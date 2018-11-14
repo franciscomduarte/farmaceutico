@@ -19,10 +19,10 @@
 	$ip = getenv("REMOTE_ADDR");
 	if($ip == '127.0.0.1') {
 		define('URL_SISTEMA', '');
-		define('ENDERECO', 'http://emnumeros:83/');
+		define('ENDERECO', 'http://projeto-exemplo:83/');
 	} else {
-		define('URL_SISTEMA', '/gestao');
-		define('ENDERECO', 'https://www.escolavirtual.gov.br/gestao');
+		define('URL_SISTEMA', '/projeto-exemplo');
+		define('ENDERECO', 'http://e2f.com.br/projeto-exemplo');
 	}
 	
 // 	define('HOST', 'localhost');
