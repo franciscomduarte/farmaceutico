@@ -42,7 +42,7 @@
    	 	
 	    
 	</head>
-	    <script src="<?php echo URL_SISTEMA?>/js/jquery-3.1.1.min.js"></script>
+	<script src="<?php echo URL_SISTEMA?>/js/jquery-3.1.1.min.js"></script>
     <script src="<?php echo URL_SISTEMA?>/js/bootstrap.min.js"></script>
     <script src="<?php echo URL_SISTEMA?>/js/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="<?php echo URL_SISTEMA?>/js/plugins/validate/jquery.validate.min.js"></script> 
