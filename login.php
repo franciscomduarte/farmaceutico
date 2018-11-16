@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?php echo SIGLA_SISTEMA?> | Login</title>
+    <title><?php echo SIGLA_SISTEMA ?> | Login</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -25,7 +25,7 @@
                 <h1 class="logo-name"><?php echo strtolower(SIGLA_SISTEMA)?></h1>
 
             </div>
-            <p><?php echo NOME_SISTEMA?> 
+            <p><?php echo NOME_SISTEMA ?> 
             </p>
             <?php 
 				if (isset($_REQUEST['erro'])) {
@@ -45,7 +45,7 @@
 			     }
 		     ?>
             
-            <form class="m-t" role="form" action="<?php echo URL_SISTEMA?>/acessar.php" method="post">
+            <form class="m-t" role="form" action="<?php echo URL_SISTEMA ?>/acessar.php" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Usuário ou email" required name="usuario">
                 </div>

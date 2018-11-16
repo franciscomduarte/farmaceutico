@@ -18,32 +18,25 @@
 	###################################################################
 	## PARAMENTROS DO BANCO DE DADOS POSTGRESQL
 	###################################################################
-	define('PG_HOST', '192.168.56.101');
+// 	define('PG_HOST', '192.168.56.101');
+// 	define('PG_DBNAME', 'exemplo');
+// 	define('PG_CHARSET', 'UTF8');
+// 	define('PG_USER', 'postgre');
+// 	define('PG_PASSWORD', 'e2f12345678'); 
+	
+	define('PG_HOST', 'localhost');
 	define('PG_DBNAME', 'exemplo');
 	define('PG_CHARSET', 'UTF8');
-	define('PG_USER', 'postgre');
-	define('PG_PASSWORD', 'e2f12345678'); 
+	define('PG_USER', 'postgres');
+	define('PG_PASSWORD', ''); 
 	
 	$ip = getenv("REMOTE_ADDR");
 	if($ip == '127.0.0.1') {
-		define('URL_SISTEMA', '/projeto-exemplo');
+		define('URL_SISTEMA', '');
 		define('ENDERECO', 'http://localhost/projeto-exemplo');
 	} else {
 		define('URL_SISTEMA', '/projeto-exemplo');
 		define('ENDERECO', 'http://e2f.com.br/projeto-exemplo');
 	}
-	
-// 	define('HOST', 'localhost');
-// 	define('DBNAME', 'secretaria');
-// 	define('CHARSET', 'utf8');
-// 	define('USER', 'postgres');
-// 	define('PASSWORD', ''); 
-
-// 	IP: 10.224.8.34
-// 	Porta: 5432
-// 	Database: db_secretaria_virtual
-// 	User: cgead_user
-// 	Password: e13VV4sEXS
-	
 	
 ?>

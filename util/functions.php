@@ -44,18 +44,6 @@
 		return $result;
 	}
 	
-	function executarSqlSqlServer($sql) {
-		$conn = Conexao::getInstanceSqlServer();
-// 		$result = $mysqli->query($sql);
-// 		if ($mysqli->errno) {
-// 			$mensagem = "MySQL error:". trim(addslashes($mysqli->errno)) .":". trim(addslashes($mysqli->error));
-// 			aprensentaMensagem(ERROR, $mensagem);
-// 			//TODO criar rotina para salvar os erros sql numa tabela
-// 			exit();
-// 		}
-// 		return $result;
-	}
-	
 	function executarSql($sql) {
 		$conn = Conexao::getInstance();
 		$result=pg_query($conn, $sql);
