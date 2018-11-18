@@ -9,18 +9,22 @@
 	###################################################################
 	## PARAMENTROS DO BANCO DE DADOS
 	###################################################################
-	define('HOST', 'localhost');
-	define('DBNAME', 'b2i');
-	define('CHARSET', 'utf8');
-	define('USER', 'root');
-	define('PASSWORD', ''); 
-	
-// 	define('HOST', '10.224.40.60');
-// 	define('DBNAME', 'b2i');
-// 	define('CHARSET', 'utf8');
-// 	define('USER', 'b2i_user');
-// 	define('PASSWORD', 'b2i_user'); 
 
+	$ip = getenv("REMOTE_ADDR");
+	if($ip == '127.0.0.1') {
+	    define('HOST', 'localhost');
+	    define('DBNAME', 'exemplo');
+	    define('CHARSET', 'utf8');
+	    define('USER', 'root');
+	    define('PASSWORD', ''); 
+	} else {
+	    define('HOST', 'mysql.e2f.com.br');
+	    define('DBNAME', 'e2f10');
+	    define('CHARSET', 'utf8');
+	    define('USER', 'e2f10');
+	    define('PASSWORD', 'e2f12345678'); 
+	}
+	
 	###################################################################
 	## PERFIS FIXOS DO SISTEMA
 	###################################################################
