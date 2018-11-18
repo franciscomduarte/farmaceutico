@@ -1,35 +1,35 @@
 <?php
 
-class Perfil
+class uf
 {
 	
 	protected $id;
 	protected $descricao;
 	
 	public function inserir($obj){
-		$sql = "INSERT INTO perfil (id, descricao) VALUES (null, '$obj->descricao')";
+		$sql = "INSERT INTO uf (id, descricao) VALUES (null, '$obj->descricao')";
 		return executarSql($sql);
 	}
 	
 	public function editar($obj){
-		$sql = "UPDATE perfil set descricao = '$obj->descricao' WHERE id = $obj->id ";
+		$sql = "UPDATE uf set descricao = '$obj->descricao' WHERE id = $obj->id ";
 		return executarSql($sql);
 	}
 	
 	public function listar(){
-		$sql = "SELECT * FROM perfil WHERE 1=1";
+		$sql = "SELECT * FROM uf WHERE 1=1";
 		$query = executarSql($sql);
 		return $query->fetch_all(MYSQLI_ASSOC);
 	}
 	
 	public function listarPorId($id){
-		$sql = "SELECT * FROM perfil WHERE id = $id ";
+		$sql = "SELECT * FROM uf WHERE 1=1 AND id = $id ";
 		$query = executarSql($sql);
 		return $query->fetch_array(MYSQLI_ASSOC);
 	}
 	
 	public function deletar($id){
-		$sql = "DELETE FROM perfil WHERE id = " . $id;
+		$sql = "DELETE FROM uf WHERE id = " . $id;
 		return executarSql($sql);
 	}
 	

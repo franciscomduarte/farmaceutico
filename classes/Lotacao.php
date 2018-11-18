@@ -1,36 +1,33 @@
 <?php
 
-class Perfil
+class Lotacao
 {
-	
+
 	protected $id;
-	protected $descricao;
+	protected $nome;
+	protected $sigla;
+	protected $id_suap;
 	
 	public function inserir($obj){
-		$sql = "INSERT INTO perfil (id, descricao) VALUES (null, '$obj->descricao')";
-		return executarSql($sql);
-	}
-	
-	public function editar($obj){
-		$sql = "UPDATE perfil set descricao = '$obj->descricao' WHERE id = $obj->id ";
-		return executarSql($sql);
+		
+		$sql = " INSERT INTO lotacao (id, nome, sigla, id_suap) VALUES
+				                       (null, 
+										'$obj->nome',
+										'$obj->sigla',
+										'$obj->id_suap')";
+		executarSql($sql);
 	}
 	
 	public function listar(){
-		$sql = "SELECT * FROM perfil WHERE 1=1";
+		$sql = " SELECT * FROM lotacao WHERE 1=1 ";
 		$query = executarSql($sql);
 		return $query->fetch_all(MYSQLI_ASSOC);
 	}
 	
 	public function listarPorId($id){
-		$sql = "SELECT * FROM perfil WHERE id = $id ";
+		$sql = " SELECT * FROM lotacao WHERE 1=1 and id = $id ";
 		$query = executarSql($sql);
 		return $query->fetch_array(MYSQLI_ASSOC);
-	}
-	
-	public function deletar($id){
-		$sql = "DELETE FROM perfil WHERE id = " . $id;
-		return executarSql($sql);
 	}
 	
 	public function retornaIdInserido() {
@@ -44,6 +41,5 @@ class Perfil
 	public function __set($propriedade,$valor){
 		$this->$propriedade = addslashes($valor);
 	}
-	
 	
 }

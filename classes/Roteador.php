@@ -20,9 +20,11 @@ class Roteador
 	public function parametro($key) 
 	{
 		if (array_key_exists ( $key, $this->uri )) 
-		{			
+		{
+			
 			return $this->uri [$key];
 		} else {
+			
 			return false;
 		}
 	}

@@ -67,14 +67,6 @@ class Usuario
 		return executarSql($sql);
 	}
 	
-	public function atualizarSenha($idUsuario, $obj) {
-			
-		$sql = "UPDATE usuario set
-		senha 		= '$obj->senha'
-		WHERE id 		= $idUsuario";
-		return executarSql ( $sql );
-	}
-	
 	public function editar($obj){
 		$sql = "UPDATE usuario 
                 SET nome 		= '$obj->nome',
@@ -94,24 +86,6 @@ class Usuario
 					uf_id 		= '$obj->uf_id',
 					lotacao_id 	= '$obj->lotacao_id'
                 WHERE id 		= $obj->id ";
-		return executarSql($sql);
-	}
-	
-	public function atualizarDadosBasicos($obj){
-		$sql = "UPDATE usuario
-		SET nome 		= '$obj->nome',
-		cpf 		= '$obj->cpf',
-		siape 		= '$obj->siape',
-		rg 			= '$obj->rg',
-		nascimento 	= '$obj->nascimento',
-		endereco 	= '$obj->endereco',
-		municipio 	= '$obj->municipio',
-		cep 		= '$obj->cep',
-		telefone 	= '$obj->telefone',
-		cargo 		= '$obj->cargo',
-		uf_id 		= '$obj->uf_id',
-		lotacao_id 	= '$obj->lotacao_id'
-		WHERE id 		= $obj->id ";
 		return executarSql($sql);
 	}
 	
@@ -145,14 +119,6 @@ class Usuario
 		$sql = " SELECT *
 				FROM usuario
 				WHERE email = '$login'";
-		$query = executarSql($sql);
-		return $query->fetch_array(MYSQLI_ASSOC);
-	}
-	
-	public function listarPorCpf($cpf){
-		$sql = " SELECT *
-		FROM usuario
-		WHERE cpf = '$cpf'";
 		$query = executarSql($sql);
 		return $query->fetch_array(MYSQLI_ASSOC);
 	}

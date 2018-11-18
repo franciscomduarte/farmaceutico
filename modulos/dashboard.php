@@ -1,180 +1,172 @@
 <?php 
 
-	$curso_selecionado = isset($_REQUEST['curso']) ? $_REQUEST['curso'] : 0;
-
-	$dashboard = new Dashboard();
-	$quantidadeInscritosPorCurso = $dashboard->quantidadeInscritosPorCurso($curso_selecionado);
-	$quantidadeInscritosPorStatus = $dashboard->quantidadeInscritosPorStatus($curso_selecionado);
-	$numeroInscritos = $dashboard->numeroInscritos($curso_selecionado);
-	$numeroEgressos = $dashboard->numeroEgressos($curso_selecionado);
-	$porcentagemConcluintes = ceil(($numeroEgressos/$numeroInscritos)*100);
-	$inscricoesDia = $dashboard->inscricoesPorDia($curso_selecionado);
-	$ofertasDisponiveis = $dashboard->countOfertasDisponiveis($curso_selecionado);
-	$inscricoesMesStatus = $dashboard->inscricoesPorMesStatus($curso_selecionado);
-	$cursos = $dashboard->consultaCursos();
-?> 
- 
-       	<a href="<?php echo URL_SISTEMA?>/alunos">Consulta Aluno</a>&nbsp; |
-       	<a href="<?php echo URL_SISTEMA?>/relatorios">Extrações</a> |
-       	<a href="<?php echo URL_SISTEMA?>/certificacao">Certificação Ouvidoria</a> |
+    
+?>       
+       
         <div class="wrapper wrapper-content">
             <div class="container">
-            <h3>SELECIONE O CURSO</h3>
-            
-            <input class="form-control" type="text" name="curso" list="cursos" placeholder="Digite o curso.." id="curso" onchange="reload()">
-            <datalist id="cursos">
-				<?php  
-				while ($row = pg_fetch_assoc($cursos)) { 
-		        ?>
-		        	<option id="<?php echo $row['tx_nome_curso']?>"  data-value="<?php echo $row['id_curso']?>"  ><?php echo $row['tx_nome_curso']?></option>
-				<?php 
-            	}
-			?>
-			</datalist>
-            
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Ofertas</h5>
+                            <h5>Currículos</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins"><a href="/pesquisa/resultado/<?php echo $curso_selecionado?>"> <?php echo $ofertasDisponiveis ?> </a><small> realizada(s) </small></h1>
+                            <h1 class="no-margins"><a href="/pesquisa/resultado"><?php echo "10" ?></a><small> Cadastrado(s) </small></h1>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Inscrições</h5>
+                            <h5>Doutores</h5>
                         </div>
                         <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="/dashboard/inscritos/<?php echo $curso_selecionado?>"><?php echo $numeroInscritos ?></a><small> Inscritos(s)</small></h1>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-3">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-success pull-right">Total</span>
-                            <h5>Egressos</h5>
-                        </div>
-                        <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="/dashboard/egressos/<?php echo $curso_selecionado?>"><?php echo $numeroEgressos ?></a><small> Egresso(s)</small></h1>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-3">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-success pull-right">Total</span>
-                            <h5>Concluintes</h5>
-                        </div>
-                        <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="#"><?php echo $porcentagemConcluintes ?> %</a><small> das inscrições</small></h1>
+                        	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=DOUTORADO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Inscrições/Dia</h5>
+                            <h5>Mestres</h5>
                         </div>
                         <div class="ibox-content">
-                        	<?php while ($row = pg_fetch_assoc($inscricoesDia)) { ?>
-                        		<h1 class="no-margins"><a href="/dashboard/inscritos_dia/<?php echo $curso_selecionado?>/<?php echo $row['dt_inscricao']?>"><?php echo $row['qtd']?></a><small> - <?php echo formatarData($row['dt_inscricao'])?></small></h1>
-                        	<?php } ?>
+                        	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=MESTRADO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Inscrições/Mês - CONCLUINTES</h5>
+                            <h5>Especialistas</h5>
                         </div>
                         <div class="ibox-content">
-                        	<table class="table table-striped table-bordered table-hover">
-	                        	<?php while ($row = pg_fetch_assoc($inscricoesMesStatus)) { ?>
-	                        		<tr>
-	                        			<td colspan="2"><b><?php echo retornaMesPorExtenso($row['mes'])?> - <?php echo $row['qtd']?></b></td>
-	                        		</tr>
-	                        	<?php } ?>
-                        	</table>
+                        	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=ESPECIALIZACAO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
                         </div>
                     </div>
                 </div>
-               </div>
-                
-			<div class="row">
-                <div class="col-md-6">
-		            <div class="ibox-content">
-		            	<div class="table-responsive">
-		            		<fieldset>Quantidade de Inscritos por Curso</fieldset>
-		                	<table class="table table-striped table-bordered table-hover dataTables-example" >
-	                            <thead>
-	                            <tr>
-	                                <th>Curso</th>
-	                                <th>Quantidade</th>
-	                            </tr>
-	                            </thead>
-	                            <tbody>
-	                            <?php  
-	                            while ($row = pg_fetch_assoc($quantidadeInscritosPorCurso)) { ?>
-		                            <tr>
-		                             	<td><?php echo $row['tx_nome_curso']?></td>
-		                                <td><?php echo $row['qtd']?></td>
-		                            </tr>
-	                            <?php } ?>
-	                            </tbody>
-	                        </table>
-	                    </div>
-	            	</div>
-				</div>
-				
-				<div class="col-md-6">
-		            <div class="ibox-content">
-		            	<div class="table-responsive">
-		            		<fieldset>Status dos Inscritos</fieldset>
-		                	<table class="table table-striped table-bordered table-hover dataTables-example" >
-	                            <thead>
-	                            <tr>
-	                                <th>Status</th>
-	                                <th>Quantidade</th>
-	                            </tr>
-	                            </thead>
-	                            <tbody>
-	                            <?php  
-	                            while ($row = pg_fetch_assoc($quantidadeInscritosPorStatus)) { ?>
-		                            <tr>
-		                             	<td><?php echo $row['tp_situacao_inscricao']?></td>
-		                                <td><?php echo $row['qtd']?></td>
-		                            </tr>
-	                            <?php } ?>
-	                            </tbody>
-	                        </table>
-	                    </div>
-	            	</div>
-				</div>
+
+
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Monthly income</h5>
+                            <div class="ibox-tools">
+                                <span class="label label-primary">Updated 12.2015</span>
+                            </div>
+                        </div>
+                        <div class="ibox-content no-padding">
+                            <div class="flot-chart m-t-lg" style="height: 55px;">
+                                <div class="flot-chart-content" id="flot-chart1"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <div>
+                                        <span class="pull-right text-right">
+                                        <small>Average value of sales in the past month in: <strong>United states</strong></small>
+                                            <br/>
+                                            All sales: 162,862
+                                        </span>
+                                    <h3 class="font-bold no-margins">
+                                        Half-year revenue margin
+                                    </h3>
+                                    <small>Sales marketing.</small>
+                                </div>
+
+                                <div class="m-t-sm">
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div>
+                                            <canvas id="lineChart" height="114"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ul class="stat-list m-t-lg">
+                                                <li>
+                                                    <h2 class="no-margins">2,346</h2>
+                                                    <small>Total orders in period</small>
+                                                    <div class="progress progress-mini">
+                                                        <div class="progress-bar" style="width: 48%;"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <h2 class="no-margins ">4,422</h2>
+                                                    <small>Orders in last month</small>
+                                                    <div class="progress progress-mini">
+                                                        <div class="progress-bar" style="width: 60%;"></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="m-t-md">
+                                    <small class="pull-right">
+                                        <i class="fa fa-clock-o"> </i>
+                                        Update on 16.07.2015
+                                    </small>
+                                    <small>
+                                        <strong>Analysis of sales:</strong> The value has been changed over time, and last month reached a level over $50,000.
+                                    </small>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-warning pull-right">Qtd</span>
+                                <h5>Currículo por Área de Interesse</h5>
+                            </div>
+                            
+                            <div class="ibox-content">
+                            		<div class="row">
+                             <?php
+                                for($i = 0; $i < 10; $i+=3) {
+        						?>
+	    					       	<div class="col-xs-4">
+	                                    <small class="stats-label"><?php echo 10 ?></small>
+	                                    <h4><a href="#">Total: <?php "10" ?></a></h4>
+	                                </div>
+	    
+	                                <div class="col-xs-4">
+	                                    <small class="stats-label"><?php echo 10  ?></small>
+	                                    <h4><a href="#"><?php echo 10  ?></a></h4>
+	                                </div>
+	                                <div class="col-xs-4">
+	                                    <small class="stats-label"><?php echo 10 ?></small>
+	                                    <h4><a href="#"><?php echo 10 ?></a></h4>
+	                                </div>
+        						<?php 
+        							}
+        						?>
+        							</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
-        
-        <script type="text/javascript">
-			function reload() {
-				var curso_selecionado = document.getElementById('curso').value;
-				var id_curso_selecionado = document.getElementById("cursos").options.namedItem(curso_selecionado).getAttribute('data-value');
-				window.location = "<?php echo ENDERECO ?>?curso="+id_curso_selecionado;
-			}
-        
-		</script>
