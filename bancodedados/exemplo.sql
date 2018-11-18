@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 17-Nov-2018 às 02:48
+-- Generation Time: 18-Nov-2018 às 22:20
 -- Versão do servidor: 10.1.24-MariaDB
 -- PHP Version: 7.0.20
 
@@ -12,12 +12,6 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `exemplo`
 --
@@ -25,47 +19,107 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `arquivo`
+-- Estrutura da tabela `alternativa`
 --
 
-CREATE TABLE `arquivo` (
+CREATE TABLE `alternativa` (
   `id` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `tipo` varchar(30) NOT NULL,
-  `tamanho` int(11) NOT NULL,
-  `url` text NOT NULL,
-  `id_curriculo` int(11) NOT NULL
+  `id_item` int(11) NOT NULL,
+  `descricao` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `lotacao`
+-- Estrutura da tabela `checklist`
 --
 
-CREATE TABLE `lotacao` (
+CREATE TABLE `checklist` (
   `id` int(11) NOT NULL,
-  `nome` text NOT NULL,
-  `sigla` varchar(50) NOT NULL,
-  `id_suap` int(11) NOT NULL
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_id` int(11) NOT NULL,
+  `nome` varchar(200) NOT NULL,
+  `ativo` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `checklist_item`
+--
+
+CREATE TABLE `checklist_item` (
+  `id_checklist` int(11) NOT NULL,
+  `id_item` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `convenio`
+--
+
+CREATE TABLE `convenio` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `lotacao`
+-- Extraindo dados da tabela `convenio`
 --
 
-INSERT INTO `lotacao` (`id`, `nome`, `sigla`, `id_suap`) VALUES
-(1, 'Presidência', 'PRESI', 1),
-(2, 'Gabinete da Presidência', 'GABIN', 2),
-(3, 'Diretoria de Gestão Interna', 'DGI', 3),
-(4, 'Diretoria de Educação Continuada', 'DEC', 4),
-(5, 'Diretoria de Formação Profissional e Especialização', 'DFPE', 5),
-(6, 'Diretoria de Pesquisa e Pós-Graduação Stricto Sensu', 'DPSS', 6),
-(7, 'Diretoria de Inovação e Gestão do Conhecimento', 'DGC', 7),
-(8, 'Procuradoria', 'Proc', 8),
-(9, 'Assessoria Internacional', 'AI', 9),
-(10, 'Auditoria Interna', 'Audit', 10),
-(11, 'Assessoria de Comunicação', 'Ascom', 11);
+INSERT INTO `convenio` (`id`, `nome`) VALUES
+(2, 'AMIL'),
+(3, 'SUS'),
+(4, 'BRADESCO');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `internacao`
+--
+
+CREATE TABLE `internacao` (
+  `id` int(11) NOT NULL,
+  `numero_internacao` varchar(10) DEFAULT NULL,
+  `data_internacao` datetime DEFAULT NULL,
+  `id_setor` int(11) NOT NULL,
+  `id_paciente` int(11) NOT NULL,
+  `id_convenio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item`
+--
+
+CREATE TABLE `item` (
+  `id` int(11) NOT NULL,
+  `enunciado` varchar(200) NOT NULL,
+  `tipo` enum('ME','VF','TX','MV') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `paciente`
+--
+
+CREATE TABLE `paciente` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `cpf` varchar(11) NOT NULL,
+  `nascimento` date DEFAULT NULL,
+  `id_convenio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `paciente`
+--
+
+INSERT INTO `paciente` (`id`, `nome`, `cpf`, `nascimento`, `id_convenio`) VALUES
+(3, 'LARA CRISTIAN1', '98920650187', '2018-11-30', 3);
 
 -- --------------------------------------------------------
 
@@ -107,10 +161,10 @@ CREATE TABLE `permissao` (
 
 INSERT INTO `permissao` (`id`, `descricao`, `url`, `id_permissao_pai`) VALUES
 (1, 'Administração', NULL, NULL),
-(2, 'Currículo', NULL, NULL),
-(5, 'Usuários', '/usuario', 1),
-(6, 'Áreas de Interesse', '/tema', 1),
-(7, 'Perfis', '/perfil', 1),
+(2, 'Internação', NULL, NULL),
+(5, 'Setor', '/setor', 1),
+(6, 'Convênio', '/convenio', 1),
+(7, 'Paciente', '/paciente', 2),
 (8, 'Ajuda', NULL, NULL),
 (9, 'Teste', '/teste', 2),
 (10, 'Meu Currículo', '/curriculo/{id_usuario}', 2),
@@ -165,64 +219,48 @@ INSERT INTO `permissao_perfil` (`id_permissao`, `id_perfil`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `teste`
+-- Estrutura da tabela `reposta_checklist`
 --
 
-CREATE TABLE `teste` (
+CREATE TABLE `reposta_checklist` (
   `id` int(11) NOT NULL,
-  `descricao` text NOT NULL
+  `id_checklist` int(11) NOT NULL,
+  `data_resposta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_internacao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `teste`
---
-
-INSERT INTO `teste` (`id`, `descricao`) VALUES
-(41, 'EXTERNO');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `uf`
+-- Estrutura da tabela `reposta_checklist_item`
 --
 
-CREATE TABLE `uf` (
+CREATE TABLE `reposta_checklist_item` (
+  `id_reposta_checklist` int(11) NOT NULL,
+  `id_item` int(11) NOT NULL,
+  `id_resposta_alternativa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `setor`
+--
+
+CREATE TABLE `setor` (
   `id` int(11) NOT NULL,
-  `descricao` varchar(45) DEFAULT NULL
+  `nome` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `uf`
+-- Extraindo dados da tabela `setor`
 --
 
-INSERT INTO `uf` (`id`, `descricao`) VALUES
-(1, 'AC'),
-(2, 'AL'),
-(3, 'AM'),
-(4, 'AP'),
-(5, 'BA'),
-(6, 'CE'),
-(7, 'DF'),
-(8, 'ES'),
-(9, 'GO'),
-(10, 'MA'),
-(11, 'MG'),
-(12, 'MS'),
-(13, 'MT'),
-(14, 'PA'),
-(15, 'PB'),
-(16, 'PE'),
-(17, 'PI'),
-(18, 'PR'),
-(19, 'RJ'),
-(20, 'RN'),
-(21, 'RO'),
-(22, 'RR'),
-(23, 'RS'),
-(24, 'SC'),
-(25, 'SE'),
-(26, 'SP'),
-(27, 'TO');
+INSERT INTO `setor` (`id`, `nome`) VALUES
+(2, 'bbbbbbqqq'),
+(3, 'ASADASDAS'),
+(4, 'Molina'),
+(5, 'asdasdas');
 
 -- --------------------------------------------------------
 
@@ -236,19 +274,8 @@ CREATE TABLE `usuario` (
   `email` varchar(100) NOT NULL,
   `senha` varchar(32) NOT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT '1',
-  `data_cadastro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cpf` varchar(45) CHARACTER SET dec8 NOT NULL,
-  `siape` varchar(15) DEFAULT NULL,
-  `rg` varchar(45) DEFAULT NULL,
-  `nascimento` date DEFAULT NULL,
-  `endereco` text,
-  `municipio` text,
-  `cep` varchar(45) DEFAULT NULL,
-  `telefone` varchar(50) DEFAULT NULL,
-  `cargo` varchar(200) DEFAULT NULL,
-  `uf_id` int(11) DEFAULT NULL,
-  `lotacao_id` int(11) DEFAULT NULL,
-  `foto` varchar(400) DEFAULT NULL,
   `id_perfil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -256,31 +283,65 @@ CREATE TABLE `usuario` (
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `data_cadastro`, `cpf`, `siape`, `rg`, `nascimento`, `endereco`, `municipio`, `cep`, `telefone`, `cargo`, `uf_id`, `lotacao_id`, `foto`, `id_perfil`) VALUES
-(3, 'Francisco Carlos Molina', 'francisco.molina@enap.gov.br', '202cb962ac59075b964b07152d234b70', 0, '2017-10-16 00:00:00', '00000000000', '', '2082914', '1983-03-05', 'Rua 12 Norte Lote 08', 'Aguas Claras', '71909540', '2020-3440', 'Assessor', 1, 1, '', 1),
-(4, 'Admin', 'admin@enap.gov.br', '202cb962ac59075b964b07152d234b70', 1, '2017-11-01 00:00:00', '0000000000', '0000000', '00000000', '2017-11-01', 'Enap', 'Asa Sul', '00000000', '00000000', 'Admin', 7, 3, '', 1),
-(6, 'Flaviano de Oliveira Silva', 'flaviano.silva@enap.gov.br', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '111.111.111-11', '1111111', '1111111', '2014-11-11', '1111111111', '111111111', '11.111-111', '(11) 11111-1111', '1111111', 4, 3, 'asda', 1),
-(12, 'FRANCISCO CARLOS MOLINA DUARTE JUNIOR', 'francicso.m.duarte@gmail.com', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '222.222.222.22', '1111111', '111111111111', '1983-03-05', '131313', '111111111111', '11.111-111', '(11) 11111-1111', '1111111111111', 3, NULL, '', 4),
-(15, 'Fulano de tal', 'fulano@email.com', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '444.444.444-44', '4444444', '4444444444444444', '2011-04-04', '44444444', '44444444444444444444444', '44.444-444', '(44) 44444-4444', '44444444444444444', 17, NULL, '', 4),
-(16, 'asdasd', 'teste@teste.com', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '666.666.666-66', '6666666', '66666666', '2011-12-12', '666666', '666666666666666666666666', '66.666-666', '(66) 66666-6666', '66666666666666', 17, 6, '', 3),
-(22, 'Francisco Carlos Molina Duarte Júnior', 'francisco.molina', '93d36da30ded8bd17536d1c642636243', 1, '2017-11-17 17:53:50', '98920650187', '', '', '0000-00-00', '', '', '', '', '', NULL, NULL, '', 2),
-(23, 'teste', 'teste1@teste.com', '202cb962ac59075b964b07152d234b70', 1, '2017-11-17 17:57:20', '555.555.555-55', '5555555', '5555555555', '2011-05-05', 'sad', 'asd', '44.444-444', '(55) 55555-5555', '444444', 2, 5, '', 3);
+INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `data_cadastro`, `cpf`, `id_perfil`) VALUES
+(3, 'Francisco Carlos Molina', 'francisco.molina@enap.gov.br', 'e10adc3949ba59abbe56e057f20f883e', 0, '2017-10-16 02:00:00', '00000000000', 1),
+(4, 'Admin', 'admin@enap.gov.br', '202cb962ac59075b964b07152d234b70', 1, '2017-11-01 02:00:00', '0000000000', 1),
+(22, 'Francisco Carlos Molina Duarte Júnior', 'francisco.molina', '93d36da30ded8bd17536d1c642636243', 1, '2017-11-17 19:53:50', '98920650187', 2),
+(23, 'teste', 'teste1@teste.com', '202cb962ac59075b964b07152d234b70', 1, '2017-11-17 19:57:20', '555.555.555-55', 3);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `arquivo`
+-- Indexes for table `alternativa`
 --
-ALTER TABLE `arquivo`
+ALTER TABLE `alternativa`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_alternativa_item1_idx` (`id_item`);
+
+--
+-- Indexes for table `checklist`
+--
+ALTER TABLE `checklist`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_checklist_usuario1_idx` (`usuario_id`);
+
+--
+-- Indexes for table `checklist_item`
+--
+ALTER TABLE `checklist_item`
+  ADD PRIMARY KEY (`id_checklist`,`id_item`),
+  ADD KEY `fk_checklist_has_item_item1_idx` (`id_item`),
+  ADD KEY `fk_checklist_has_item_checklist1_idx` (`id_checklist`);
+
+--
+-- Indexes for table `convenio`
+--
+ALTER TABLE `convenio`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `lotacao`
+-- Indexes for table `internacao`
 --
-ALTER TABLE `lotacao`
+ALTER TABLE `internacao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_internacao_setor1_idx` (`id_setor`),
+  ADD KEY `fk_internacao_paciente1_idx` (`id_paciente`);
+
+--
+-- Indexes for table `item`
+--
+ALTER TABLE `item`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `paciente`
+--
+ALTER TABLE `paciente`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  ADD KEY `fk_paciente_convenio1_idx` (`id_convenio`);
 
 --
 -- Indexes for table `perfil`
@@ -302,15 +363,26 @@ ALTER TABLE `permissao_perfil`
   ADD KEY `fk_permissao_perfil_perfil1_idx` (`id_perfil`);
 
 --
--- Indexes for table `teste`
+-- Indexes for table `reposta_checklist`
 --
-ALTER TABLE `teste`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `reposta_checklist`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_reposta_checklist_checklist1_idx` (`id_checklist`),
+  ADD KEY `fk_reposta_checklist_internacao1_idx` (`id_internacao`);
 
 --
--- Indexes for table `uf`
+-- Indexes for table `reposta_checklist_item`
 --
-ALTER TABLE `uf`
+ALTER TABLE `reposta_checklist_item`
+  ADD PRIMARY KEY (`id_reposta_checklist`,`id_item`),
+  ADD KEY `fk_reposta_checklist_has_item_item1_idx` (`id_item`),
+  ADD KEY `fk_reposta_checklist_has_item_reposta_checklist1_idx` (`id_reposta_checklist`),
+  ADD KEY `fk_reposta_checklist_item_alternativa1_idx` (`id_resposta_alternativa`);
+
+--
+-- Indexes for table `setor`
+--
+ALTER TABLE `setor`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -320,24 +392,42 @@ ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `fk_usuario_uf1_idx` (`uf_id`),
-  ADD KEY `fk_usuario_perfil1_idx` (`id_perfil`),
-  ADD KEY `lotacao_id` (`lotacao_id`) USING BTREE;
+  ADD KEY `fk_usuario_perfil1_idx` (`id_perfil`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `arquivo`
+-- AUTO_INCREMENT for table `alternativa`
 --
-ALTER TABLE `arquivo`
+ALTER TABLE `alternativa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `lotacao`
+-- AUTO_INCREMENT for table `checklist`
 --
-ALTER TABLE `lotacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+ALTER TABLE `checklist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `convenio`
+--
+ALTER TABLE `convenio`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `internacao`
+--
+ALTER TABLE `internacao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `item`
+--
+ALTER TABLE `item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `paciente`
+--
+ALTER TABLE `paciente`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
 -- AUTO_INCREMENT for table `perfil`
 --
@@ -349,15 +439,20 @@ ALTER TABLE `perfil`
 ALTER TABLE `permissao`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
--- AUTO_INCREMENT for table `teste`
+-- AUTO_INCREMENT for table `reposta_checklist`
 --
-ALTER TABLE `teste`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+ALTER TABLE `reposta_checklist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `uf`
+-- AUTO_INCREMENT for table `reposta_checklist_item`
 --
-ALTER TABLE `uf`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+ALTER TABLE `reposta_checklist_item`
+  MODIFY `id_reposta_checklist` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `setor`
+--
+ALTER TABLE `setor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
@@ -368,6 +463,38 @@ ALTER TABLE `usuario`
 --
 
 --
+-- Limitadores para a tabela `alternativa`
+--
+ALTER TABLE `alternativa`
+  ADD CONSTRAINT `fk_alternativa_item1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `checklist`
+--
+ALTER TABLE `checklist`
+  ADD CONSTRAINT `fk_checklist_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `checklist_item`
+--
+ALTER TABLE `checklist_item`
+  ADD CONSTRAINT `fk_checklist_has_item_checklist1` FOREIGN KEY (`id_checklist`) REFERENCES `checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_checklist_has_item_item1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `internacao`
+--
+ALTER TABLE `internacao`
+  ADD CONSTRAINT `fk_internacao_paciente1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_internacao_setor1` FOREIGN KEY (`id_setor`) REFERENCES `setor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `paciente`
+--
+ALTER TABLE `paciente`
+  ADD CONSTRAINT `fk_paciente_convenio1` FOREIGN KEY (`id_convenio`) REFERENCES `convenio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Limitadores para a tabela `permissao_perfil`
 --
 ALTER TABLE `permissao_perfil`
@@ -375,14 +502,23 @@ ALTER TABLE `permissao_perfil`
   ADD CONSTRAINT `fk_permissao_perfil_permissao1` FOREIGN KEY (`id_permissao`) REFERENCES `permissao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Limitadores para a tabela `reposta_checklist`
+--
+ALTER TABLE `reposta_checklist`
+  ADD CONSTRAINT `fk_reposta_checklist_checklist1` FOREIGN KEY (`id_checklist`) REFERENCES `checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_reposta_checklist_internacao1` FOREIGN KEY (`id_internacao`) REFERENCES `internacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `reposta_checklist_item`
+--
+ALTER TABLE `reposta_checklist_item`
+  ADD CONSTRAINT `fk_reposta_checklist_has_item_item1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_reposta_checklist_has_item_reposta_checklist1` FOREIGN KEY (`id_reposta_checklist`) REFERENCES `reposta_checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_reposta_checklist_item_alternativa1` FOREIGN KEY (`id_resposta_alternativa`) REFERENCES `alternativa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Limitadores para a tabela `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `fk_usuario_perfil1` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usuario_uf1` FOREIGN KEY (`uf_id`) REFERENCES `uf` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`lotacao_id`) REFERENCES `lotacao` (`id`);
+  ADD CONSTRAINT `fk_usuario_perfil1` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

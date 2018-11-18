@@ -147,8 +147,10 @@
 	});
 
 	function apresentaMensagemErro(mensagem) {
+		$("#mensagemErroVoltar").html("<a href='#' onclick='history.back()'>Voltar</a>");
 		$("#mensagemErro").html(mensagem);
 		$("#mensagemErro").removeAttr("style").show();
+		$("#mensagemErroVoltar").removeAttr("style").show();
 	}
 
 	function apresentaMensagemSucesso(mensagem) {
