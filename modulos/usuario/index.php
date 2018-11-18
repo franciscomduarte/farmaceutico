@@ -5,7 +5,6 @@
 	include_once 'breadcrumb.php';
 
 ?>
-
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
@@ -25,51 +24,52 @@
 											<th>Nome</th>
 					                        <th>CPF</th>
 					                        <th>E-mail</th>
-					                        <th>Lotação</th>
-					                        <th>Telefone</th>
+					                        <th>Data Cadastro</th>
+					                        <th>Perfil</th>
 					                        <th>Status</th>
 					                        <th><center>Ações</center></th>
 					                    </tr>
 	                    			</thead>
 	                   			 	<tbody>
-										<?php 
-											
-											$usuario = new Usuario();
-											$array = $usuario->listar();
-											
-											foreach ($array as $linha) {
-								        ?>
-										<tr>
-											<td width='25px'><img title="<?php echo $linha['id'] ?>" class="img-circle m-t-xs img-responsive" src="<?php echo $linha['foto'] != null ? $linha['foto'] : '/img/user.jpg' ?>"></td>
-											<td><?php echo $linha['nome'] ?></td>
-											<td><?php echo $linha['cpf'] ?></td>
-											<td><?php echo $linha['email'] ?></td>
-											<td><?php echo $linha['lotacao_id'] ?></td>
-											<td><?php echo $linha['telefone'] ?></td>
-											<td><?php echo $linha['ativo'] ? "Ativo" : "Inativo" ?></td>
-											<td>
-												<button onclick="editar(<?php echo $linha['id']?>)">
-													<span class="glyphicon glyphicon-edit" title="Editar"></span>
-												</button>
-												<button onclick="excluir(<?php echo $linha['id']?>)">
-													<span class="glyphicon glyphicon-trash remove" title="Excluir"></span>
-												</button>
-												
-											</td>
-										</tr>
-					
-										<?php 
-								          	}
-								        ?>
+    									<?php 
+    										
+    										$usuario = new Usuario();
+    										#$array = $usuario->listar();
+    										
+    										foreach ($usuario->listar() as $usuario) {
+    										    
+    							        ?>
+        									<tr>
+        										<td width='25px'><img title="<?php echo $usuario->id ?>" class="img-circle m-t-xs img-responsive" src="<?php echo $usuario->foto != null ? $usuario->foto : '/img/user.jpg' ?>"></td>
+        										<td><?php echo $usuario->nome?></td>
+        										<td><?php echo $usuario->cpf?></td>
+        										<td><?php echo $usuario->email?></td>
+        										<td><?php echo formatarDataHora($usuario->data_cadastro)?></td>
+        										<td><?php echo $usuario->perfil->descricao?></td>
+        										<td><?php echo $usuario->ativo ? "Ativo" : "Inativo"?></td>
+        										<td>
+        											<button onclick="editar(<?php echo $usuario->id?>)">
+        												<span class="glyphicon glyphicon-edit" title="Editar"></span>
+        											</button>
+        											<button onclick="excluir(<?php echo $usuario->id?>)">
+        												<span class="glyphicon glyphicon-trash remove" title="Excluir"></span>
+        											</button>
+        											
+        										</td>
+        									</tr>
+        				
+    									<?php 
+    							          	}
+    							        ?>
 	                    			</tbody>
 	                    			<tfoot>
 					                    <tr>
 											<th>Foto</th>
-					                        <th>Nome</th>
+											<th>Nome</th>
 					                        <th>CPF</th>
 					                        <th>E-mail</th>
-					                        <th>Lotação</th>
-					                        <th>Telefone</th>
+					                        <th>Data Cadastro</th>
+					                        <th>Perfil</th>
 					                        <th>Status</th>
 					                        <th><center>Ações</center></th>
 					                    </tr>

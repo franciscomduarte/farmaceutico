@@ -1,49 +1,34 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
-	    <title>b2i - Sistema de Gerenciamento de Banco interno de Instrutores</title>
-	
+	    <title><?php echo NOME_SISTEMA?></title>
+	    
 	    <link href="/css/bootstrap.min.css" rel="stylesheet">
 	    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
 	    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
-	
 	    <link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
     	<link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
     	<link href="/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
     	<link href="/css/plugins/codemirror/codemirror.css" rel="stylesheet">
-	
 	    <!-- Toastr style -->
 	    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-	
 	    <!-- Gritter -->
 	    <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
-	
 	    <link href="/css/animate.css" rel="stylesheet">
 	    <link href="/css/style.css" rel="stylesheet">
-	    
 	    <link href="/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-	    
 	    <link rel="stylesheet" type="text/css" href="/css/editor/editor.dataTables.min.css">
-	    
 	    <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-	    
 	    <link href="/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
-	    
    	 	<link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-   	 	
    	 	<link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-   	 	
    	 	<link href="/css/plugins/steps/jquery.steps.css" rel="stylesheet">
-   	 	
    	 	<link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
    		<link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-
-	    
 	</head>
 	
 	<script src="/js/jquery-3.1.1.min.js"></script>
@@ -53,13 +38,10 @@
     <script src="/js/md5/md5.min.js"></script>
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="/js/plugins/toastr/toastr.min.js"></script>
-        <!-- ChartJS-->
+    <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
-    
     <script src="/js/plugins/steps/jquery.steps.min.js"></script>
-    
     <script src="/js/plugins/summernote/summernote.min.js"></script>
-    
 
 	<script type="text/javascript">
 

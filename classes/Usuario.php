@@ -1,70 +1,24 @@
 <?php
+#require_once '../classes/Perfil.php';
 
-class Usuario
-{
+class Usuario {
 	
-	protected $id;
+    protected $id;
 	protected $nome;
 	protected $email;
 	protected $senha;
 	protected $ativo;
 	protected $data_cadastro;
 	protected $cpf;
-	protected $siape;
-	protected $rg;
-	protected $nascimento;
-	protected $endereco;
-	protected $municipio;
-	protected $cep;
-	protected $telefone;
-	protected $cargo;
-	protected $uf_id;
-	protected $lotacao_id;
 	protected $foto;
-	protected $id_perfil;
+	protected $perfil;
 	
 	public function inserir($obj){
-		
-		$locacao = $obj->lotacao_id == null ? 'null' : $obj->lotacao_id;
-		$uf 	 = $obj->uf_id == null ? 'null' : $obj->uf_id;
-		
-		$sql = "INSERT INTO usuario (id, 
-									 nome,
-									 email,
-									 senha,
-									 ativo,
-									 id_perfil,
-									 cpf,
-									 siape,
-									 rg,
-									 nascimento,
-									 endereco,
-									 municipio,
-									 cep,
-									 telefone,
-									 cargo,
-									 uf_id,
-									 lotacao_id,
-									 foto) 
-				VALUES 				(null, 
-									'$obj->nome',
-									'$obj->email',
-									'$obj->senha',
-									 1,
-									'$obj->id_perfil',
-									'$obj->cpf',
-									'$obj->siape',
-									'$obj->rg',
-									'$obj->nascimento',
-								    '$obj->endereco',
-									'$obj->municipio',
-									'$obj->cep',
-									'$obj->telefone',
-									'$obj->cargo',
-									 $uf,
-									 $locacao,
-									'')";
-		return executarSql($sql);
+		$sql = "INSERT INTO usuario (id,nome,email,senha,
+                                     ativo,id_perfil,cpf,foto) 
+				             VALUES (null,'$obj->nome','$obj->email','$obj->senha',
+									 1,'$obj->id_perfil','$obj->cpf','')";
+        return executarSql($sql);
 	}
 	
 	public function editar($obj){
@@ -74,17 +28,7 @@ class Usuario
 					senha 		= '$obj->senha',
 					ativo 		= '$obj->ativo',
 					id_perfil	= '$obj->id_perfil',
-					cpf 		= '$obj->cpf',
-					siape 		= '$obj->siape',
-					rg 			= '$obj->rg',
-					nascimento 	= '$obj->nascimento',
-					endereco 	= '$obj->endereco', 
-					municipio 	= '$obj->municipio',
-					cep 		= '$obj->cep',
-					telefone 	= '$obj->telefone',
-					cargo 		= '$obj->cargo',
-					uf_id 		= '$obj->uf_id',
-					lotacao_id 	= '$obj->lotacao_id'
+					cpf 		= '$obj->cpf'
                 WHERE id 		= $obj->id ";
 		return executarSql($sql);
 	}
@@ -97,7 +41,28 @@ class Usuario
 	public function listar(){
 		$sql = "SELECT * FROM usuario WHERE 1=1";
 		$query = executarSql($sql);
-		return $query->fetch_all(MYSQLI_ASSOC);
+		
+		$array = $query->fetch_all(MYSQLI_ASSOC);
+		
+		$usuarios = [];
+		
+		foreach ($array as $linha) {
+		    $usuario = new Usuario();
+		    $usuario->id            = $linha['id'];
+		    $usuario->nome          = $linha['nome'];
+		    $usuario->email         = $linha['email'];
+		    $usuario->ativo         = $linha['ativo'];
+		    $usuario->cpf           = $linha['cpf'];
+		    $usuario->data_cadastro = $linha['data_cadastro'];
+		    $usuario->foto          = $linha['foto'];
+		    
+		    $perfil = new Perfil();
+		    $usuario->perfil        = $perfil->listarPorId($linha['id_perfil']);
+		    
+		    $usuarios[] = $usuario;
+		}
+		
+		return $usuarios;
 	}
 	
 	public function listarPorId($id){
@@ -107,16 +72,16 @@ class Usuario
 	}
 	
 	public function listarPorLoginESenha($login, $senha){
-		$sql = " SELECT *
-				 FROM usuario
-				 WHERE email = '$login'
-				 AND   senha = '" . md5($senha) . "'";
+		$sql = "SELECT *
+				FROM usuario
+				WHERE email = '$login'
+				AND   senha = '" . md5($senha) . "'";
 		$query = executarSql($sql);
 		return $query->fetch_array(MYSQLI_ASSOC);
 	}
 	
 	public function listarPorLogin($login){
-		$sql = " SELECT *
+		$sql = "SELECT *
 				FROM usuario
 				WHERE email = '$login'";
 		$query = executarSql($sql);

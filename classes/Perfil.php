@@ -19,13 +19,33 @@ class Perfil
 	public function listar(){
 		$sql = "SELECT * FROM perfil WHERE 1=1";
 		$query = executarSql($sql);
-		return $query->fetch_all(MYSQLI_ASSOC);
+		$array = $query->fetch_all(MYSQLI_ASSOC);
+		
+		$perfis = [];
+		
+		foreach ($array as $linha) {
+		    $perfil = new Perfil();
+		    $perfil->id         = $linha['id'];
+		    $perfil->descricao  = $linha['descricao'];
+		    
+		    $perfis[] = $perfil;
+		}
+		return $perfis;
 	}
 	
 	public function listarPorId($id){
 		$sql = "SELECT * FROM perfil WHERE id = $id ";
 		$query = executarSql($sql);
-		return $query->fetch_array(MYSQLI_ASSOC);
+		
+		$array = $query->fetch_all(MYSQLI_ASSOC);
+		
+		foreach ($array as $linha) {
+		    $perfil = new Perfil();
+		    $perfil->id         = $linha['id'];
+		    $perfil->descricao  = $linha['descricao'];
+		}
+		
+		return $perfil;
 	}
 	
 	public function deletar($id){
