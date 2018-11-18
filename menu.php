@@ -1,4 +1,7 @@
-<?php $usuario = $_SESSION['usuario']; ?>
+<?php 
+$usuario = $_SESSION['usuario']; 
+require_once 'config.php';
+?>
 
 <body class="top-navigation">
     <div id="wrapper">
@@ -8,12 +11,12 @@
                 <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                     <i class="fa fa-reorder"></i>
                 </button>
-                <a href="/" class="navbar-brand">B2i - Banco Interno de Instrutores</a>
+                <a href="/" class="navbar-brand"><?php echo SIGLA_SISTEMA." - ".NOME_SISTEMA?></a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a aria-expanded="false" role="button" href="/"> Bem-vindo, <?php echo $usuario['nome'] ?> </a>
+                        <a aria-expanded="false" role="button" href="/"> Bem-vindo(a), <?php echo $usuario['nome'] ?> </a>
                     </li>
                     
                     <?php 
@@ -41,7 +44,6 @@
                     <?php 
                     	}
                     ?>
-                    
                     
                     <li class="dropdown">
                     	<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Ajuda <span class="caret"></span></a>

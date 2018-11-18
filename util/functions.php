@@ -62,6 +62,11 @@
 		return date_format($date, 'd/m/y');
 	}
 
+	function formatarDataHora($date){
+	    $date = date_create($date);
+	    return date_format($date, 'd/m/Y H:i:s');
+	}
+	
 	function formataDataMysql($date){
 		$date = date_create($date);
 		return date_format($date, 'Y-m-d');

@@ -3,15 +3,16 @@
 	###################################################################
 	## PARAMENTROS INTERNOS DO SISTEMA
 	###################################################################
-	define('NOME_SISTEMA', 'Banco Interno de Instrutores'); 
-	define('SIGLA_SISTEMA', 'b2i'); 
+	define('NOME_SISTEMA', 'Sistema de Checklist para UTIs'); 
+	define('SIGLA_SISTEMA', 'c.UTI');
+	define('AMBIENTE','PROD');
 
 	###################################################################
 	## PARAMENTROS DO BANCO DE DADOS
 	###################################################################
 
 	$ip = getenv("REMOTE_ADDR");
-	if($ip == '127.0.0.1') {
+	if($ip == '127.0.0.1' && AMBIENTE == "DEV") {
 	    define('HOST', 'localhost');
 	    define('DBNAME', 'exemplo');
 	    define('CHARSET', 'utf8');

@@ -12,11 +12,8 @@
 		include 'classes/'.$class .'.php';
 	});
 
-
 	include_once 'config.php';
 	include_once 'util/functions.php';
-	
-	
 	
  	if (!isset($_SESSION["usuario"])) {
  	   	redirecionar("/login.php");
