@@ -41,3 +41,12 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # L, QSA é algo como: Ei, este é o query string que eu quero, páre de executar!
 
 RewriteRule ^(.*)$ index.php?r=$1 [L,QSA]
+
+
+# enable the directives - assuming they're not enabled globally
+ExpiresActive on
+
+# 1 Month for most static assets
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico|woff)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>

@@ -107,6 +107,8 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 									onclick="history.go(-1);">Voltar</button>
 								<?php if (!$view) {?>
 								<button class="btn btn-primary" type="submit" >Salvar</button>
+								<?php }else{?>
+								<button onclick="location.href='/usuario/novo/<?php echo $id?>'" class="btn btn-warning" type="button" >Editar</button>
 								<?php }?>
 							</div>
 						</div>

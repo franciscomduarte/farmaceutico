@@ -48,7 +48,7 @@
         										<td><?php echo $usuario->perfil->descricao?></td>
         										<td><?php echo $usuario->ativo ? "Ativo" : "Inativo"?></td>
         										<td align="center">
-        										    <button onclick="Visualizar(<?php echo $usuario->id?>)">
+        										    <button onclick="visualizar(<?php echo $usuario->id?>)">
         												<span class="glyphicon glyphicon-eye-open" title="Visualizar"></span>
         											</button>
         											<button onclick="editar(<?php echo $usuario->id?>)">
