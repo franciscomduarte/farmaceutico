@@ -1,6 +1,6 @@
 <?php
 
-class Internacao
+class Internacao extends Base
 {
 	
 	protected $id;
@@ -18,11 +18,11 @@ class Internacao
 	
 	public function editar($obj){
 		$sql = "UPDATE internacao 
-                SET numero_internacao = '$obj->numero_internacao',
-                    data_interncao = '$obj->data_internacao',
-                    id_setor = $obj->id_setor,
-                    id_paciente = $obj->id_paciente,
-                    id_convenio = $obj->id_convenio
+                SET numero_internacao = '$obj->numero_internacao', 
+                data_internacao = '$obj->data_internacao',
+                id_setor = $obj->id_setor,
+                id_paciente = $obj->id_paciente,
+                id_convenio = $obj->id_convenio
                 WHERE id = $obj->id ";
 		return executarSql($sql);
 	}
@@ -42,18 +42,6 @@ class Internacao
 	public function deletar($id){
 		$sql = "DELETE FROM internacao WHERE id = " . $id;
 		return executarSql($sql);
-	}
-	
-	public function retornaIdInserido() {
-		return retornaId();
-	}
-	
-	// Criação dos métodos __Get e __Set
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
 	}
 	
 }

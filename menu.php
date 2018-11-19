@@ -1,6 +1,6 @@
 <?php 
-$usuario = $_SESSION['usuario']; 
 require_once 'config.php';
+$usuario = $_SESSION['usuario']; 
 ?>
 
 <body class="top-navigation">

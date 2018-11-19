@@ -22,7 +22,7 @@ class Convenio
 		return $query->fetch_all(MYSQLI_ASSOC);
 	}
 	
-	public function listarPorId($id){
+	public static function listarPorId($id){
 		$sql = "SELECT * FROM convenio WHERE 1=1 AND id = $id ";
 		$query = executarSql($sql);
 		return $query->fetch_array(MYSQLI_ASSOC);

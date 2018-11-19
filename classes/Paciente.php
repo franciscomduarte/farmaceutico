@@ -45,6 +45,12 @@ class Paciente
 		return $query->fetch_array(MYSQLI_ASSOC);
 	}
 	
+	public function listarPorCpf($obj){
+	    $sql = "SELECT * FROM paciente WHERE 1=1 AND cpf = '$obj->cpf' ";
+	    $query = executarSql($sql);
+	    return $query->fetch_array(MYSQLI_ASSOC);
+	}
+	
 	public function deletar($id){
 		$sql = "DELETE FROM paciente WHERE id = " . $id;
 		return executarSql($sql);
