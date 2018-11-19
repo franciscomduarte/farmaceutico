@@ -96,7 +96,7 @@ if(isset($_REQUEST['cpf'])) {
            	<?php } else { ?>
                	<div class="row">
                		<div class="col-sm-8 b-r">
-               			<div class="alert alert-success" id="mensagemSucesso">Caso deseje cadastrar um novo paciente, clique aqui</div>
+               			<div class="alert alert-success" id="mensagemSucesso">Caso deseje cadastrar um novo paciente, <a href="/paciente/novo">clique aqui</a></div>
                		</div>
                	</div>
            	<?php } ?>
