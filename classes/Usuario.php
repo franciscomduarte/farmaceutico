@@ -73,7 +73,21 @@ class Usuario extends Base
 	public function listarPorId($id){
 		$sql = "SELECT * FROM usuario WHERE 1=1 AND id = $id ";
 		$query = executarSql($sql);
-		return $query->fetch_array(MYSQLI_ASSOC);
+		$array = $query->fetch_all(MYSQLI_ASSOC);
+		$usuario = new Usuario();
+		
+		foreach ($array as $linha) {
+		    $usuario->id            = $linha['id'];
+		    $usuario->nome          = $linha['nome'];
+		    $usuario->email         = $linha['email'];
+		    $usuario->ativo         = $linha['ativo'];
+		    $usuario->cpf           = $linha['cpf'];
+		    $usuario->data_cadastro = $linha['data_cadastro'];
+		    $usuario->perfil        = $usuario->perfil->listarPorId($linha['id_perfil']);
+		    
+		}
+		
+		return $usuario;
 	}
 	
 	public function listarPorLoginESenha($login, $senha){

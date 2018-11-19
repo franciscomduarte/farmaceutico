@@ -1,6 +1,6 @@
 <?php 
 
-	define("NOME_MODULO", "Usuário"); 
+	define("NOME_MODULO", "Checklist"); 
 	define("NOME_ACAO", "Listar"); 
 	include_once 'breadcrumb.php';
 
@@ -13,19 +13,17 @@
 	                        <h5>Lista de Usuários</h5>
 	                    </div>
 	                   <div class="ibox-title-right col-lg-4">
-	                        <button type="button" class="btn btn-info" onclick="location.href='/usuario/novo/'">Novo</button>
+	                        <button type="button" class="btn btn-info" onclick="location.href='/checklist/novo/'">Novo</button>
 	                    </div>
 	                    <div class="ibox-content">
 	                        <div class="table-responsive">
 	                    		<table class="table table-striped table-bordered table-hover dataTables-example" >
 	                    			<thead>
 					                    <tr>
-					                        <th>Foto</th>
+					                        <th>ID</th>
 											<th>Nome</th>
-					                        <th>CPF</th>
-					                        <th>E-mail</th>
-					                        <th>Data Cadastro</th>
-					                        <th>Perfil</th>
+											<th>Data Cadastro</th>
+					                        <th>Usuário Responsável</th>
 					                        <th>Status</th>
 					                        <th><center>Ações</center></th>
 					                    </tr>
@@ -33,19 +31,15 @@
 	                   			 	<tbody>
     									<?php 
     										
-    										$usuario = new Usuario();
-    										#$array = $usuario->listar();
+    										$checklist = new Checklist();
     										
-    										foreach ($usuario->listar() as $obj) {
-    										    
+    										foreach ($checklist->listar() as $obj) {    										    
     							        ?>
         									<tr>
-        										<td width='25px'><img title="<?php echo $obj->id ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>
+        										<td width='25px'><?php echo $obj->id ?></td>
         										<td><?php echo $obj->nome?></td>
-        										<td><?php echo $obj->cpf?></td>
-        										<td><?php echo $obj->email?></td>
         										<td><?php echo formatarDataHora($obj->data_cadastro)?></td>
-        										<td><?php echo $obj->perfil->descricao?></td>
+        										<td><?php echo $obj->usuario->nome?></td>
         										<td><?php echo $obj->ativo ? "Ativo" : "Inativo"?></td>
         										<td align="center">
         										    <button onclick="visualizar(<?php echo $obj->id?>)">
@@ -54,6 +48,9 @@
         											<button onclick="editar(<?php echo $obj->id?>)">
         												<span class="glyphicon glyphicon-edit" title="Editar"></span>
         											</button>
+         											<button onclick="addItens(<?php echo $obj->id?>)">
+        												<span class="glyphicon glyphicon-list" title="Adcionar Itens"></span>
+        											</button>       											
         											<button onclick="excluir(<?php echo $obj->id?>)">
         												<span class="glyphicon glyphicon-trash remove" title="Excluir"></span>
         											</button>
@@ -67,12 +64,10 @@
 	                    			</tbody>
 	                    			<tfoot>
 					                    <tr>
-											<th>Foto</th>
+					                        <th>ID</th>
 											<th>Nome</th>
-					                        <th>CPF</th>
-					                        <th>E-mail</th>
-					                        <th>Data Cadastro</th>
-					                        <th>Perfil</th>
+											<th>Data Cadastro</th>
+					                        <th>Usuário Responsável</th>
 					                        <th>Status</th>
 					                        <th><center>Ações</center></th>
 					                    </tr>
@@ -87,17 +82,22 @@
         
 		<script>
     		function visualizar(id){
-    			var pag = "/usuario/novo/"+id+"?view";
+    			var pag = "/checklist/novo/"+id+"?view";
     			location.href = pag;
     		}
-			
+    		
+    		function addItens(id){
+    			var pag = "/checklist/novo/"+id+"?add";
+    			location.href = pag;
+    		}			
+
 			function editar(id){
-				var pag = "/usuario/novo/"+id;
+				var pag = "/checklist/novo/"+id;
 				location.href = pag;
 			}
 		
 			function excluir(id){
-				var pag = "/usuario/excluir/"+id;
+				var pag = "/checklist/excluir/"+id;
 				if (confirm("Tem certeza que deseja excluir este usuário?")){
 					location.href = pag;
 				}

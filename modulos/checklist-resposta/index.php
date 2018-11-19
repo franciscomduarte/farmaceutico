@@ -36,25 +36,25 @@
     										$usuario = new Usuario();
     										#$array = $usuario->listar();
     										
-    										foreach ($usuario->listar() as $obj) {
+    										foreach ($usuario->listar() as $usuario) {
     										    
     							        ?>
         									<tr>
-        										<td width='25px'><img title="<?php echo $obj->id ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>
-        										<td><?php echo $obj->nome?></td>
-        										<td><?php echo $obj->cpf?></td>
-        										<td><?php echo $obj->email?></td>
-        										<td><?php echo formatarDataHora($obj->data_cadastro)?></td>
-        										<td><?php echo $obj->perfil->descricao?></td>
-        										<td><?php echo $obj->ativo ? "Ativo" : "Inativo"?></td>
+        										<td width='25px'><img title="<?php echo $usuario->id ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>
+        										<td><?php echo $usuario->nome?></td>
+        										<td><?php echo $usuario->cpf?></td>
+        										<td><?php echo $usuario->email?></td>
+        										<td><?php echo formatarDataHora($usuario->data_cadastro)?></td>
+        										<td><?php echo $usuario->perfil->descricao?></td>
+        										<td><?php echo $usuario->ativo ? "Ativo" : "Inativo"?></td>
         										<td align="center">
-        										    <button onclick="visualizar(<?php echo $obj->id?>)">
+        										    <button onclick="visualizar(<?php echo $usuario->id?>)">
         												<span class="glyphicon glyphicon-eye-open" title="Visualizar"></span>
         											</button>
-        											<button onclick="editar(<?php echo $obj->id?>)">
+        											<button onclick="editar(<?php echo $usuario->id?>)">
         												<span class="glyphicon glyphicon-edit" title="Editar"></span>
         											</button>
-        											<button onclick="excluir(<?php echo $obj->id?>)">
+        											<button onclick="excluir(<?php echo $usuario->id?>)">
         												<span class="glyphicon glyphicon-trash remove" title="Excluir"></span>
         											</button>
         											
