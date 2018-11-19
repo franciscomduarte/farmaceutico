@@ -1,8 +1,7 @@
 <?php
-#require_once '../classes/Perfil.php';
 
-class Usuario {
-	
+class Usuario extends Base
+{	
     protected $id;
 	protected $nome;
 	protected $email;
@@ -10,15 +9,19 @@ class Usuario {
 	protected $ativo;
 	protected $data_cadastro;
 	protected $cpf;
-	protected $foto;
 	protected $perfil;
+	
+	public function __construct(){
+	    $this->perfil = new Perfil();
+	}
 	
 	public function inserir($obj){
 		$sql = "INSERT INTO usuario (id,nome,email,senha,
-                                     ativo,id_perfil,cpf,foto) 
+                                     ativo,id_perfil,cpf) 
 				             VALUES (null,'$obj->nome','$obj->email','$obj->senha',
-									 1,'$obj->id_perfil','$obj->cpf','')";
-        return executarSql($sql);
+                                     1,".$obj->perfil->id.",'$obj->cpf')";
+		
+		return executarSql($sql);
 	}
 	
 	public function editar($obj){
@@ -27,19 +30,21 @@ class Usuario {
 					email 		= '$obj->email',
 					senha 		= '$obj->senha',
 					ativo 		= '$obj->ativo',
-					id_perfil	= '$obj->id_perfil',
+					id_perfil	= '".$obj->perfil->id."',
 					cpf 		= '$obj->cpf'
                 WHERE id 		= $obj->id ";
+		
 		return executarSql($sql);
 	}
 	
 	public function desativar($id){
 		$sql = "UPDATE usuario set ativo = 0 WHERE id = $id ";
+		
 		return executarSql($sql);
 	}
 	
 	public function listar(){
-		$sql = "SELECT * FROM usuario WHERE 1=1";
+		$sql = "SELECT * FROM usuario WHERE 1=1 order by nome";
 		$query = executarSql($sql);
 		
 		$array = $query->fetch_all(MYSQLI_ASSOC);
@@ -54,10 +59,7 @@ class Usuario {
 		    $usuario->ativo         = $linha['ativo'];
 		    $usuario->cpf           = $linha['cpf'];
 		    $usuario->data_cadastro = $linha['data_cadastro'];
-		    $usuario->foto          = $linha['foto'];
-		    
-		    $perfil = new Perfil();
-		    $usuario->perfil        = $perfil->listarPorId($linha['id_perfil']);
+		    $usuario->perfil        = $usuario->perfil->listarPorId($linha['id_perfil']);
 		    
 		    $usuarios[] = $usuario;
 		}
@@ -91,17 +93,6 @@ class Usuario {
 	public function deletar($id){
 		$sql = "DELETE FROM usuario WHERE id = " . $id;
 		return executarSql($sql);
-	}
-	
-	public function retornaIdInserido() {
-		return retornaId();
-	}
-	
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
 	}
 	
 }

@@ -79,5 +79,10 @@
 			echo $objeto['progresso'] == 0 ? 'active' : '';
 		}
 	}
+	
+	function disableInput($disabled) {
+	    if ($disabled)
+	        echo "disabled='disabled'";
+	}
 
 ?>

@@ -40,14 +40,17 @@
     										    
     							        ?>
         									<tr>
-        										<td width='25px'><img title="<?php echo $usuario->id ?>" class="img-circle m-t-xs img-responsive" src="<?php echo $usuario->foto != null ? $usuario->foto : '/img/user.jpg' ?>"></td>
+        										<td width='25px'><img title="<?php echo $usuario->id ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>
         										<td><?php echo $usuario->nome?></td>
         										<td><?php echo $usuario->cpf?></td>
         										<td><?php echo $usuario->email?></td>
         										<td><?php echo formatarDataHora($usuario->data_cadastro)?></td>
         										<td><?php echo $usuario->perfil->descricao?></td>
         										<td><?php echo $usuario->ativo ? "Ativo" : "Inativo"?></td>
-        										<td>
+        										<td align="center">
+        										    <button onclick="Visualizar(<?php echo $usuario->id?>)">
+        												<span class="glyphicon glyphicon-eye-open" title="Visualizar"></span>
+        											</button>
         											<button onclick="editar(<?php echo $usuario->id?>)">
         												<span class="glyphicon glyphicon-edit" title="Editar"></span>
         											</button>
@@ -83,7 +86,11 @@
         </div>
         
 		<script>
-
+    		function visualizar(id){
+    			var pag = "/usuario/novo/"+id+"?view";
+    			location.href = pag;
+    		}
+			
 			function editar(id){
 				var pag = "/usuario/novo/"+id;
 				location.href = pag;

@@ -5,6 +5,7 @@ class Roteador
 	protected $uri = array ();
 	protected $controlador;
 	protected $acao;
+	
 	public function __construct() 
 	{
 		$this->parametros ();

@@ -1,6 +1,6 @@
 <?php
 
-class Teste
+class Teste extends Base
 {
 	
 	protected $id;
@@ -31,18 +31,6 @@ class Teste
 	public function deletar($id){
 		$sql = "DELETE FROM teste WHERE id = " . $id;
 		return executarSql($sql);
-	}
-	
-	public function retornaIdInserido() {
-		return retornaId();
-	}
-	
-	// Criação dos métodos __Get e __Set
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
 	}
 	
 }

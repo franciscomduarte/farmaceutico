@@ -1,6 +1,6 @@
 <?php
 
-class PermissaoPerfil
+class PermissaoPerfil extends Base
 {
 
 	protected $id_permissao;
@@ -37,7 +37,7 @@ class PermissaoPerfil
 	
 	public function deleteAll($id){
 		$sql = "DELETE from permissao_perfil where id_perfil = $id";
-		$query = executarSql($sql);
+		executarSql($sql);
 	}
 
 	public function listarPorIdCurriculo($id){
@@ -48,13 +48,12 @@ class PermissaoPerfil
 		return $query->fetch_all(MYSQLI_ASSOC);
 	}
 	
-	// Criação dos métodos __Get e __Set
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
-	}
+    public function editar($obj)
+    {}
+
+    public function listarPorId($id)
+    {}
+
 	
 	
 }

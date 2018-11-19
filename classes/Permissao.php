@@ -1,6 +1,6 @@
 <?php
 
-class Permissao
+class Permissao extends Base
 {
 	
 	protected $id;
@@ -72,18 +72,6 @@ class Permissao
 	public function deletar($id){
 		$sql = "DELETE FROM permissao WHERE id = " . $id;
 		return executarSql($sql);
-	}
-	
-	public function retornaIdInserido() {
-		return retornaId();
-	}
-	
-	// Criação dos métodos __Get e __Set
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
 	}
 	
 }

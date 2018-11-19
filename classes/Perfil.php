@@ -1,10 +1,11 @@
 <?php
 
-class Perfil
+class Perfil extends Base
 {
 	
 	protected $id;
 	protected $descricao;
+	
 	
 	public function inserir($obj){
 		$sql = "INSERT INTO perfil (id, descricao) VALUES (null, '$obj->descricao')";
@@ -52,18 +53,5 @@ class Perfil
 		$sql = "DELETE FROM perfil WHERE id = " . $id;
 		return executarSql($sql);
 	}
-	
-	public function retornaIdInserido() {
-		return retornaId();
-	}
-	
-	// Criação dos métodos __Get e __Set
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
-	}
-	
 	
 }
