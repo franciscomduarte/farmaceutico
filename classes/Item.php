@@ -13,12 +13,22 @@ class Item extends Base
 	}
 	
 	public function inserir($obj){
-	    
-		$sql = "INSERT INTO item (id,enunciado,tipo) 
-				               VALUES (null,'$obj->enunciado','$obj->tipo')";
-        var_dump($sql);
-        exit();
-        return  executarSql($sql);
+	    try {
+    		$sql = "INSERT INTO item (id,enunciado,tipo) 
+    				               VALUES (null,'$obj->enunciado','$obj->tipo')";
+    		
+    		retornaConexao()->begin_transaction();
+    		retornaConexao()->query($sql);
+    		$sql_checklist = "INSERT INTO checklist_item (id_item,id_checklist)
+                              VALUES (".retornaId().",".$obj->checklist->id.");";    
+        	retornaConexao()->query($sql_checklist);
+        	retornaConexao()->commit();
+	    }catch (Exception $e){
+	        retornaConexao()->rollback();
+        	echo $e->getMessage();
+        	exit();
+        }
+        
 	}
 	
 	public function editar($obj){

@@ -74,7 +74,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 									onclick="history.go(-1);">Voltar</button>
 								<?php if (!$view) {?>
 								<button class="btn btn-primary" type="submit">Salvar</button>
-								<button onclick="location.href='/checklist/novo/<?php echo $id?>?add'" class="btn btn-primary" type="button">Adicionar itens</button>
+								<button onclick="location.href='/checklist/add-item/<?php echo $id?>?add'" class="btn btn-primary" type="button">Adicionar itens</button>
 								<?php }else{?>
 								<button onclick="location.href='/checklist/novo/<?php echo $id?>'" class="btn btn-warning" type="button" >Editar</button>
 								<?php }?>
@@ -86,10 +86,5 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 				</form>
 			</div>
 		</div>
-		<?php 
-		if ($add){
-		   include_once 'add-item.php';
-		}
-		?>
 	</div>
 </div>

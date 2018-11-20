@@ -32,12 +32,8 @@
 	                    			</thead>
 	                   			 	<tbody>
     									<?php 
-    										
     										$usuario = new Usuario();
-    										#$array = $usuario->listar();
-    										
     										foreach ($usuario->listar() as $obj) {
-    										    
     							        ?>
         									<tr>
         										<td width='25px'><img title="<?php echo $obj->id ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>

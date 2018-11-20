@@ -87,7 +87,7 @@
     		}
     		
     		function addItens(id){
-    			var pag = "/checklist/novo/"+id+"?add";
+    			var pag = "/checklist/add-item/"+id+"?add";
     			location.href = pag;
     		}			
 

@@ -22,7 +22,7 @@ abstract class Base
     }
     
     public function __set($propriedade,$valor){
-        $this->$propriedade = addslashes($valor);
+        $this->$propriedade = $valor;
     }
 }
 

@@ -45,6 +45,15 @@
 		return $result;
 	}
 	
+	function retornaConexao() {
+	    
+	    $mysqli = Conexao::getInstance();
+	    return $mysqli;
+
+	}
+	
+	
+	
 	function retornaId(){
 		$mysqli = Conexao::getInstance();
 		return $mysqli->insert_id;
