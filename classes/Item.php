@@ -101,6 +101,24 @@ class Item extends Base
 		
 	}
 	
+	public function listarPorIdCkelist($id){
+	    $sql = "SELECT c.* FROM checklist as a, checklist_item as b, item as c WHERE 1=1 AND a.id = b.id_checklist AND c.id = b.id_item AND b.id_checklist = $id ";
+	    $query = executarSql($sql);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    
+	    $itens = array();
+	    
+	    foreach ($array as $linha) {
+	        $item = new Item();
+	        $item->id            = $linha['id'];
+	        $item->enunciado          = $linha['enunciado'];
+	        $item->tipo          = $linha['tipo'];
+	        $item->checklist          = $linha['checklist'];
+	        $itens[] = $item;
+	    }
+	    return $itens;
+	}
+	
 	public function listarPorNome($nome){
 		$sql = "SELECT *
 				FROM checklist
