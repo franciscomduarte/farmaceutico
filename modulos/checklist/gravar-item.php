@@ -1,26 +1,23 @@
 <?php 
     
 	#dados do formulario
-	$checklist = new Checklist();
-	$checklist = $checklist->listarPorId($_REQUEST['id_checklist']);
-
-	$_SESSION['checklist'] = $checklist;
-	
-	
+	$checklist = unserialize($_SESSION['checklist']);
 	
 	if ($checklist) {
-    	$item  = new Item();
+     	$item  = new Item();
     	
     	$item->id        = $_REQUEST['id_item'];
     	$item->enunciado = $_REQUEST['enunciado'];
     	$item->tipo		 = $_REQUEST['tipo'];
     	$item->checklist = $checklist;
-
+        
     	if($item->id){
     	    $item->editar($item);
     	} else {
     	    $item->inserir($item);
+    	    $_SESSION['item'] = serialize($item);
     	}
-    	redirecionar("/checklist/novo/".$checklist->id."?add");
+    	redirecionar("/checklist/add-item/".$checklist->id."?add");
 	}
+	
 ?>

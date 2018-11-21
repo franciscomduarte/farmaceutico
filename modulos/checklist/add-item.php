@@ -5,22 +5,22 @@ $id = $params[2];#id do checkout
 if ($id) {
     $checklist = new Checklist();
     $obj = $checklist->listarPorId($id);
-    $_SESSION['checklist_session'] = $obj;
+    $_SESSION['checklist'] = serialize($obj);
 }else{
    echo "<script>alert('É necessário escolher um Checklist');history.go(-1);</script>";
 }
-$item   = new Item();
 
-if (isset($_REQUEST['id_item'])){
-    $item = $item->listarPorId($_REQUEST['id_item']);
+if (isset($_SESSION['item'])){
+    $item = unserialize($_SESSION['item']);
 }else{  
+    $item = new Item();
     $item->checklist = $obj; 
 }
 
 ?>
 		<div class="ibox-title">
 			<h5>
-				Cadastro de Itens | <strong><?php echo strtoupper($item->checklist->nome." #".$item->checklist->id) ?></strong>
+				Cadastro de Itens | <strong style="color: #1ab394;"><?php echo strtoupper($item->checklist->nome." #".$item->checklist->id) ?></strong>
 			</h5>
 		</div>
 		<div class="ibox-content">
@@ -46,8 +46,7 @@ if (isset($_REQUEST['id_item'])){
 							<div class="form-group">
 								<label>Tipo de Questão</label>
 								
-								<select name="tipo"
-								class="select2_demo_2 form-control select2-hidden-accessible">
+								<select name="tipo" class="select2_demo_2 form-control select2-hidden-accessible">
 								<option value="">-- Selecione --</option>
 								<?php
 								    foreach (EnumTipoItem::TIPOS_QUESTOES as $key => $tipo) { ?>
@@ -56,49 +55,21 @@ if (isset($_REQUEST['id_item'])){
 	                    		</select>
 							</div>
 						</div>
-
-						<div class="form-group col-xs-6">
-							<div>
-								<button class="btn btn-white" type="button"
-									onclick="history.go(-1);">Voltar</button>
-								<?php #if (!$view) {?>
-								<button class="btn btn-primary" type="submit">Adicionar</button>
-								<?php #}?>
-							</div>
+					    <div class="form-group col-xs-6">
+    					    <div class="form-group">
+    							<button class="btn btn-xs btn-primary" type="submit" <?php disableInput(isset($_SESSION['item']))?>>Adicionar</button>
+							</div>	
 						</div>
-						
-						</form>
+					  </div>	
+				</form>
+			</div>
 						
 <?php 
-    $alternativa = new Alternativa();
-    $alternativa->item->__set($item, $item);
-
+    #$alternativa = new Alternativa();
+    #$alternativa->item->__set($item, $item);
+    
+    
 ?>				
 				
-				
-				
-					<div class="form-group col-xs-6 m-sm">
 
-						<div class="form-group col-xs-6">
-							<div class="form-group">
-								<label>Alternativa</label> <input type="text"
-									value="<?php echo $alternativa->descricao ? $alternativa->descricao : null ?>"
-									placeholder="Insira o enunciado" class="form-control" name="alternativa"
-									required="required">
-							</div>
-						</div>
-
-						<div class="form-group col-xs-6">
-							<div>
-								<?php #if (!$view) {?>
-								<button class="btn btn-primary" type="submit">Adicionar</button>
-								<?php #}?>
-							</div>
-						</div>
-						
-					</div>
-				</div>
-
-				
-			</div>
 		</div>

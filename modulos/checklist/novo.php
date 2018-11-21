@@ -2,6 +2,9 @@
 $params = retornaParametrosUrl($_GET['r']);
 $id = $params[2];
 
+$_SESSION['item']      = NULL;
+$_SESSION['checklist'] = NULL;
+
 if ($id) {
 	$checklist = new Checklist();
 	$obj = $checklist->listarPorId($id);
