@@ -1,6 +1,6 @@
 <?php
 
-class Paciente
+class Paciente extends Base
 {
 	
 	protected $id;
@@ -8,6 +8,12 @@ class Paciente
 	protected $cpf;
 	protected $nascimento;
 	protected $id_convenio;
+	
+	protected $convenio;
+	
+	public function __construct(){
+	    $this->convenio = new Convenio();
+	}
 	
 	public function inserir($obj) {
 		$sql = "INSERT INTO paciente (id, nome, cpf, nascimento, id_convenio) 
@@ -40,10 +46,22 @@ class Paciente
 	}
 	
 	public function listarPorId($id){
-		$sql = "SELECT * FROM paciente WHERE 1=1 AND id = $id ";
-		$query = executarSql($sql);
-		return $query->fetch_array(MYSQLI_ASSOC);
+	    $sql = "SELECT * FROM paciente WHERE 1=1 AND id = $id ";
+	    $query = executarSql($sql);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    $paciente = new Paciente();
+	    $convenio = new Convenio();
+	    
+	    foreach ($array as $linha) {
+	        $paciente->id            = $linha['id'];
+	        $paciente->nome          = $linha['nome'];
+	        $paciente->cpf           = $linha['cpf'];
+	        $paciente->nascimento    = $linha['nascimento'];
+	        $paciente->convenio = $convenio->listarPorId($linha['id_convenio']);
+	    }
+	    return $paciente;
 	}
+	
 	
 	public function listarPorCpf($obj){
 	    $sql = "SELECT * FROM paciente WHERE 1=1 AND cpf = '$obj->cpf' ";
@@ -54,18 +72,6 @@ class Paciente
 	public function deletar($id){
 		$sql = "DELETE FROM paciente WHERE id = " . $id;
 		return executarSql($sql);
-	}
-	
-	public function retornaIdInserido() {
-		return retornaId();
-	}
-	
-	// Criação dos métodos __Get e __Set
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
 	}
 	
 }

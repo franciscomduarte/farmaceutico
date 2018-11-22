@@ -5,7 +5,12 @@
 	include_once 'breadcrumb.php';
 	
 	$checklist = new Checklist();
-	$listaQuestionarios = $checklist->listar();
+	$listaCkeckList = $checklist->listar();
+	
+	$internacao = new Internacao();
+	if(isset($_REQUEST['cpf'])) {
+	    $objInternacao =  $internacao->listarInternacaoPorCpf($_REQUEST['cpf']);
+	}
 
 ?>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -17,57 +22,57 @@
                             <h5>Questionários Disponíveis</h5>
                         </div>
                         <div class="ibox-content">
+                        
+                        	<div class="row">
+                            	<div class="col-sm-8 b-r">
+                                	<form role="form" action="#" method="post">
+                                	<fieldset style="border: solid 1px;">
+                                		<label>Consulte o paciente</label>
+                                        <div>
+                                        	<div class="form-group col-sm-8"><input type="text" placeholder="Informe o cpf do paciente" class="form-control" name="cpf"></div>
+                                            <button class="btn btn-primary" type="submit">Pesquisar</button>
+                                        </div>
+                                    </fieldset>
+                                    </form>
+                               	</div>
+                           	</div>
+                           	
+                           	<?php if($objInternacao != null) { ?>
+                        	<div class="row">
+                            	<div class="col-sm-12 b-r">
+                                	<div class="row">
+                                    	<div class="col-sm-6"><label>Nome</label> <input type="text" value="<?php echo $objInternacao->paciente->nome ?>" disabled="disabled" class="form-control" name="nome"></div>
+                                        <div class="col-sm-6"><label>CPF</label> <input type="text" value="<?php echo $objInternacao->paciente->cpf ?>" disabled="disabled" class="form-control" name="cpf"></div>
+                                    </div>  
+                                    <div class="row">
+                                    	<div class="col-sm-6"><label>Nascimento</label> <input type="text" value="<?php echo formatarData($objInternacao->paciente->nascimento) ?>" disabled="disabled" class="form-control" name="nascimento"></div>
+                                        <div class="col-sm-6"><label>Convênio</label> <input type="text" value="<?php echo $objInternacao->convenio->nome ?>" disabled="disabled" class="form-control" name="convenio"></div>
+                                    </div> 
+                                    
+                                    
+                                    <div class="row">
+                                    	<div class="col-sm-6"><label>Número da Internação *</label> <input type="text" disabled="disabled" value="<?php echo $objInternacao->paciente->numero_internacao ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required"></div>
+                                    </div>
+                               	</div>
+                           	</div>
+                           	<div class="hr-line-dashed"></div>
+                           	<?php } ?>
 
-                            <p class="m-b-lg">
-                                Escolha o questionário que deseja responder
-                            </p>
-							
 							<?php 
-							     foreach ($listaQuestionarios as $questionario) {
+							foreach ($listaCkeckList as $checklist) {
 							         $item = new Item();
-							         $itensChecklist = $item->listarPorIdCkelist($questionario->id);
+							         $itensChecklist = $item->listarPorIdChecklist($checklist->id);
 						    ?>
                                 <div class="dd" id="nestable2">
                                     <ol class="dd-list">
                                         <li class="dd-item" data-id="1">
                                             <div class="dd-handle">
-                                            	<span class="pull-right"> <a href="#"><?php echo count($itensChecklist) . " questões" ?> </a></span>
-                                                <span class="label label-info"><i class="fa fa-users"></i></span> <?php echo $questionario->nome ?>
+                                            	<span class="pull-right"> <a href="/checklist-resposta/resposta/<?php echo $checklist->id?>/<?php echo $objInternacao->id ?>"><?php echo " Responder - ".count($itensChecklist) . " questões" ?> </a></span>
+                                                <span class="label label-info"><i class="fa fa-users"></i></span> <?php echo $checklist->nome ?>
                                             </div>
                                         </li>
                                     </ol>
                                 </div>
-                                
-                                <?php foreach ($itensChecklist as $i) { ?>
-                                	<div class="form-group">
-                                		<label class="control-label"><?php echo $i->enunciado ?><br/><small class="text-navy">Custom elements</small></label>
-                                	
-                                	<?php if ($i->tipo == 'ME')  { ?>
-                                    		<div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Option one </label></div>
-                                            <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Option two checked </label></div>
-                                            <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Option three checked and disabled </label></div>
-                                            <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Option four disabled </label></div>
-                                	<?php } ?>
-                                	
-                                	<?php if ($i->tipo == 'TX')  { ?>
-                                		<input type="text" value="" class="form-control">
-                                	<?php } ?>
-                                	
-                                	<?php if ($i->tipo == 'VF')  { ?>
-										<div class="i-checks"><label> <input type="radio" value="option1" name="a"> <i></i> SIM </label></div>
-                                        <div class="i-checks"><label> <input type="radio" value="option2" name="a"> <i></i> NÃO </label></div>
-                                	<?php } ?>
-                                	
-                                	<?php if ($i->tipo == 'MV')  { ?>
-                                		<select multiple="multiple" class="form-control">
-                                			<option>Opção 1</option>
-                                			<option>Opção 2</option>
-                                			<option>Opção 3</option>
-                                		</select>
-                                	<?php } ?>
-                                	
-                                	<div class="hr-line-dashed"></div>
-                                <?php } ?>
                                 
                             <?php } ?>
                             
@@ -79,24 +84,3 @@
             </div>
         </div>
      </div>
-  </div>
-        
-		<script>
-    		function visualizar(id){
-    			var pag = "/usuario/novo/"+id+"?view";
-    			location.href = pag;
-    		}
-			
-			function editar(id){
-				var pag = "/usuario/novo/"+id;
-				location.href = pag;
-			}
-		
-			function excluir(id){
-				var pag = "/usuario/excluir/"+id;
-				if (confirm("Tem certeza que deseja excluir este usuário?")){
-					location.href = pag;
-				}
-			}
-		</script>
-
