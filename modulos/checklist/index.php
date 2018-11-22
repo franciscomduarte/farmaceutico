@@ -3,6 +3,9 @@
 	define("NOME_MODULO", "Checklist"); 
 	define("NOME_ACAO", "Listar"); 
 	include_once 'breadcrumb.php';
+	
+	$_SESSION['item']      = NULL;
+	$_SESSION['checklist'] = NULL;
 
 ?>
         <div class="wrapper wrapper-content animated fadeInRight">
