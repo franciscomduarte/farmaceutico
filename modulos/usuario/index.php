@@ -27,13 +27,13 @@
 					                        <th>Data Cadastro</th>
 					                        <th>Perfil</th>
 					                        <th>Status</th>
-					                        <th><center>Ações</center></th>
+					                        <th align="center">Ações</th>
 					                    </tr>
 	                    			</thead>
 	                   			 	<tbody>
     									<?php 
-    										$usuario = new Usuario();
-    										foreach ($usuario->listar() as $obj) {
+    										$usuarioLista = new Usuario();
+    										foreach ($usuarioLista->listar() as $obj) {
     							        ?>
         									<tr>
         										<td width='25px'><img title="<?php echo $obj->id ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>
@@ -70,7 +70,7 @@
 					                        <th>Data Cadastro</th>
 					                        <th>Perfil</th>
 					                        <th>Status</th>
-					                        <th><center>Ações</center></th>
+					                        <th align="center">Ações</th>
 					                    </tr>
 	                    			</tfoot>
 	                    		</table>

@@ -7,7 +7,6 @@ class Paciente extends Base
 	protected $nome;
 	protected $cpf;
 	protected $nascimento;
-	protected $id_convenio;
 	
 	protected $convenio;
 	
@@ -17,7 +16,7 @@ class Paciente extends Base
 	
 	public function inserir($obj) {
 		$sql = "INSERT INTO paciente (id, nome, cpf, nascimento, id_convenio) 
-                VALUES (null, '$obj->nome', '$obj->cpf', '$obj->nascimento', $obj->id_convenio)";
+                VALUES (null, '$obj->nome', '$obj->cpf', '$obj->nascimento', ".$obj->convenio->id.")";
 		$result = executarSql($sql);
 		if($result->errno != null){
 		    if ($result->errno == 1062) {
@@ -34,15 +33,27 @@ class Paciente extends Base
                 SET nome = '$obj->nome',
                     cpf = '$obj->cpf',
                     nascimento = '$obj->nascimento',
-                    id_convenio = $obj->id_convenio
+                    id_convenio = ".$obj->convenio->id."
                 WHERE id = $obj->id ";
 		return executarSql($sql);
 	}
 	
 	public function listar(){
-		$sql = "SELECT * FROM paciente WHERE 1=1";
-		$query = executarSql($sql);
-		return $query->fetch_all(MYSQLI_ASSOC);
+	    $sql = "SELECT * FROM paciente WHERE 1=1 order by nome";
+	    $query = executarSql($sql);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    $pacientes = [];
+	    
+	    foreach ($array as $linha) {
+	        $paciente = new Paciente();
+	        $paciente->id            = $linha['id'];
+	        $paciente->nome          = $linha['nome'];
+	        $paciente->cpf           = $linha['cpf'];
+	        $paciente->nascimento    = $linha['nascimento'];
+	        $paciente->convenio      = $paciente->convenio->listarPorId($linha['id_convenio']);
+	        $pacientes[]             = $paciente;
+	    }
+	    return $pacientes;
 	}
 	
 	public function listarPorId($id){
@@ -66,7 +77,18 @@ class Paciente extends Base
 	public function listarPorCpf($obj){
 	    $sql = "SELECT * FROM paciente WHERE 1=1 AND cpf = '$obj->cpf' ";
 	    $query = executarSql($sql);
-	    return $query->fetch_array(MYSQLI_ASSOC);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    $paciente = new Paciente();
+	    $convenio = new Convenio();
+	    
+	    foreach ($array as $linha) {
+	        $paciente->id            = $linha['id'];
+	        $paciente->nome          = $linha['nome'];
+	        $paciente->cpf           = $linha['cpf'];
+	        $paciente->nascimento    = $linha['nascimento'];
+	        $paciente->convenio      = $convenio->listarPorId($linha['id_convenio']);
+	    }
+	    return $paciente;
 	}
 	
 	public function deletar($id){

@@ -4,7 +4,7 @@
 	define("NOME_ACAO", "Responder"); 
 	include_once 'breadcrumb.php';
 	
-	$params = retornaParametrosUrl($_GET['r']);
+	$params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
 	$id_checklist = $params[2];
 	$id_internacao = $params[3];
 	

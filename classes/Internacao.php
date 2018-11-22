@@ -6,46 +6,61 @@ class Internacao extends Base
 	protected $id;
 	protected $numero_internacao;
 	protected $data_internacao;
-	protected $id_setor;
-	protected $id_paciente;
-	protected $id_convenio;
-	
-	protected $convenio;
+	protected $setor;
 	protected $paciente;
+	protected $convenio;
 	
 	public function __construct(){
+	    $this->tabela   = "internacao";
+	    $this->setor    = new Setor();
 	    $this->convenio = new Convenio();
 	    $this->paciente = new Paciente();
 	}
 	
 	public function inserir($obj){
-		$sql = "INSERT INTO internacao (id, numero_internacao, data_internacao, id_setor, id_paciente, id_convenio) 
-                VALUES (null, '$obj->numero_internacao', '$obj->data_internacao', $obj->id_setor, $obj->id_paciente, $obj->id_convenio)";
+		$sql = "INSERT INTO ".$this->tabela." (id, numero_internacao, data_internacao, id_setor, id_paciente, id_convenio) 
+                VALUES (null, '$obj->numero_internacao', '$obj->data_internacao', ".$obj->setor->id.", 
+		                ".$obj->paciente->id.", ".$obj->convenio->id.")";
+		
 		return executarSql($sql);
 	}
 	
 	public function editar($obj){
-		$sql = "UPDATE internacao 
+		$sql = "UPDATE ".$this->tabela." 
                 SET numero_internacao = '$obj->numero_internacao', 
                 data_internacao = '$obj->data_internacao',
-                id_setor = $obj->id_setor,
-                id_paciente = $obj->id_paciente,
-                id_convenio = $obj->id_convenio
+                id_setor    = ".$obj->setor->id.",
+                id_paciente = ".$obj->paciente->id.",
+                id_convenio = ".$obj->convenio->id."
                 WHERE id = $obj->id ";
+		
 		return executarSql($sql);
 	}
 	
 	public function listar(){
-		$sql = "SELECT * FROM internacao WHERE 1=1";
-		$query = executarSql($sql);
-		return $query->fetch_all(MYSQLI_ASSOC);
+		self::listarObjetos();
+	    $internacoes = [];
+	    
+	    foreach ($this->array as $linha) {
+	        $internacao = new Internacao();
+	        $convenio   = new Convenio();
+	        $paciente   = new Paciente();
+	        
+	        $internacao->id = $linha['id'];
+	        $internacao->numero_internacao = $linha['numero_internacao'];
+	        $internacao->paciente = $paciente->listarPorId($linha['id_paciente']);
+	        $internacao->convenio = $convenio->listarPorId($linha['id_convenio']);
+	        $internacoes[] = $internacao;
+	    }
+	    return $internacoes;
 	}
 	
 	public function listarInternacaoPorCpf($cpf){
-		$sql = "SELECT a.numero_internacao, a.id as id, b.id as id_paciente, b.id_convenio as id_convenio 
-                FROM internacao a, paciente b 
-                WHERE 1=1 AND a.id_paciente = b.id AND b.cpf = '$cpf' 
-                ORDER BY data_internacao desc limit 1 ";
+		$sql = "SELECT i.numero_internacao, i.id as id, p.id as id_paciente, p.id_convenio as id_convenio, p.cpf
+                FROM internacao i, paciente p 
+                WHERE i.id_paciente = p.id 
+                AND   p.cpf = '$cpf' 
+                ORDER BY i.data_internacao desc limit 1 ";
 		$query = executarSql($sql);
 		$array = $query->fetch_all(MYSQLI_ASSOC);
 		
@@ -62,14 +77,19 @@ class Internacao extends Base
 	}
 	
 	public function listarPorId($id){
-	    $sql = "SELECT * FROM internacao WHERE 1=1 AND id = $id ";
-	    $query = executarSql($sql);
-	    return $query->fetch_array(MYSQLI_ASSOC);
-	}
-	
-	public function deletar($id){
-		$sql = "DELETE FROM internacao WHERE id = " . $id;
-		return executarSql($sql);
+	    self::listarObjetosPorId($id);
+	    
+	    $internacao = new Internacao();
+	    $convenio   = new Convenio();
+	    $paciente   = new Paciente();
+	    
+	    foreach ($this->array as $linha) {
+	        $internacao->id = $linha['id'];
+	        $internacao->numero_internacao = $linha['numero_internacao'];
+	        $internacao->paciente = $paciente->listarPorId($linha['id_paciente']);
+	        $internacao->convenio = $convenio->listarPorId($linha['id_convenio']);
+	    }
+	    return $internacao;
 	}
 	
 }

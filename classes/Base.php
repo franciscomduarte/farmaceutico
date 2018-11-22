@@ -3,6 +3,9 @@
 abstract class Base
 {
     
+    protected $tabela;
+    protected $array;
+    
     public abstract function inserir($obj);
     
     public abstract function editar($obj);
@@ -11,12 +14,6 @@ abstract class Base
     
     public abstract function listarPorId($id);
     
-    public abstract function deletar($id);
-    
-    public function retornaIdInserido() {
-        return retornaId();
-    }
-    
     public function __get($valor){
         return $this->$valor;
     }
@@ -24,5 +21,33 @@ abstract class Base
     public function __set($propriedade,$valor){
         $this->$propriedade = $valor;
     }
+    
+    public function retornaIdInserido() {
+        return retornaId();
+    }
+    
+    public function deletar($id){
+        $sql = "DELETE FROM ".$this->tabela." WHERE id = $id";
+        return executarSql($sql);
+    }
+
+    public function desativar($id){
+        $sql = "UPDATE ".$this->tabela." set ativo = 0 WHERE id = $id ";
+        
+        return executarSql($sql);
+    }
+    
+    protected function listarObjetos(){
+        $sql   = "SELECT * FROM ".$this->tabela." WHERE 1=1 order by 2";
+        $query = executarSql($sql);
+        $this->array = $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    protected function listarObjetosPorId($id){
+        $sql = "SELECT * FROM ".$this->tabela." WHERE 1=1 AND id = $id order by 2";
+        $query = executarSql($sql);
+        $this->array = $query->fetch_all(MYSQLI_ASSOC);
+    }
+   
 }
 

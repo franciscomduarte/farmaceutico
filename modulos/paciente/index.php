@@ -31,25 +31,22 @@
 	                    			</thead>
 	                   			 	<tbody>
 										<?php 
+											$paciente = new Paciente();
+										    $pacientes = $paciente->listar();
 											
-										    $paciente = new Paciente();
-										    $convenio = new Convenio();
-										    $array = $paciente->listar();
-											
-											foreach ($array as $linha) {
-											    $covenioPaciente = $convenio->listarPorId($linha['id_convenio']);
+											foreach ($pacientes as $paciente) {
 								        ?>
 										<tr>
-											<td><?php echo $linha['id']?></td>
-											<td><?php echo $linha['nome']?></td>
-											<td><?php echo $linha['cpf']?></td>
-											<td><?php echo formatarData($linha['nascimento'])?></td>
-											<td><?php echo $covenioPaciente['nome'] ?></td>
+											<td><?php echo $paciente->id?></td>
+											<td><?php echo $paciente->nome?></td>
+											<td><?php echo $paciente->cpf?></td>
+											<td><?php echo formatarData($paciente->nascimento)?></td>
+											<td><?php echo $paciente->convenio->nome ?></td>
 											<td>
-												<button onclick="editar(<?php echo $linha['id']?>)">
+												<button onclick="editar(<?php echo $paciente->id?>)">
 													<span class="glyphicon glyphicon-edit" title="Editar"></span>
 												</button>
-												<button onclick="excluir(<?php echo $linha['id']?>)">
+												<button onclick="excluir(<?php echo $paciente->id?>)">
 													<span class="glyphicon glyphicon-trash" title="Excluir"></span>
 												</button>
 												

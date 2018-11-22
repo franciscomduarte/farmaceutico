@@ -1,11 +1,11 @@
 <?php 
     
 	// dados da url
-	$params = retornaParametrosUrl($_GET['r']);
+    $params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
 	$id = $params[2];
 
 	#dados do formulario
 	$usuario = new Usuario();
-	$usuario->desativar($id);
+	$usuario->deletar($id);
 	redirecionar("/usuario");
 ?>

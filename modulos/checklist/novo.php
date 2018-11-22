@@ -1,9 +1,10 @@
 <?php
-$params = retornaParametrosUrl($_GET['r']);
+$params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
 $id = $params[2];
 
 $_SESSION['item']      = NULL;
 $_SESSION['checklist'] = NULL;
+$view = false;
 
 if ($id) {
 	$checklist = new Checklist();
@@ -18,8 +19,6 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
     $view = true;
     $add = true;
 }
-
-
 
 ?>
 
@@ -77,9 +76,11 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 									onclick="history.go(-1);">Voltar</button>
 								<?php if (!$view) {?>
 								<button class="btn btn-primary" type="submit">Salvar</button>
-								<button onclick="location.href='/checklist/add-item/<?php echo $id?>?add'" class="btn btn-primary" type="button">Adicionar itens</button>
 								<?php }else{?>
 								<button onclick="location.href='/checklist/novo/<?php echo $id?>'" class="btn btn-warning" type="button" >Editar</button>
+								<?php }?>
+								<?php if ($id != ""){?>
+								<button onclick="location.href='/checklist/add-item/<?php echo $id?>?add'" class="btn btn-primary" type="button">Adicionar itens</button>
 								<?php }?>
 							</div>
 						</div>
