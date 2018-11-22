@@ -10,18 +10,19 @@ class Checklist extends Base
 	protected $itens = [];
 	
 	public function __construct(){
+	    $this->tabela = "checklist";
 	    $this->usuario = new Usuario();
 	}
 	
 	public function inserir($obj){
-		$sql = "INSERT INTO checklist (id,nome,usuario_id,ativo) 
+		$sql = "INSERT INTO ".$this->tabela." (id,nome,usuario_id,ativo) 
 				               VALUES (null,'$obj->nome','".$_SESSION['usuario']['id']."',$obj->ativo)";
         
         return  executarSql($sql);
 	}
 	
 	public function editar($obj){
-		$sql = "UPDATE checklist 
+		$sql = "UPDATE ".$this->tabela." 
                 SET nome 	= '$obj->nome',
 					ativo 	= '$obj->ativo' 
                 WHERE id 	= $obj->id";
@@ -30,26 +31,21 @@ class Checklist extends Base
 	}
 	
 	public function desativar($id){
-		$sql = "UPDATE checklist set ativo = 0 WHERE id = $id ";
+		$sql = "UPDATE ".$this->tabela." set ativo = 0 WHERE id = $id ";
 		
 		return executarSql($sql);
 	}
 	
 	public function listar(){
-		echo $sql = "SELECT * FROM checklist WHERE 1=1 order by nome";
-		$query = executarSql($sql);
-		
-		$array = $query->fetch_all(MYSQLI_ASSOC);
-		
+		self::listarObjetos();
 		$checklists = [];
 		
-		foreach ($array as $linha) {
+		foreach ($this->array as $linha) {
 		    $checklist = new Checklist();
 		    $checklist->id            = $linha['id'];
 		    $checklist->nome          = $linha['nome'];
 		    $checklist->data_cadastro = $linha['data_cadastro'];
 		    $checklist->ativo         = $linha['ativo'];
-		   
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 		    
 		    $checklists[] = $checklist;
@@ -59,13 +55,11 @@ class Checklist extends Base
 	}
 	
 	public function listarPorId($id){
-		$sql = "SELECT * FROM checklist WHERE 1=1 AND id = $id ";
-		$query = executarSql($sql);
-		$array = $query->fetch_all(MYSQLI_ASSOC);
+		self::listarObjetosPorId($id);
 		
 		$checklist = new Checklist();
 		
-		foreach ($array as $linha) {
+		foreach ($this->array as $linha) {
 		    $checklist->id            = $linha['id'];
 		    $checklist->nome          = $linha['nome'];
 		    $checklist->data_cadastro = $linha['data_cadastro'];
@@ -80,7 +74,7 @@ class Checklist extends Base
 	
 	public function listarPorNome($nome){
 		$sql = "SELECT *
-				FROM checklist
+				FROM ".$this->tabela."
 				WHERE nome like '%$nome%' order by nome";
 		
 		$query = executarSql($sql);
@@ -91,8 +85,7 @@ class Checklist extends Base
 	public function deletar($id){
 		#fazer consulta no checklist_resposta pra verificar se já tem resposta
 		#se tiver não pode excluir.
-	    $sql = "DELETE FROM checklist WHERE id = " . $id;
-		return executarSql($sql);
+	    self::deletar($id);
 	}
 	
 }

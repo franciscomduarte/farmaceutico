@@ -52,14 +52,15 @@
 
 	}
 	
-	
-	
 	function retornaId(){
 		$mysqli = Conexao::getInstance();
 		return $mysqli->insert_id;
 	}
 	
 	function retornaParametrosUrl($r){
+	    if (strpos($r, "&")){
+	       $r = strstr($r, "&",true);
+	    }
 		return explode("/", $r);
 	}
 	
@@ -73,8 +74,10 @@
 	}
 
 	function formatarDataHora($date){
-	    $date = date_create($date);
-	    return date_format($date, 'd/m/Y H:i:s');
+	    if (isset($date)){
+	       $date = date_create($date);
+	       return date_format($date, 'd/m/Y H:i:s');
+	    }
 	}
 	
 	function formataDataMysql($date){

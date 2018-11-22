@@ -9,12 +9,13 @@ class Item extends Base
 	protected $checklist;
 	
 	public function __construct(){
+	    $this->tabela = "item";
 	    $this->checklist = new Checklist();
 	}
 	
 	public function inserir($obj){
 	    try {
-    		$sql = "INSERT INTO item (id,enunciado,tipo) 
+    		$sql = "INSERT INTO ".$this->tabela." (id,enunciado,tipo) 
     				               VALUES (null,'$obj->enunciado','$obj->tipo')";
     		
     		retornaConexao()->begin_transaction();
@@ -41,7 +42,7 @@ class Item extends Base
 	}
 	
 	public function editar($obj){
-		$sql = "UPDATE item 
+		$sql = "UPDATE ".$this->tabela."  
                 SET enunciado = '$obj->nome',
 					tipo 	  = '$obj->tipo' 
                 WHERE id 	= $obj->id";
@@ -53,7 +54,7 @@ class Item extends Base
 	}
 	
 	public function desativar($id){
-		$sql = "UPDATE checklist set ativo = 0 WHERE id = $id ";
+		$sql = "UPDATE ".$this->tabela." set ativo = 0 WHERE id = $id ";
 		
 		return executarSql($sql);
 	}

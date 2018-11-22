@@ -9,12 +9,13 @@ class RespostaChecklist extends Base
 	protected $itens = [];
 	
 	public function __construct(){
+	    $this->tabela = "resposta_cecklist";
 	    $this->checklist = new Checklist();
 	    $this->internacao = new Internacao();
 	}
 	
 	public function inserir($obj){
-		echo $sql = "INSERT INTO resposta_checklist (id, id_checklist, id_internacao) 
+	    echo $sql = "INSERT INTO ".$this->tabela." (id, id_checklist, id_internacao) 
 				               VALUES (null,$obj->id_checklist, $obj->id_internacao)";
         
         return  executarSql($sql);

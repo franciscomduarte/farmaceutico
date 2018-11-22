@@ -6,6 +6,9 @@ class Perfil extends Base
 	protected $id;
 	protected $descricao;
 	
+	public function __construct() {
+	    $this->tabela = "perfil";
+	}
 	
 	public function inserir($obj){
 		$sql = "INSERT INTO perfil (id, descricao) VALUES (null, '$obj->descricao')";
@@ -18,13 +21,11 @@ class Perfil extends Base
 	}
 	
 	public function listar(){
-		$sql = "SELECT * FROM perfil WHERE 1=1";
-		$query = executarSql($sql);
-		$array = $query->fetch_all(MYSQLI_ASSOC);
+	    self::listarObjetos();
 		
 		$perfis = [];
 		
-		foreach ($array as $linha) {
+		foreach ($this->array as $linha) {
 		    $perfil = new Perfil();
 		    $perfil->id         = $linha['id'];
 		    $perfil->descricao  = $linha['descricao'];
@@ -35,23 +36,15 @@ class Perfil extends Base
 	}
 	
 	public function listarPorId($id){
-		$sql = "SELECT * FROM perfil WHERE id = $id ";
-		$query = executarSql($sql);
+		self::listarObjetosPorId($id);
 		
-		$array = $query->fetch_all(MYSQLI_ASSOC);
-		
-		foreach ($array as $linha) {
+		foreach ($this->array as $linha) {
 		    $perfil = new Perfil();
 		    $perfil->id         = $linha['id'];
 		    $perfil->descricao  = $linha['descricao'];
 		}
 		
 		return $perfil;
-	}
-	
-	public function deletar($id){
-		$sql = "DELETE FROM perfil WHERE id = " . $id;
-		return executarSql($sql);
 	}
 	
 }

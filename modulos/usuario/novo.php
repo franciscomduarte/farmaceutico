@@ -1,5 +1,5 @@
 <?php
-$params = retornaParametrosUrl($_GET['r']);
+$params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
 $id = $params[2];
 
 if ($id) {

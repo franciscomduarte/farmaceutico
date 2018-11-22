@@ -21,7 +21,6 @@
 	                    		<table class="table table-striped table-bordered table-hover dataTables-example" >
 	                    			<thead>
 					                    <tr>
-					                        <th>ID</th>
 					                        <th>Nr. Internação</th>
 					                        <th>Paciente</th>
 					                        <th>Convênio</th>
@@ -31,23 +30,19 @@
 	                    			</thead>
 	                   			 	<tbody>
 										<?php 
-											
 											$internacao = new Internacao();
-											$array = $internacao->listar();
-											
-											foreach ($array as $linha) {
+											foreach ($internacao->listar() as $obj) {
 								        ?>
 										<tr>
-											<td><?php echo $linha['id']?></td>
-											<td><?php echo $linha['numero_internacao']?></td>
-											<td><?php echo $linha['id_paciente']?></td>
-											<td><?php echo $linha['id_convenio']?></td>
-											<td><?php echo formatarDataHora($linha['data_internacao'])?></td>
+											<td><?php echo $obj->numero_internacao?></td>
+											<td><?php echo $obj->paciente->nome." (".$obj->paciente->cpf.")"?></td>
+											<td><?php echo $obj->convenio->nome?></td>
+											<td><?php echo formatarDataHora($obj->data_internacao)?></td>
 											<td>
-												<button onclick="editar(<?php echo $linha['id']?>)">
+												<button onclick="editar(<?php echo $obj->id?>)">
 													<span class="glyphicon glyphicon-edit" title="Editar"></span>
 												</button>
-												<button onclick="excluir(<?php echo $linha['id']?>)">
+												<button onclick="excluir(<?php echo $obj->id?>)">
 													<span class="glyphicon glyphicon-trash" title="Excluir"></span>
 												</button>
 												
@@ -60,7 +55,6 @@
 	                    			</tbody>
 	                    			<tfoot>
 					                    <tr>
-					                        <th>ID</th>
 					                        <th>Nr. Internação</th>
 					                        <th>Paciente</th>
 					                        <th>Convênio</th>

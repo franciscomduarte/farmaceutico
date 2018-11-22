@@ -30,18 +30,17 @@
 										<?php 
 											
 										    $convenio = new Convenio();
-											$array = $convenio->listar();
 											
-											foreach ($array as $linha) {
+										    foreach ($convenio->listar() as $obj) {
 								        ?>
 										<tr>
-											<td><?php echo $linha['id']?></td>
-											<td><?php echo $linha['nome']?></td>
+											<td><?php echo $obj->id?></td>
+											<td><?php echo $obj->nome?></td>
 											<td>
-												<button onclick="editar(<?php echo $linha['id']?>)">
+												<button onclick="editar(<?php echo $obj->id?>)">
 													<span class="glyphicon glyphicon-edit" title="Editar"></span>
 												</button>
-												<button onclick="excluir(<?php echo $linha['id']?>)">
+												<button onclick="excluir(<?php echo $obj->id?>)">
 													<span class="glyphicon glyphicon-trash" title="Excluir"></span>
 												</button>
 												

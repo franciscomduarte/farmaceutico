@@ -28,14 +28,12 @@
 											<th>Data Cadastro</th>
 					                        <th>Usuário Responsável</th>
 					                        <th>Status</th>
-					                        <th><center>Ações</center></th>
+					                        <th align="center">Ações</th>
 					                    </tr>
 	                    			</thead>
 	                   			 	<tbody>
     									<?php 
-    										
     										$checklist = new Checklist();
-    										
     										foreach ($checklist->listar() as $obj) {    										    
     							        ?>
         									<tr>
@@ -53,7 +51,7 @@
         											</button>
          											<button onclick="addItens(<?php echo $obj->id?>)">
         												<span class="glyphicon glyphicon-list" title="Adcionar Itens"></span>
-        											</button>       											
+        											</button>
         											<button onclick="excluir(<?php echo $obj->id?>)">
         												<span class="glyphicon glyphicon-trash remove" title="Excluir"></span>
         											</button>
@@ -72,7 +70,7 @@
 											<th>Data Cadastro</th>
 					                        <th>Usuário Responsável</th>
 					                        <th>Status</th>
-					                        <th><center>Ações</center></th>
+					                        <th align="center">Ações</th>
 					                    </tr>
 	                    			</tfoot>
 	                    		</table>
