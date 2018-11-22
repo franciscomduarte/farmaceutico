@@ -29,13 +29,13 @@ class Usuario extends Base
 	
 	public function editar($obj){
 		$sql = "UPDATE usuario 
-                SET nome 		= '$obj->nome',
-					email 		= '$obj->email',
-					senha 		= '$obj->senha',
-					ativo 		= '$obj->ativo',
-					id_perfil	= '".$obj->perfil->id."',
-					cpf 		= '$obj->cpf'
-                WHERE id 		= $obj->id ";
+			SET nome      =  '$obj->nome',
+			    email     = '$obj->email',
+			    senha     = '$obj->senha',
+			    ativo     = '$obj->ativo',
+			    id_perfil = '".$obj->perfil->id."',
+			    cpf       = '$obj->cpf'
+                	WHERE id      = $obj->id ";
 		
 		return executarSql($sql);
 	}
@@ -83,6 +83,7 @@ class Usuario extends Base
 		    $usuario->ativo         = $linha['ativo'];
 		    $usuario->cpf           = $linha['cpf'];
 		    $usuario->data_cadastro = $linha['data_cadastro'];
+		    $usuario->senha	    = $linha['senha'];
 		    $usuario->perfil        = $usuario->perfil->listarPorId($linha['id_perfil']);
 		    
 		}
