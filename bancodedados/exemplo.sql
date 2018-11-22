@@ -2,8 +2,8 @@
 -- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 19-Nov-2018 às 13:48
+-- Host: localhost
+-- Generation Time: 22-Nov-2018 às 03:19
 -- Versão do servidor: 10.1.24-MariaDB
 -- PHP Version: 7.0.20
 
@@ -28,6 +28,22 @@ CREATE TABLE `alternativa` (
   `descricao` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `alternativa`
+--
+
+INSERT INTO `alternativa` (`id`, `id_item`, `descricao`) VALUES
+(1, 2, 'Sim'),
+(2, 2, 'Não'),
+(3, 1, 'Sim'),
+(4, 1, 'Não'),
+(5, 3, 'Sim'),
+(6, 3, 'Não'),
+(7, 5, 'Sim'),
+(8, 5, 'Não'),
+(9, 6, 'Sim'),
+(10, 6, 'Não');
+
 -- --------------------------------------------------------
 
 --
@@ -42,6 +58,14 @@ CREATE TABLE `checklist` (
   `ativo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `checklist`
+--
+
+INSERT INTO `checklist` (`id`, `data_cadastro`, `usuario_id`, `nome`, `ativo`) VALUES
+(1, '2018-11-20 16:52:21', 3, 'Bundle PAV (este é para pacientes que estão dependentes do\r\nrespirador mecânico, ou seja está internado na UTI)', 1),
+(2, '2018-11-20 17:39:19', 3, 'Bundle Sonda Vesical (pacientes em uso de sonda vesical)', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -52,6 +76,17 @@ CREATE TABLE `checklist_item` (
   `id_checklist` int(11) NOT NULL,
   `id_item` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `checklist_item`
+--
+
+INSERT INTO `checklist_item` (`id_checklist`, `id_item`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 5),
+(1, 6);
 
 -- --------------------------------------------------------
 
@@ -76,26 +111,6 @@ INSERT INTO `convenio` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `historico_acesso`
---
-
-CREATE TABLE `historico_acesso` (
-  `id` int(11) NOT NULL,
-  `data` datetime NOT NULL,
-  `usuario_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `historico_acesso`
---
-
-INSERT INTO `historico_acesso` (`id`, `data`, `usuario_id`) VALUES
-(1, '2018-11-18 00:05:54', 6),
-(2, '2018-11-18 00:06:07', 3);
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `internacao`
 --
 
@@ -108,6 +123,13 @@ CREATE TABLE `internacao` (
   `id_convenio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `internacao`
+--
+
+INSERT INTO `internacao` (`id`, `numero_internacao`, `data_internacao`, `id_setor`, `id_paciente`, `id_convenio`) VALUES
+(1, '1234', '2018-11-21 00:00:00', 3, 3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -119,6 +141,22 @@ CREATE TABLE `item` (
   `enunciado` varchar(200) NOT NULL,
   `tipo` enum('ME','VF','TX','MV') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `item`
+--
+
+INSERT INTO `item` (`id`, `enunciado`, `tipo`) VALUES
+(1, 'Cabeceira elevada 30°-45°', 'VF'),
+(2, 'Suspensão diária da sedação', 'VF'),
+(3, 'Higiene oral com Clorexidine', 'VF'),
+(5, 'Profilaxia sangramento digestivo', 'VF'),
+(6, 'Profilaxia de Tromboembolismo venoso', 'VF'),
+(8, 'Fixação segura', 'VF'),
+(9, 'Posicionamento correto do coletor', 'VF'),
+(10, 'Capacidade máxima de 2/3 do coletor', 'VF'),
+(11, 'Manteve conectado o sistema', 'VF'),
+(12, 'Necessidade de manutenção', 'VF');
 
 -- --------------------------------------------------------
 
@@ -181,18 +219,17 @@ CREATE TABLE `permissao` (
 
 INSERT INTO `permissao` (`id`, `descricao`, `url`, `id_permissao_pai`) VALUES
 (1, 'Administração', NULL, NULL),
-(2, 'Internação', NULL, NULL),
+(2, 'Hospital', NULL, NULL),
+(3, 'Checklist', NULL, NULL),
 (5, 'Setor', '/setor', 1),
 (6, 'Convênio', '/convenio', 1),
 (7, 'Paciente', '/paciente', 2),
 (8, 'Ajuda', NULL, NULL),
-(9, 'Teste', '/teste', 2),
-(10, 'Meu Currículo', '/curriculo/{id_usuario}', 2),
-(11, 'Ver p/ Impressão', '/curriculo/aba11/{id_usuario}', 2),
-(12, 'Cursos', '/curso', 1),
-(14, 'Seleção', NULL, NULL),
+(10, 'Internação', '/internacao', 2),
 (15, 'Teste', '/teste', 14),
-(16, 'Iniciar Seleção', '/selecao/iniciar', 14);
+(16, 'Iniciar Seleção', '/selecao/iniciar', 14),
+(18, 'Criar', '/checklist', 3),
+(19, 'Responder', '/checklist-resposta', 3);
 
 -- --------------------------------------------------------
 
@@ -215,51 +252,59 @@ INSERT INTO `permissao_perfil` (`id_permissao`, `id_perfil`) VALUES
 (6, 1),
 (7, 1),
 (2, 1),
-(9, 1),
 (10, 1),
-(11, 1),
-(12, 1),
-(14, 1),
-(15, 1),
-(16, 1),
 (2, 4),
-(11, 4),
 (10, 4),
 (2, 3),
-(14, 3),
-(11, 3),
 (10, 3),
-(9, 3),
-(15, 3),
-(16, 3),
 (2, 2),
-(11, 2),
-(10, 2);
+(10, 2),
+(18, 1),
+(19, 1),
+(3, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `reposta_checklist`
+-- Estrutura da tabela `resposta_checklist`
 --
 
-CREATE TABLE `reposta_checklist` (
+CREATE TABLE `resposta_checklist` (
   `id` int(11) NOT NULL,
   `id_checklist` int(11) NOT NULL,
   `data_resposta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_internacao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `resposta_checklist`
+--
+
+INSERT INTO `resposta_checklist` (`id`, `id_checklist`, `data_resposta`, `id_internacao`) VALUES
+(3, 1, '2018-11-22 02:18:17', 1);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `reposta_checklist_item`
+-- Estrutura da tabela `resposta_checklist_item`
 --
 
-CREATE TABLE `reposta_checklist_item` (
-  `id_reposta_checklist` int(11) NOT NULL,
+CREATE TABLE `resposta_checklist_item` (
+  `id_resposta_checklist` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
   `id_resposta_alternativa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `resposta_checklist_item`
+--
+
+INSERT INTO `resposta_checklist_item` (`id_resposta_checklist`, `id_item`, `id_resposta_alternativa`) VALUES
+(3, 1, 3),
+(3, 2, 1),
+(3, 3, 5),
+(3, 5, 7),
+(3, 6, 10);
 
 -- --------------------------------------------------------
 
@@ -342,13 +387,6 @@ ALTER TABLE `convenio`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `historico_acesso`
---
-ALTER TABLE `historico_acesso`
-  ADD PRIMARY KEY (`id`,`usuario_id`),
-  ADD KEY `fk_historico_acesso_usuario1_idx` (`usuario_id`);
-
---
 -- Indexes for table `internacao`
 --
 ALTER TABLE `internacao`
@@ -390,20 +428,19 @@ ALTER TABLE `permissao_perfil`
   ADD KEY `fk_permissao_perfil_perfil1_idx` (`id_perfil`);
 
 --
--- Indexes for table `reposta_checklist`
+-- Indexes for table `resposta_checklist`
 --
-ALTER TABLE `reposta_checklist`
+ALTER TABLE `resposta_checklist`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_reposta_checklist_checklist1_idx` (`id_checklist`),
   ADD KEY `fk_reposta_checklist_internacao1_idx` (`id_internacao`);
 
 --
--- Indexes for table `reposta_checklist_item`
+-- Indexes for table `resposta_checklist_item`
 --
-ALTER TABLE `reposta_checklist_item`
-  ADD PRIMARY KEY (`id_reposta_checklist`,`id_item`),
+ALTER TABLE `resposta_checklist_item`
   ADD KEY `fk_reposta_checklist_has_item_item1_idx` (`id_item`),
-  ADD KEY `fk_reposta_checklist_has_item_reposta_checklist1_idx` (`id_reposta_checklist`),
+  ADD KEY `fk_reposta_checklist_has_item_reposta_checklist1_idx` (`id_resposta_checklist`),
   ADD KEY `fk_reposta_checklist_item_alternativa1_idx` (`id_resposta_alternativa`);
 
 --
@@ -429,32 +466,27 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `alternativa`
 --
 ALTER TABLE `alternativa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `checklist`
 --
 ALTER TABLE `checklist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `convenio`
 --
 ALTER TABLE `convenio`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `historico_acesso`
---
-ALTER TABLE `historico_acesso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
 -- AUTO_INCREMENT for table `internacao`
 --
 ALTER TABLE `internacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `paciente`
 --
@@ -469,17 +501,12 @@ ALTER TABLE `perfil`
 -- AUTO_INCREMENT for table `permissao`
 --
 ALTER TABLE `permissao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
--- AUTO_INCREMENT for table `reposta_checklist`
+-- AUTO_INCREMENT for table `resposta_checklist`
 --
-ALTER TABLE `reposta_checklist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `reposta_checklist_item`
---
-ALTER TABLE `reposta_checklist_item`
-  MODIFY `id_reposta_checklist` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `resposta_checklist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `setor`
 --
@@ -534,18 +561,18 @@ ALTER TABLE `permissao_perfil`
   ADD CONSTRAINT `fk_permissao_perfil_permissao1` FOREIGN KEY (`id_permissao`) REFERENCES `permissao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `reposta_checklist`
+-- Limitadores para a tabela `resposta_checklist`
 --
-ALTER TABLE `reposta_checklist`
+ALTER TABLE `resposta_checklist`
   ADD CONSTRAINT `fk_reposta_checklist_checklist1` FOREIGN KEY (`id_checklist`) REFERENCES `checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_reposta_checklist_internacao1` FOREIGN KEY (`id_internacao`) REFERENCES `internacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `reposta_checklist_item`
+-- Limitadores para a tabela `resposta_checklist_item`
 --
-ALTER TABLE `reposta_checklist_item`
+ALTER TABLE `resposta_checklist_item`
   ADD CONSTRAINT `fk_reposta_checklist_has_item_item1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_reposta_checklist_has_item_reposta_checklist1` FOREIGN KEY (`id_reposta_checklist`) REFERENCES `reposta_checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_reposta_checklist_has_item_reposta_checklist1` FOREIGN KEY (`id_resposta_checklist`) REFERENCES `resposta_checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_reposta_checklist_item_alternativa1` FOREIGN KEY (`id_resposta_alternativa`) REFERENCES `alternativa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --

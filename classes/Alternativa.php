@@ -28,6 +28,26 @@ class Alternativa extends Base
         return executarSql($sql);
     }
     
+    public function listarPorIdCkelist($id_checklist) {
+        $sql = " SELECT a.* FROM alternativa a, item b, checklist_item c, checklist d WHERE 1 = 1 and a.id_item = b.id and b.id = c.id_item and c.id_checklist = d.id and d.id = $id_checklist";
+        $query = executarSql($sql);
+        
+        $array = $query->fetch_all(MYSQLI_ASSOC);
+        
+        $alternativas = [];
+        
+        foreach ($array as $linha) {
+            $alternativa = new Alternativa();
+            $alternativa->id         = $linha['id'];
+            $alternativa->descricao  = $linha['descricao'];
+            $alternativa->item       = $alternativa->item->listarPorId($linha['id_item']);
+            $alternativas[] = $alternativa;
+        }
+        
+        return $alternativas;
+    }
+    
+    
     public function listar() {
         $sql = "SELECT * FROM alternativa WHERE 1=1 ";
         $query = executarSql($sql);
@@ -50,6 +70,26 @@ class Alternativa extends Base
     
     public function listarComChecklist($id_checklist){
         $sql = "SELECT * FROM alternativa WHERE id_item = $id_checklist";
+        $query = executarSql($sql);
+        
+        $array = $query->fetch_all(MYSQLI_ASSOC);
+        
+        $alternativas = [];
+        
+        foreach ($array as $linha) {
+            $alternativa = new Alternativa();
+            $alternativa->id         = $linha['id'];
+            $alternativa->descricao  = $linha['descricao'];
+            $alternativa->item       = $alternativa->item->listarPorId($linha['id_item']);
+            
+            $alternativas[] = $alternativa;
+        }
+        
+        return $alternativas;
+    }
+    
+    public function listarComItem($id_item){
+        $sql = "SELECT * FROM alternativa WHERE id_item = $id_item";
         $query = executarSql($sql);
         
         $array = $query->fetch_all(MYSQLI_ASSOC);

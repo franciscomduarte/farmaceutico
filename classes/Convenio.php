@@ -1,6 +1,6 @@
 <?php
 
-class Convenio
+class Convenio extends Base
 {
 	
 	protected $id;
@@ -22,27 +22,22 @@ class Convenio
 		return $query->fetch_all(MYSQLI_ASSOC);
 	}
 	
-	public static function listarPorId($id){
-		$sql = "SELECT * FROM convenio WHERE 1=1 AND id = $id ";
-		$query = executarSql($sql);
-		return $query->fetch_array(MYSQLI_ASSOC);
+	public function listarPorId($id){
+	    $sql = "SELECT * FROM convenio WHERE 1=1 AND id = $id ";
+	    $query = executarSql($sql);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    $convenio = new Convenio();
+
+	    foreach ($array as $linha) {
+	        $convenio->id            = $linha['id'];
+	        $convenio->nome          = $linha['nome'];
+	    }
+	    return $convenio;
 	}
 	
 	public function deletar($id){
 		$sql = "DELETE FROM convenio WHERE id = " . $id;
 		return executarSql($sql);
-	}
-	
-	public function retornaIdInserido() {
-		return retornaId();
-	}
-	
-	// Criação dos métodos __Get e __Set
-	public function __get($valor){
-		return $this->$valor;
-	}
-	public function __set($propriedade,$valor){
-		$this->$propriedade = addslashes($valor);
 	}
 	
 }

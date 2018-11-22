@@ -36,7 +36,7 @@ class Checklist extends Base
 	}
 	
 	public function listar(){
-		$sql = "SELECT * FROM checklist WHERE 1=1 order by nome";
+		echo $sql = "SELECT * FROM checklist WHERE 1=1 order by nome";
 		$query = executarSql($sql);
 		
 		$array = $query->fetch_all(MYSQLI_ASSOC);
