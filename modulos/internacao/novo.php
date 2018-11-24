@@ -14,9 +14,8 @@ if($id) {
     $obj         = $internacao->listarPorId($id);
     $objPaciente = $obj->paciente;
 }
-
-if(isset($_REQUEST->cpf)) {
-    $paciente->cpf = $_REQUEST->cpf;
+if(isset($_REQUEST['cpf'])) {
+    $paciente->cpf = $_REQUEST['cpf'];
     $objPaciente =  $paciente->listarPorCpf($paciente);
 }
 
@@ -29,7 +28,7 @@ if(isset($_REQUEST->cpf)) {
         </div>
         <div class="ibox-content">
         	<div class="row">
-            	<div class="col-sm-8 b-r">
+            	<div class="col-sm-12">
                 	<form role="form" action="#" method="post">
                 	<fieldset style="border: solid 1px;">
                 		<label>Consulte o paciente</label>
@@ -41,9 +40,11 @@ if(isset($_REQUEST->cpf)) {
                     </form>
                	</div>
            	</div>
+           	<div class="hr-line-dashed"></div>
+           	
            	<?php if($objPaciente != null) {?>
         	<div class="row">
-            	<div class="col-sm-8 b-r">
+            	<div class="col-sm-12">
                 	<form role="form" action="/internacao/gravar" method="post">
                 		<input type="hidden" name="id" value="<?php echo $obj->id ? $obj->id : null ?>">
                 		<input type="hidden" name="id_paciente" value="<?php echo $objPaciente->id ? $objPaciente->id : null ?>">
@@ -92,7 +93,7 @@ if(isset($_REQUEST->cpf)) {
            	</div>
            	<?php } else { ?>
                	<div class="row">
-               		<div class="col-sm-8 b-r">
+               		<div class="col-sm-12">
                			<div class="alert alert-success" id="mensagemSucesso">Caso deseje cadastrar um novo paciente, <a href="/paciente/novo">clique aqui</a></div>
                		</div>
                	</div>

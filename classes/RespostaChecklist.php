@@ -9,7 +9,7 @@ class RespostaChecklist extends Base
 	protected $itens = [];
 	
 	public function __construct(){
-	    $this->tabela = "resposta_cecklist";
+	    $this->tabela = "resposta_checklist";
 	    $this->checklist = new Checklist();
 	    $this->internacao = new Internacao();
 	}
@@ -17,7 +17,6 @@ class RespostaChecklist extends Base
 	public function inserir($obj){
 	    echo $sql = "INSERT INTO ".$this->tabela." (id, id_checklist, id_internacao) 
 				               VALUES (null,$obj->id_checklist, $obj->id_internacao)";
-        
         return  executarSql($sql);
 	}
     public function deletar($id)

@@ -78,10 +78,12 @@ class Paciente extends Base
 	    $sql = "SELECT * FROM paciente WHERE 1=1 AND cpf = '$obj->cpf' ";
 	    $query = executarSql($sql);
 	    $array = $query->fetch_all(MYSQLI_ASSOC);
-	    $paciente = new Paciente();
-	    $convenio = new Convenio();
+	    $paciente = null;
+	    $convenio = null;
 	    
 	    foreach ($array as $linha) {
+	        $paciente = new Paciente();
+	        $convenio = new Convenio();
 	        $paciente->id            = $linha['id'];
 	        $paciente->nome          = $linha['nome'];
 	        $paciente->cpf           = $linha['cpf'];

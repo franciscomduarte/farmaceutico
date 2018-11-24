@@ -45,15 +45,6 @@ $usuario = $_SESSION['usuario'];
                     	}
                     ?>
                     
-                    <li class="dropdown">
-                    	<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Ajuda <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li><a href="#">Manual do Sistema</a></li>
-                            <li><a href="#">IN xxx</a></li>
-                            <li><a href="#">Procedimentos de Pagamento de GECC</a></li>
-                        </ul>
-                    </li>
-
                 </ul>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>

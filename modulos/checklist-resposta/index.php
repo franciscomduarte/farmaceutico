@@ -19,24 +19,24 @@
 	                    <div class="ibox-content">
 						<div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Questionários Disponíveis</h5>
+                            <h5>Questionários Disponíveis<br/><small class="text-navy">Pesquise a internação antes de responder os questionarios</small></h5>
                         </div>
                         <div class="ibox-content">
                         
                         	<div class="row">
-                            	<div class="col-sm-8 b-r">
+                            	<div class="col-sm-12">
                                 	<form role="form" action="#" method="post">
                                 	<fieldset style="border: solid 1px;">
                                 		<label>Consulte o paciente</label>
                                         <div>
-                                        	<div class="form-group col-sm-8"><input type="text" placeholder="Informe o cpf do paciente" class="form-control" name="cpf"></div>
+                                        	<div class="form-group col-sm-8"><input type="text" placeholder="Informe o cpf do paciente internado" class="form-control" name="cpf"></div>
                                             <button class="btn btn-primary" type="submit">Pesquisar</button>
                                         </div>
                                     </fieldset>
                                     </form>
                                	</div>
                            	</div>
-                           	
+                           	<div class="hr-line-dashed"></div>
                            	<?php if($objInternacao != null) { ?>
                         	<div class="row">
                             	<div class="col-sm-12 b-r">
@@ -56,9 +56,7 @@
                                	</div>
                            	</div>
                            	<div class="hr-line-dashed"></div>
-                           	<?php } ?>
-
-							<?php 
+                           	<?php 
 							foreach ($listaCkeckList as $checklist) {
 							         $item = new Item();
 							         $itensChecklist = $item->listarPorIdChecklist($checklist->id);
@@ -75,8 +73,15 @@
                                 </div>
                                 
                             <?php } ?>
-                            
-
+                           	
+                           	<?php } else { ?>
+                           	<div class="row">
+                           		<div class="col-sm-12">
+                           			<div class="alert alert-success" id="mensagemSucesso">Caso deseje realizar uma nova internação, <a href="/internacao/novo">clique aqui</a></div>
+                           		</div>
+                           	</div>
+                           	<?php }?>
+							<div class="hr-line-dashed"></div>
 
 	                    </div>
 	                </div>

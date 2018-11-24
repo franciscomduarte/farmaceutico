@@ -37,7 +37,7 @@
 											<td><?php echo $obj->numero_internacao?></td>
 											<td><?php echo $obj->paciente->nome." (".$obj->paciente->cpf.")"?></td>
 											<td><?php echo $obj->convenio->nome?></td>
-											<td><?php echo formatarDataHora($obj->data_internacao)?></td>
+											<td><?php echo formatarData($obj->data_internacao)?></td>
 											<td>
 												<button onclick="editar(<?php echo $obj->id?>)">
 													<span class="glyphicon glyphicon-edit" title="Editar"></span>
