@@ -8,8 +8,8 @@
     
     $id_checklist = $_REQUEST['id_checklist'];
     $resposta_checklist = new RespostaChecklist();
-    $resposta_checklist->id_checklist = $id_checklist;
-    $resposta_checklist->id_internacao = $_REQUEST['id_internacao'];
+    $resposta_checklist->checklist->id = $id_checklist;
+    $resposta_checklist->internacao->id = $_REQUEST['id_internacao'];
     // a data de resposta é preenchida pelo banco de dados;
     
     $resposta_checklist->inserir($resposta_checklist);
@@ -50,5 +50,7 @@
             $resposta_checklist_item->inserir($resposta_checklist_item);
         }
     }
+    
+    redirecionar("/checklist-resposta/resultado");
 
 ?>

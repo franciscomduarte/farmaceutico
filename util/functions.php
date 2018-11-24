@@ -85,6 +85,14 @@
 		return date_format($date, 'Y-m-d');
 	}
 	
+	function diffDate($data, $data_atual) {
+	    
+	    $date_time  = new DateTime( $data_atual );
+	    $diff       = $date_time->diff( new DateTime( $data ) );
+	    $result = $diff->format( '%d dia(s), %H hora(s) e %i minuto(s)' );
+	    return $result;
+	}
+	
 	function verificarProgresso($objeto){
 		if ($objeto['progresso'] == NULL){
 			echo 'active';

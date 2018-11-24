@@ -15,7 +15,6 @@ class Internacao extends Base
 	    $this->setor    = new Setor();
 	    $this->convenio = new Convenio();
 	    $this->paciente = new Paciente();
-	    $this->setor = new Setor();
 	}
 	
 	public function inserir($obj){
