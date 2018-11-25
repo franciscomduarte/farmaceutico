@@ -3,14 +3,30 @@
     
 ?>       
        
+
+       
         <div class="wrapper wrapper-content">
             <div class="container">
             <div class="row">
+            
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Bar Chart Example</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div>
+                                <canvas id="barChart" height="140"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
                 <div class="col-md-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Currículos</h5>
+                            <h5>Info 1</h5>
                         </div>
                         <div class="ibox-content">
                             <h1 class="no-margins"><a href="/pesquisa/resultado"><?php echo "10" ?></a><small> Cadastrado(s) </small></h1>
@@ -22,7 +38,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Doutores</h5>
+                            <h5>Info 2</h5>
                         </div>
                         <div class="ibox-content">
                         	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=DOUTORADO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
@@ -34,7 +50,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Mestres</h5>
+                            <h5>Info 3</h5>
                         </div>
                         <div class="ibox-content">
                         	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=MESTRADO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
@@ -46,7 +62,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Especialistas</h5>
+                            <h5>Info 4</h5>
                         </div>
                         <div class="ibox-content">
                         	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=ESPECIALIZACAO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
@@ -135,7 +151,7 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <span class="label label-warning pull-right">Qtd</span>
-                                <h5>Currículo por Área de Interesse</h5>
+                                <h5>Info 5</h5>
                             </div>
                             
                             <div class="ibox-content">

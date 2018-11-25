@@ -43,6 +43,10 @@
     <script src="/js/plugins/steps/jquery.steps.min.js"></script>
     <script src="/js/plugins/summernote/summernote.min.js"></script>
 
+<!-- ChartJS-->
+    <script src="/js/plugins/chartJs/Chart.min.js"></script>
+    <script src="/js/demo/chartjs-demo.js"></script>
+
 	<script type="text/javascript">
 
 	$(document).ready(function() {
