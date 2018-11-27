@@ -11,9 +11,7 @@ $interenacoes = $obj->listarAtivas();
 			<div class="ibox-title">
 				<h5>Pacientes na UTI</h5>
 				<div class="ibox-tools">
-					<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-					</a> <a class="close-link"> <i class="fa fa-times"></i>
-					</a>
+					<button type="button" class="btn btn-info" onclick="location.href='/internacao/novo/'"> Nova Internação</button>
 				</div>
 			</div>
 			<div class="ibox-content">
@@ -38,12 +36,9 @@ $interenacoes = $obj->listarAtivas();
 						<tr>
 							<td><small><?php echo $internacao->paciente->nome ?></small></td>
 							<td><small><?php echo $internacao->numero_internacao ?></small></td>
-							<td><small><?php echo $internacao->data_internacao ?></small></td>
+							<td><small><?php echo formatarData($internacao->data_internacao) ?></small></td>
 							<td class="text-navy"> <small class="label label-primary"><i class="fa fa-clock-o"></i> <?php echo diffDate(date('Y-m-d H:i'), $internacao->data_internacao)?></small></td>
 							<td>
-								<button onclick="lista_checklist(<?php echo $internacao->id?>)">
-									<span class="glyphicon glyphicon-eye-open" title="Responder Checklists"></span>
-								</button>
 								<button onclick="responder_pav(<?php echo 1 ?>,<?php echo $internacao->id?>)" <?php echo $status != null ? "disabled" : "" ?>>
 									<span title="Bundle PAV">Bundle PAV</span>
 								</button>
@@ -54,7 +49,7 @@ $interenacoes = $obj->listarAtivas();
 								</button>
 							</td>
 							<td>
-								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?>
+								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?> - <small><?php echo formatarData($status->data_internacao) ?></small>
 							</td>
 						</tr>
 						<?php }?>

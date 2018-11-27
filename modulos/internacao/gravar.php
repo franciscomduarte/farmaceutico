@@ -13,6 +13,6 @@
 	} else {
 	    $internacao->inserir($internacao);
 	}
-	redirecionar("/internacao");
+	redirecionar("/checklist-resposta");
 
 ?>
