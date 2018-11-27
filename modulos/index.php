@@ -2,7 +2,7 @@
     
 	include 'mensagens.php';
 	include 'modal.php';
-	//include 'alert.php';
+	include 'alert.php';
 	
 	$roteador = new Roteador();
 	$controlador = $roteador->controlador();

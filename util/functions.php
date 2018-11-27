@@ -89,7 +89,7 @@
 	    
 	    $date_time  = new DateTime( $data_atual );
 	    $diff       = $date_time->diff( new DateTime( $data ) );
-	    $result = $diff->format( '%d dia(s), %H hora(s) e %i minuto(s)' );
+	    $result = $diff->format( '%d dia(s)' );
 	    return $result;
 	}
 	

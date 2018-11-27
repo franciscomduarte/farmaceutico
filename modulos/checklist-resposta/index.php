@@ -1,91 +1,103 @@
-<?php 
+<?php
 
-	define("NOME_MODULO", "Questionários"); 
-	define("NOME_ACAO", "Responder"); 
-	include_once 'breadcrumb.php';
-	
-	$checklist = new Checklist();
-	$listaCkeckList = $checklist->listar();
-	
-	$internacao = new Internacao();
-	if(isset($_REQUEST['cpf'])) {
-	    $objInternacao =  $internacao->listarInternacaoPorCpf($_REQUEST['cpf']);
-	}
+$obj = new Internacao();
+$interenacoes = $obj->listarAtivas();
 
 ?>
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-	                    <div class="ibox-content">
-						<div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Questionários Disponíveis<br/><small class="text-navy">Pesquise a internação antes de responder os questionarios</small></h5>
-                        </div>
-                        <div class="ibox-content">
-                        
-                        	<div class="row">
-                            	<div class="col-sm-12">
-                                	<form role="form" action="#" method="post">
-                                	<fieldset style="border: solid 1px;">
-                                		<label>Consulte o paciente</label>
-                                        <div>
-                                        	<div class="form-group col-sm-8"><input type="text" placeholder="Informe o cpf do paciente internado" class="form-control" name="cpf"></div>
-                                            <button class="btn btn-primary" type="submit">Pesquisar</button>
-                                        </div>
-                                    </fieldset>
-                                    </form>
-                               	</div>
-                           	</div>
-                           	<div class="hr-line-dashed"></div>
-                           	<?php if($objInternacao != null) { ?>
-                        	<div class="row">
-                            	<div class="col-sm-12 b-r">
-                                	<div class="row">
-                                    	<div class="col-sm-6"><label>Nome</label> <input type="text" value="<?php echo $objInternacao->paciente->nome ?>" disabled="disabled" class="form-control" name="nome"></div>
-                                        <div class="col-sm-6"><label>CPF</label> <input type="text" value="<?php echo $objInternacao->paciente->cpf ?>" disabled="disabled" class="form-control" name="cpf"></div>
-                                    </div>  
-                                    <div class="row">
-                                    	<div class="col-sm-6"><label>Nascimento</label> <input type="text" value="<?php echo formatarData($objInternacao->paciente->nascimento) ?>" disabled="disabled" class="form-control" name="nascimento"></div>
-                                        <div class="col-sm-6"><label>Convênio</label> <input type="text" value="<?php echo $objInternacao->convenio->nome ?>" disabled="disabled" class="form-control" name="convenio"></div>
-                                    </div> 
-                                    
-                                    
-                                    <div class="row">
-                                    	<div class="col-sm-6"><label>Número da Internação *</label> <input type="text" disabled="disabled" value="<?php echo $objInternacao->paciente->numero_internacao ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required"></div>
-                                    </div>
-                               	</div>
-                           	</div>
-                           	<div class="hr-line-dashed"></div>
-                           	<?php 
-							foreach ($listaCkeckList as $checklist) {
-							         $item = new Item();
-							         $itensChecklist = $item->listarPorIdChecklist($checklist->id);
-						    ?>
-                                <div class="dd" id="nestable2">
-                                    <ol class="dd-list">
-                                        <li class="dd-item" data-id="1">
-                                            <div class="dd-handle">
-                                            	<span class="pull-right"> <a href="/checklist-resposta/resposta/<?php echo $checklist->id?>/<?php echo $objInternacao->id ?>"><?php echo " Responder - ".count($itensChecklist) . " questões" ?> </a></span>
-                                                <span class="label label-info"><i class="fa fa-users"></i></span> <?php echo $checklist->nome ?>
-                                            </div>
-                                        </li>
-                                    </ol>
-                                </div>
-                                
-                            <?php } ?>
-                           	
-                           	<?php } else { ?>
-                           	<div class="row">
-                           		<div class="col-sm-12">
-                           			<div class="alert alert-success" id="mensagemSucesso">Caso deseje realizar uma nova internação, <a href="/internacao/novo">clique aqui</a></div>
-                           		</div>
-                           	</div>
-                           	<?php }?>
-							<div class="hr-line-dashed"></div>
 
-	                    </div>
-	                </div>
-	            </div>
-            </div>
-        </div>
-     </div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>Pacientes na UTI</h5>
+				<div class="ibox-tools">
+					<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+					</a> <a class="close-link"> <i class="fa fa-times"></i>
+					</a>
+				</div>
+			</div>
+			<div class="ibox-content">
+				<table class="table table-hover no-margins">
+					<thead>
+						<tr>
+							<th>Paciente</th>
+							<th>Nr. Internação</th>
+							<th>Data Entrada</th>
+							<th>Dias Internado</th>
+							<th>Responder</th>
+							<th>Dar alta?</th>
+							<th>Respondido Hoje?</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
+						$respostaChecklist = new RespostaChecklist();
+						foreach ($interenacoes as $internacao) {
+						    $status = $respostaChecklist->verificarPreenchimento($internacao->id);
+						?>
+						<tr>
+							<td><small><?php echo $internacao->paciente->nome ?></small></td>
+							<td><small><?php echo $internacao->numero_internacao ?></small></td>
+							<td><small><?php echo $internacao->data_internacao ?></small></td>
+							<td class="text-navy"> <small class="label label-primary"><i class="fa fa-clock-o"></i> <?php echo diffDate(date('Y-m-d H:i'), $internacao->data_internacao)?></small></td>
+							<td>
+								<button onclick="lista_checklist(<?php echo $internacao->id?>)">
+									<span class="glyphicon glyphicon-eye-open" title="Responder Checklists"></span>
+								</button>
+								<button onclick="responder_pav(<?php echo 1 ?>,<?php echo $internacao->id?>)" <?php echo $status != null ? "disabled" : "" ?>>
+									<span title="Bundle PAV">Bundle PAV</span>
+								</button>
+							</td>
+							<td>
+								<button onclick="dar_alta(<?php echo $internacao->id?>)">
+									<span title="Dar alta">Alta</span>
+								</button>
+							</td>
+							<td>
+								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?>
+							</td>
+						</tr>
+						<?php }?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+		<script>
+    		function dar_alta(id){
+    			apresentaConfirmacao();
+    			swal({
+                    title: "Tem certeza que deseja encerrar a internação deste paciente?",
+                    text: "Você não poderá desfazer essa operação.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirmar",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+        				var pag = "/internacao/liberar/"+id;
+        				location.href = pag;
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                });
+        		
+    			
+    		}
+    		
+    		function lista_checklist(id){
+    			var pag = "/checklist-resposta/lista-checklist/"+id;
+    			location.href = pag;
+    		}	
+
+    		function responder_pav(id_checklist, id_internacao){
+    			var pag = "/checklist-resposta/resposta/"+id_checklist+"/"+id_internacao;
+    			location.href = pag;
+    		}			
+
+		</script>

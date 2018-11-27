@@ -144,5 +144,9 @@
 		$("#mensagemSucesso").removeAttr("style").show();
 	}
 
+	function apresentaConfirmacao() {
+		$("#alerta").removeAttr("style").show();
+	}
+
 	</script>	
 	

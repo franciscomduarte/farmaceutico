@@ -6,6 +6,7 @@ class Internacao extends Base
 	protected $id;
 	protected $numero_internacao;
 	protected $data_internacao;
+	protected $data_saida;
 	protected $setor;
 	protected $paciente;
 	protected $convenio;
@@ -36,11 +37,46 @@ class Internacao extends Base
 		return executarSql($sql);
 	}
 	
+	public function atualizarDataSaida($id){
+	    $sql = "UPDATE ".$this->tabela."
+                SET data_saida = '" . date('Y-m-d H:i') . "'
+                WHERE id = $id ";
+	    return executarSql($sql);
+	}
+	
 	public function listar(){
 		self::listarObjetos();
 	    $internacoes = [];
 	    
 	    foreach ($this->array as $linha) {
+	        $internacao = new Internacao();
+	        $convenio   = new Convenio();
+	        $paciente   = new Paciente();
+	        $setor   = new Setor();
+	        
+	        $internacao->id = $linha['id'];
+	        $internacao->numero_internacao = $linha['numero_internacao'];
+	        $internacao->data_internacao = $linha['data_internacao'];
+	        $internacao->paciente = $paciente->listarPorId($linha['id_paciente']);
+	        $internacao->convenio = $convenio->listarPorId($linha['id_convenio']);
+	        $internacao->setor = $setor->listarPorId($linha['id_setor']);
+	        $internacoes[] = $internacao;
+	    }
+	    return $internacoes;
+	}
+	
+	public function listarAtivas(){
+	    
+	    $sql = "SELECT *
+                FROM internacao i
+                WHERE 1 = 1
+                AND   i.data_saida is null
+                ORDER BY i.data_internacao ";
+	    $query = executarSql($sql);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    
+	    $internacoes = array();
+	    foreach ($array as $linha) {
 	        $internacao = new Internacao();
 	        $convenio   = new Convenio();
 	        $paciente   = new Paciente();
