@@ -1,5 +1,5 @@
 <?php 
-
+    $dashboard = new Dashboard();
     
 ?>       
        
@@ -26,10 +26,10 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Info 1</h5>
+                            <h5>Cheklists</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins"><a href="/pesquisa/resultado"><?php echo "10" ?></a><small> Cadastrado(s) </small></h1>
+                            <h1 class="no-margins"><a href="/checklist"><?php printf("%02d",$dashboard->total["checklist"]) ?></a><small> Cadastrado(s) </small></h1>
                         </div>
                     </div>
                 </div>
@@ -38,10 +38,10 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Info 2</h5>
+                            <h5>Pacientes</h5>
                         </div>
                         <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=DOUTORADO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
+                        	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["paciente"]) ?></a><small> Cadastrado(s)</small></h1>
                         </div>
                     </div>
                 </div>
@@ -50,10 +50,10 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Info 3</h5>
+                            <h5>Internações</h5>
                         </div>
                         <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=MESTRADO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
+                        	<h1 class="no-margins"><a href="/internacao"><?php printf("%02d",$dashboard->total["internacao"]) ?></a><small> Cadastrado(s)</small></h1>
                         </div>
                     </div>
                 </div>
@@ -62,10 +62,10 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
-                            <h5>Info 4</h5>
+                            <h5>Respostas</h5>
                         </div>
                         <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="/pesquisa/resultado?tipo_formacao_instrutor=ESPECIALIZACAO"><?php echo "10" ?></a><small> Cadastrado(s)</small></h1>
+                        	<h1 class="no-margins"><a href="#"><?php  printf("%02d",$dashboard->total["resposta_checklist"]) ?></a><small> Cadastrado(s)</small></h1>
                         </div>
                     </div>
                 </div>
@@ -151,30 +151,43 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <span class="label label-warning pull-right">Qtd</span>
-                                <h5>Info 5</h5>
+                                <h5>Dados do Sistema</h5>
                             </div>
                             
                             <div class="ibox-content">
                             		<div class="row">
-                             <?php
-                                for($i = 0; $i < 10; $i+=3) {
-        						?>
-	    					       	<div class="col-xs-4">
-	                                    <small class="stats-label"><?php echo 10 ?></small>
-	                                    <h4><a href="#">Total: <?php "10" ?></a></h4>
-	                                </div>
-	    
-	                                <div class="col-xs-4">
-	                                    <small class="stats-label"><?php echo 10  ?></small>
-	                                    <h4><a href="#"><?php echo 10  ?></a></h4>
-	                                </div>
-	                                <div class="col-xs-4">
-	                                    <small class="stats-label"><?php echo 10 ?></small>
-	                                    <h4><a href="#"><?php echo 10 ?></a></h4>
-	                                </div>
-        						<?php 
-        							}
-        						?>
+
+    	    					       	<div class="col-xs-4">
+    	                                    <h4><a href="#">Pacientes: </a></h4>
+    	                                     <small class="stats-label"><?php printf("%02d",$dashboard->total["paciente"])?></small>
+    	                                </div>
+    	    
+    	                                <div class="col-xs-4">
+    	                                    <small class="stats-label">Cadastrados</small>
+    	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total["paciente"])?></a></h4>
+    	                                </div>
+    	                                <div class="col-xs-4">
+    	                                    <small class="stats-label">Internados</small>
+    	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total["internacao"])?></a></h4>
+    	                                </div>
+
+										<?php $dashboard->getDashboardInternados();?>
+										
+    	    					       	<div class="col-xs-4">
+    	                                    <h4><a href="#">Internações: </a></h4>
+    	                                    <small class="stats-label"><?php printf("%02d",$dashboard->total_internados["total"])?></small>
+    	                                </div>
+    	    
+    	                                <div class="col-xs-4">
+    	                                    <small class="stats-label">Internados</small>
+    	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total_internados["internado"])?></a></h4>
+    	                                </div>
+    	                                <div class="col-xs-4">
+    	                                    <small class="stats-label">Dispensados</small>
+    	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total_internados["dispensado"])?></a></h4>
+    	                                </div>
+
+
         							</div>
                             </div>
                             

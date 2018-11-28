@@ -117,7 +117,7 @@
            	    console.log(file.myCustomName);
 				formData.append("filesize", file.size);
 				formData.append("fileName", file.myCustomName);
-				formData.append("id_curriculo", <?php echo (isset($obj['id_curriculo']) ? $obj['id_curriculo'] : null) ?>);
+				formData.append("id_curriculo", 1);
            	});
             
            	this.on("removedfile", function(file) {

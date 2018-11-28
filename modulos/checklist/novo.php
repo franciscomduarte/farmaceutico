@@ -46,7 +46,16 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 							</div>
 						</div>
 
-						<div class="form-group col-xs-6">
+					    <div class="form-group col-xs-4">
+							<div class="form-group">
+								<label>Meta</label> <input type="number" min="10" max="100" step="5" style="width: 5em;"
+									value="<?php echo $obj->meta ? $obj->meta : null ?>"
+									placeholder="Digite a meta" class="form-control" name="meta"
+									required="required" <?php disableInput($view)?>>
+							</div>
+						</div>
+		
+						<div class="form-group col-xs-4">
 							<p>
 								<label>Status</label>
 							</p>
@@ -63,7 +72,8 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 							</div>
 						</div>
 
-						<div class="form-group col-xs-6">
+
+						<div class="form-group col-xs-4">
 							<div class="form-group">
 								<label>Usuário Responsável</label> 
 								<p><?php echo $obj->usuario->nome ? $obj->usuario->nome : null ?></p>

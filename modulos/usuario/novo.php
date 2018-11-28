@@ -4,7 +4,7 @@ $id = $params[2];
 
 if ($id) {
 	$usuario = new Usuario ();
-	$obj = $usuario->listarPorId($id);
+	$obj = $usuario->listarPorChave($id);
 }
 if (strpos($_SERVER['QUERY_STRING'],"view")){
     $view = true;
@@ -23,7 +23,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 
 				<form role="form" action="/usuario/gravar" method="post">
 					<input type="hidden" name="id"
-						value="<?php echo $obj->id ? $obj->id : null ?>">
+						value="<?php echo $obj->chave ? $obj->chave : null ?>">
 					<div class="form-group col-xs-12 m-sm">
 
 						<div class="form-group col-xs-6">

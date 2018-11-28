@@ -7,6 +7,7 @@ class Checklist extends Base
 	protected $nome;
 	protected $usuario;
 	protected $ativo;
+	protected $meta;
 	protected $itens = [];
 	
 	public function __construct(){
@@ -15,8 +16,8 @@ class Checklist extends Base
 	}
 	
 	public function inserir($obj){
-		$sql = "INSERT INTO ".$this->tabela." (id,nome,usuario_id,ativo) 
-				               VALUES (null,'$obj->nome','".$_SESSION['usuario']['id']."',$obj->ativo)";
+		$sql = "INSERT INTO ".$this->tabela." (id,nome,usuario_id,ativo,meta) 
+				               VALUES (null,'$obj->nome','".$_SESSION['usuario']['id']."',$obj->ativo,'$obj->meta')";
         
         return  executarSql($sql);
 	}
@@ -24,7 +25,8 @@ class Checklist extends Base
 	public function editar($obj){
 		$sql = "UPDATE ".$this->tabela." 
                 SET nome 	= '$obj->nome',
-					ativo 	= '$obj->ativo' 
+					ativo 	= '$obj->ativo',
+                    meta    = '$obj->meta'  
                 WHERE id 	= $obj->id";
 		
 		return executarSql($sql);
@@ -46,6 +48,7 @@ class Checklist extends Base
 		    $checklist->nome          = $linha['nome'];
 		    $checklist->data_cadastro = $linha['data_cadastro'];
 		    $checklist->ativo         = $linha['ativo'];
+		    $checklist->meta          = $linha['meta'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 		    
 		    $checklists[] = $checklist;
@@ -64,7 +67,7 @@ class Checklist extends Base
 		    $checklist->nome          = $linha['nome'];
 		    $checklist->data_cadastro = $linha['data_cadastro'];
 		    $checklist->ativo         = $linha['ativo'];
-		    
+		    $checklist->meta          = $linha['meta'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 		}
 		

@@ -5,6 +5,7 @@ abstract class Base
     
     protected $tabela;
     protected $array;
+    protected $chave;
     
     public abstract function inserir($obj);
     
@@ -37,6 +38,12 @@ abstract class Base
         return executarSql($sql);
     }
     
+    public function desativarComChave($chave){
+        $sql = "UPDATE ".$this->tabela." set ativo = 0 WHERE chave = '$chave' ";
+        
+        return executarSql($sql);
+    }
+    
     protected function listarObjetos(){
         $sql   = "SELECT * FROM ".$this->tabela." WHERE 1=1 order by 2";
         $query = executarSql($sql);
@@ -48,6 +55,15 @@ abstract class Base
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
     }
-   
+
+    protected function listarObjetosPorChave($chave){
+        $sql = "SELECT * FROM ".$this->tabela." WHERE 1=1 AND chave = '$chave' order by 2";
+        $query = executarSql($sql);
+        $this->array = $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    protected function gerarChave(){
+        return md5(time()."$%&".microtime());
+    }
 }
 

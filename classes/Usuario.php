@@ -21,9 +21,9 @@ class Usuario extends Base
 	
 	public function inserir($obj){
 		$sql = "INSERT INTO ".$this->tabela." (id,nome,email,senha,
-                                     ativo,id_perfil,cpf) 
+                                     ativo,id_perfil,cpf,chave) 
 				             VALUES (null,'$obj->nome','$obj->email','$obj->senha',
-                                     1,".$obj->perfil->id.",'$obj->cpf')";
+                                     1,".$obj->perfil->id.",'$obj->cpf','".$this->gerarChave()."')";
 		
 		return executarSql($sql);
 	}
@@ -36,8 +36,8 @@ class Usuario extends Base
 			    ativo     = '$obj->ativo',
 			    id_perfil = '".$obj->perfil->id."',
 			    cpf       = '$obj->cpf'
-                WHERE id  = $obj->id ";
-		
+                WHERE chave = '$obj->chave' ";
+
 		return executarSql($sql);
 	}
 	
@@ -54,6 +54,7 @@ class Usuario extends Base
 		    $usuario->cpf           = $linha['cpf'];
 		    $usuario->data_cadastro = $linha['data_cadastro'];
 		    $usuario->perfil        = $usuario->perfil->listarPorId($linha['id_perfil']);
+		    $usuario->chave         = $linha['chave'];
 		    
 		    $usuarios[] = $usuario;
 		}
@@ -74,9 +75,29 @@ class Usuario extends Base
 		    $usuario->data_cadastro = $linha['data_cadastro'];
 		    $usuario->senha	        = $linha['senha'];
 		    $usuario->perfil        = $usuario->perfil->listarPorId($linha['id_perfil']);
+		    $usuario->chave         = $linha['chave'];
 		}
 		
 		return $usuario;
+	}
+
+	public function listarPorChave($chave){
+	    self::listarObjetosPorChave($chave);
+	    $usuario = new Usuario();
+	    
+	    foreach ($this->array as $linha) {
+	        $usuario->id            = $linha['id'];
+	        $usuario->nome          = $linha['nome'];
+	        $usuario->email         = $linha['email'];
+	        $usuario->ativo         = $linha['ativo'];
+	        $usuario->cpf           = $linha['cpf'];
+	        $usuario->data_cadastro = $linha['data_cadastro'];
+	        $usuario->senha	        = $linha['senha'];
+	        $usuario->perfil        = $usuario->perfil->listarPorId($linha['id_perfil']);
+	        $usuario->chave         = $linha['chave'];
+	    }
+	    
+	    return $usuario;
 	}
 	
 	public function listarPorLoginESenha($login, $senha){
@@ -96,8 +117,8 @@ class Usuario extends Base
 		return $query->fetch_array(MYSQLI_ASSOC);
 	}
 	
-	public function deletar($id) {
-	    self::desativar($id);
+	public function deletar($chave) {
+	    self::desativarComChave($chave);
 	}
 	
 }
