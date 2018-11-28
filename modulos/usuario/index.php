@@ -36,21 +36,21 @@
     										foreach ($usuarioLista->listar() as $obj) {
     							        ?>
         									<tr>
-        										<td width='25px'><img title="<?php echo $obj->id ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>
+        										<td width='25px'><img title="<?php echo $obj->chave ?>" class="img-circle m-t-xs img-responsive" src="/img/user.jpg"></td>
         										<td><?php echo $obj->nome?></td>
         										<td><?php echo $obj->cpf?></td>
         										<td><?php echo $obj->email?></td>
         										<td><?php echo formatarDataHora($obj->data_cadastro)?></td>
         										<td><?php echo $obj->perfil->descricao?></td>
-        										<td><?php echo $obj->ativo ? "Ativo" : "Inativo"?></td>
+        										<td class="project-status" align="center"><?php mostrarAtivoInativo($obj->ativo)?></td>
         										<td align="center">
-        										    <button onclick="visualizar(<?php echo $obj->id?>)">
+        										    <button onclick="visualizar('<?php echo $obj->chave?>')">
         												<span class="glyphicon glyphicon-eye-open" title="Visualizar"></span>
         											</button>
-        											<button onclick="editar(<?php echo $obj->id?>)">
+        											<button onclick="editar('<?php echo $obj->chave?>')">
         												<span class="glyphicon glyphicon-edit" title="Editar"></span>
         											</button>
-        											<button onclick="excluir(<?php echo $obj->id?>)">
+        											<button onclick="excluir('<?php echo $obj->chave?>')">
         												<span class="glyphicon glyphicon-trash remove" title="Excluir"></span>
         											</button>
         											

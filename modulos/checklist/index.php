@@ -27,8 +27,9 @@
 											<th>Nome</th>
 											<th>Data Cadastro</th>
 					                        <th>Usuário Responsável</th>
+					                        <th>Meta</th>
 					                        <th>Status</th>
-					                        <th align="center">Ações</th>
+					                        <th>Ações</th>
 					                    </tr>
 	                    			</thead>
 	                   			 	<tbody>
@@ -41,7 +42,8 @@
         										<td><?php echo $obj->nome?></td>
         										<td><?php echo formatarDataHora($obj->data_cadastro)?></td>
         										<td><?php echo $obj->usuario->nome?></td>
-        										<td><?php echo $obj->ativo ? "Ativo" : "Inativo"?></td>
+        										<td><?php echo $obj->meta."%" ?></td>
+        										<td class="project-status" align="center"><?php mostrarAtivoInativo($obj->ativo)?></td>
         										<td align="center">
         										    <button onclick="visualizar(<?php echo $obj->id?>)">
         												<span class="glyphicon glyphicon-eye-open" title="Visualizar"></span>
@@ -69,6 +71,7 @@
 											<th>Nome</th>
 											<th>Data Cadastro</th>
 					                        <th>Usuário Responsável</th>
+					                        <th>Meta</th>
 					                        <th>Status</th>
 					                        <th align="center">Ações</th>
 					                    </tr>

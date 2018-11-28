@@ -105,5 +105,9 @@
 	    if ($disabled)
 	        echo "disabled='disabled'";
 	}
+	
+	function mostrarAtivoInativo($status){
+	    echo $status == '1' ? '<span class="label label-primary">Ativo</span>' : '<span class="label label-default">Inativo</span>';
+	}
 
 ?>
