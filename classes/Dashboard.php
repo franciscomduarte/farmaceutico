@@ -46,13 +46,22 @@ class Dashboard{
     
     public function getDashboardRespostasCheckListPorDia($setor=NULL){
         
-        $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta,
-                count(*) as total_respondido,
-                (select count(*) from internacao where (data_saida is null or data_saida <= r.data_resposta)) as total_esperado,
-                (select ROUND((count(*)*100)/total_esperado)) as porcentagem
-                from resposta_checklist r, checklist c
-                where c.id = r.id_checklist
-                group by c.id, date_format(r.data_resposta,'%Y-%m-%d')";
+        if ($setor==NULL){
+            $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta,
+                    count(*) as total_respondido,
+                    (select count(*) from internacao where (data_saida is null or data_saida <= r.data_resposta)) as total_esperado
+                    from resposta_checklist r, checklist c
+                    where c.id = r.id_checklist
+                    group by c.id, date_format(r.data_resposta,'%Y-%m-%d')";
+        }else{
+            $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta, count(*) as total_respondido,
+                    (select count(*) from internacao where (data_saida is null or data_saida <= r.data_resposta) and id_setor='$setor') as total_esperado
+                    from resposta_checklist r, checklist c, internacao i
+                    where c.id = r.id_checklist
+                    and   r.id_internacao = i.id
+                    and   i.id_setor = '$setor'  
+                    group by c.id, date_format(r.data_resposta,'%Y-%m-%d')";
+        }
         
         $query = executarSql($sql);
         
@@ -76,8 +85,8 @@ class Dashboard{
             $soma_total_metas      += $linha['meta'];
         }
        
-        $porcentagem_resposta = round(($soma_total_respondido*100)/$soma_total_esperados);
-        $porcentagem_meta     = $soma_total_metas/sizeof($array_dias);
+        $porcentagem_resposta = $soma_total_esperados > 0 ? round(($soma_total_respondido*100)/$soma_total_esperados) : 0;
+        $porcentagem_meta     = sizeof($array_dias)   > 0 ? $soma_total_metas/sizeof($array_dias) : 0;
         
         $this->grafico_barras_inicial = 
                 array(
