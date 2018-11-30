@@ -90,7 +90,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 								<button onclick="location.href='/checklist/novo/<?php echo $id?>'" class="btn btn-warning" type="button" >Editar</button>
 								<?php }?>
 								<?php if ($id != ""){?>
-								<button onclick="location.href='/checklist/add-item/<?php echo $id?>?add'" class="btn btn-primary" type="button">Adicionar itens</button>
+								<!--button onclick="location.href='/checklist/add-item/<?php echo $id?>?add'" class="btn btn-primary" type="button">Adicionar itens</button-->
 								<?php }?>
 							</div>
 						</div>

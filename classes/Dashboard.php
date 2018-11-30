@@ -4,6 +4,7 @@ class Dashboard{
     
     protected $total;
     protected $total_internados;
+    protected $grafico_barras_inicial;
         
     function __construct() {
         $sql = "SELECT TABLE_NAME, TABLE_ROWS 
@@ -45,15 +46,51 @@ class Dashboard{
     
     public function getDashboardRespostasCheckListPorDia($setor=NULL){
         
-        $sql = "select c.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta, c.nome, c.meta,
+        $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta,
                 count(*) as total_respondido,
                 (select count(*) from internacao where (data_saida is null or data_saida <= r.data_resposta)) as total_esperado,
                 (select ROUND((count(*)*100)/total_esperado)) as porcentagem
                 from resposta_checklist r, checklist c
                 where c.id = r.id_checklist
                 group by c.id, date_format(r.data_resposta,'%Y-%m-%d')";
+        
+        $query = executarSql($sql);
+        
+        $this->array = $query->fetch_all(MYSQLI_ASSOC);
+        
+        $array_dias = [];
+        $array_respondidos = [];
+        $array_esperados = [];
+        
+        $soma_total_respondido = 0;
+        $soma_total_esperados  = 0;
+        $soma_total_metas      = 0;
+        
+        foreach ($this->array as $linha){
+            $array_dias[]        = $linha['data_resposta'];
+            $array_respondidos[] = $linha['total_respondido'];
+            $array_esperados[]   = $linha['total_esperado'];
+            
+            $soma_total_respondido += $linha['total_respondido'];
+            $soma_total_esperados  += $linha['total_esperado'];
+            $soma_total_metas      += $linha['meta'];
+        }
        
+        $porcentagem_resposta = round(($soma_total_respondido*100)/$soma_total_esperados);
+        $porcentagem_meta     = $soma_total_metas/sizeof($array_dias);
+        
+        $this->grafico_barras_inicial = 
+                array(
+                    "dias"                  => '"'.implode('","',$array_dias).'"',
+                    "previstos"             => implode(',',$array_esperados),
+                    "respondidos"           => implode(',',$array_respondidos),
+                    "meta_calculada"        => $porcentagem_meta,
+                    "porcetagem_resposta"   => $porcentagem_resposta
+                );
     }
        
 }
+
+
+
 ?>

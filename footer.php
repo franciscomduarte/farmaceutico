@@ -13,13 +13,15 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    
+      
     <!-- Flot -->
     <script src="/js/plugins/flot/jquery.flot.js"></script>
     <script src="/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
     <script src="/js/plugins/flot/jquery.flot.spline.js"></script>
     <script src="/js/plugins/flot/jquery.flot.resize.js"></script>
     <script src="/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="js/plugins/flot/jquery.flot.symbol.js"></script>
+    <script src="js/plugins/flot/jquery.flot.time.js"></script>
 
     <!-- Peity -->
     <script src="/js/plugins/peity/jquery.peity.min.js"></script>
@@ -57,7 +59,21 @@
     <script src="/js/plugins/codemirror/mode/xml/xml.js"></script>
     
     <script src="/js/plugins/dualListbox/jquery.bootstrap-duallistbox.js"></script>
-    
+
+    <!-- jQuery UI -->
+    <script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- Jvectormap -->
+    <script src="js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <!-- EayPIE -->
+    <script src="js/plugins/easypiechart/jquery.easypiechart.js"></script>
+
+    <!-- d3 and c3 charts -->
+    <script src="js/plugins/c3-0.6.9/d3-5.4.0.min.js"></script>
+    <script src="js/plugins/c3-0.6.9/c3.js"></script>
+ 
     <script>
 
     $('.dataTables-example').DataTable({
@@ -137,7 +153,130 @@
         }
     };
 
+    $(document).ready(function() {
 
-    </script>
+        var dataset = [
+            {
+                label: "Previstos",
+                data: data3,
+                color: "#1ab394",
+                bars: {
+                    show: true,
+                    align: "center",
+                    barWidth: 24 * 60 * 60 * 600,
+                    lineWidth:0
+                }
+
+            }, {
+                label: "Executados",
+                data: data2,
+                yaxis: 2,
+                color: "#1C84C6",
+                lines: {
+                    lineWidth:1,
+                        show: true,
+                        fill: true,
+                    fillColor: {
+                        colors: [{
+                            opacity: 0.2
+                        }, {
+                            opacity: 0.4
+                        }]
+                    }
+                },
+                splines: {
+                    show: false,
+                    tension: 0.6,
+                    lineWidth: 1,
+                    fill: 0.1
+                },
+            }
+        ];
+
+
+        var options = {
+            xaxis: {
+                mode: "time",
+                tickSize: [3, "day"],
+                tickLength: 0,
+                axisLabel: "Date",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Arial',
+                axisLabelPadding: 10,
+                color: "#d5d5d5"
+            },
+            yaxes: [{
+                position: "left",
+                max: 1070,
+                color: "#d5d5d5",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Arial',
+                axisLabelPadding: 3
+            }, {
+                position: "right",
+                clolor: "#d5d5d5",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: ' Arial',
+                axisLabelPadding: 67
+            }
+            ],
+            legend: {
+                noColumns: 1,
+                labelBoxBorderColor: "#000000",
+                position: "nw"
+            },
+            grid: {
+                hoverable: false,
+                borderWidth: 0
+            }
+        };
+
+        function gd(year, month, day) {
+            return new Date(year, month - 1, day).getTime();
+        }
+
+        var previousPoint = null, previousLabel = null;
+
+        $.plot($("#flot-dashboard-chart"), dataset, options);
+
+        var mapData = {
+            "US": 298,
+            "SA": 200,
+            "DE": 220,
+            "FR": 540,
+            "CN": 120,
+            "AU": 760,
+            "BR": 550,
+            "IN": 200,
+            "GB": 120,
+        };
+
+        $('#world-map').vectorMap({
+            map: 'world_mill_en',
+            backgroundColor: "transparent",
+            regionStyle: {
+                initial: {
+                    fill: '#e4e4e4',
+                    "fill-opacity": 0.9,
+                    stroke: 'none',
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                }
+            },
+
+            series: {
+                regions: [{
+                    values: mapData,
+                    scale: ["#1ab394", "#22d6b1"],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+        });
+    });
+</script>
+
 </body>
 </html>

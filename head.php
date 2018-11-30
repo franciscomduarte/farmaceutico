@@ -29,6 +29,7 @@
    	 	<link href="/css/plugins/steps/jquery.steps.css" rel="stylesheet">
    	 	<link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
    		<link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+   		<link href="/css/plugins/c3-0.6.9/c3.css" rel="stylesheet">
 	</head>
 	
 	<script src="/js/jquery-3.1.1.min.js"></script>
@@ -102,7 +103,7 @@
         });
 
         var lineData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: ["Janeiro", "February", "March", "April", "May", "June", "July"],
             datasets: [
                 {
                     label: "Example dataset",

@@ -16,7 +16,7 @@
 	                        <h5>Lista de Usuários</h5>
 	                    </div>
 	                   <div class="ibox-title-right col-lg-4">
-	                        <button type="button" class="btn btn-info" onclick="location.href='/checklist/novo/'">Novo</button>
+	                        <button type="button" class="btn btn-info" disabled="disabled" onclick="location.href='/checklist/novo/'">Novo</button>
 	                    </div>
 	                    <div class="ibox-content">
 	                        <div class="table-responsive">
@@ -25,11 +25,11 @@
 					                    <tr>
 					                        <th>ID</th>
 											<th>Nome</th>
-											<th>Data Cadastro</th>
-					                        <th>Usuário Responsável</th>
-					                        <th>Meta</th>
-					                        <th>Status</th>
-					                        <th>Ações</th>
+											<th width="12%">Data Cadastro</th>
+					                        <th width="15%">Usuário Responsável</th>
+					                        <th width="5%">Meta</th>
+					                        <th width="5%">Status</th>
+					                        <th width="12%">Ações</th>
 					                    </tr>
 	                    			</thead>
 	                   			 	<tbody>
@@ -42,7 +42,7 @@
         										<td><?php echo $obj->nome?></td>
         										<td><?php echo formatarDataHora($obj->data_cadastro)?></td>
         										<td><?php echo $obj->usuario->nome?></td>
-        										<td><?php echo $obj->meta."%" ?></td>
+        										<td align="center"><span class="pie" title="<?php echo "  ".$obj->meta."%" ?>"><?php echo $obj->meta."/100" ?></span></td>
         										<td class="project-status" align="center"><?php mostrarAtivoInativo($obj->ativo)?></td>
         										<td align="center">
         										    <button onclick="visualizar(<?php echo $obj->id?>)">

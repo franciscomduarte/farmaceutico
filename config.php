@@ -6,6 +6,7 @@
 define('NOME_SISTEMA', 'Sistema de Checklist para UTIs');
 define('SIGLA_SISTEMA', 'c.UTI');
 define('AMBIENTE','PROD');
+define('SETOR_ATUAL','5');
 
 ###################################################################
 ## PARAMENTROS DO BANCO DE DADOS

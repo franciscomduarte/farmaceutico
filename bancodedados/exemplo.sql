@@ -1,35 +1,35 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
--- https://www.phpmyadmin.net/
+-- version 4.4.15.10
+-- https://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 27-Nov-2018 às 03:58
--- Versão do servidor: 10.1.24-MariaDB
--- PHP Version: 7.0.20
+-- Tempo de geração: 30/11/2018 às 13:41
+-- Versão do servidor: 5.6.42
+-- Versão do PHP: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Database: `exemplo`
+-- Banco de dados: `e2f10`
 --
+CREATE DATABASE IF NOT EXISTS `e2f10` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `e2f10`;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `alternativa`
+-- Estrutura para tabela `alternativa`
 --
 
-CREATE TABLE `alternativa` (
+CREATE TABLE IF NOT EXISTS `alternativa` (
   `id` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
   `descricao` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `alternativa`
+-- Fazendo dump de dados para tabela `alternativa`
 --
 
 INSERT INTO `alternativa` (`id`, `id_item`, `descricao`) VALUES
@@ -47,38 +47,39 @@ INSERT INTO `alternativa` (`id`, `id_item`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `checklist`
+-- Estrutura para tabela `checklist`
 --
 
-CREATE TABLE `checklist` (
+CREATE TABLE IF NOT EXISTS `checklist` (
   `id` int(11) NOT NULL,
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `usuario_id` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
-  `ativo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ativo` tinyint(1) NOT NULL,
+  `meta` int(11) NOT NULL DEFAULT '75'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `checklist`
+-- Fazendo dump de dados para tabela `checklist`
 --
 
-INSERT INTO `checklist` (`id`, `data_cadastro`, `usuario_id`, `nome`, `ativo`) VALUES
-(1, '2018-11-20 16:52:21', 3, 'Bundle PAV (este é para pacientes que estão dependentes do\r\nrespirador mecânico, ou seja está internado na UTI)', 1),
-(2, '2018-11-20 17:39:19', 3, 'Bundle Sonda Vesical (pacientes em uso de sonda vesical)', 1);
+INSERT INTO `checklist` (`id`, `data_cadastro`, `usuario_id`, `nome`, `ativo`, `meta`) VALUES
+(1, '2018-11-20 16:52:21', 3, 'Bundle PAV (este é para pacientes que estão dependentes dorespirador mecânico, ou seja está internado na UTI)', 1, 95),
+(2, '2018-11-20 17:39:19', 3, 'Bundle Sonda Vesical (pacientes em uso de sonda vesical)', 1, 75);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `checklist_item`
+-- Estrutura para tabela `checklist_item`
 --
 
-CREATE TABLE `checklist_item` (
+CREATE TABLE IF NOT EXISTS `checklist_item` (
   `id_checklist` int(11) NOT NULL,
   `id_item` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `checklist_item`
+-- Fazendo dump de dados para tabela `checklist_item`
 --
 
 INSERT INTO `checklist_item` (`id_checklist`, `id_item`) VALUES
@@ -91,16 +92,16 @@ INSERT INTO `checklist_item` (`id_checklist`, `id_item`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `convenio`
+-- Estrutura para tabela `convenio`
 --
 
-CREATE TABLE `convenio` (
+CREATE TABLE IF NOT EXISTS `convenio` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `convenio`
+-- Fazendo dump de dados para tabela `convenio`
 --
 
 INSERT INTO `convenio` (`id`, `nome`) VALUES
@@ -111,10 +112,10 @@ INSERT INTO `convenio` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `internacao`
+-- Estrutura para tabela `internacao`
 --
 
-CREATE TABLE `internacao` (
+CREATE TABLE IF NOT EXISTS `internacao` (
   `id` int(11) NOT NULL,
   `numero_internacao` varchar(10) DEFAULT NULL,
   `data_internacao` datetime DEFAULT NULL,
@@ -122,10 +123,10 @@ CREATE TABLE `internacao` (
   `id_setor` int(11) NOT NULL,
   `id_paciente` int(11) NOT NULL,
   `id_convenio` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `internacao`
+-- Fazendo dump de dados para tabela `internacao`
 --
 
 INSERT INTO `internacao` (`id`, `numero_internacao`, `data_internacao`, `data_saida`, `id_setor`, `id_paciente`, `id_convenio`) VALUES
@@ -138,17 +139,17 @@ INSERT INTO `internacao` (`id`, `numero_internacao`, `data_internacao`, `data_sa
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `item`
+-- Estrutura para tabela `item`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE IF NOT EXISTS `item` (
   `id` int(11) NOT NULL,
   `enunciado` varchar(200) NOT NULL,
   `tipo` enum('ME','VF','TX','MV') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `item`
+-- Fazendo dump de dados para tabela `item`
 --
 
 INSERT INTO `item` (`id`, `enunciado`, `tipo`) VALUES
@@ -166,19 +167,19 @@ INSERT INTO `item` (`id`, `enunciado`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `paciente`
+-- Estrutura para tabela `paciente`
 --
 
-CREATE TABLE `paciente` (
+CREATE TABLE IF NOT EXISTS `paciente` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `cpf` varchar(11) NOT NULL,
   `nascimento` date DEFAULT NULL,
   `id_convenio` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `paciente`
+-- Fazendo dump de dados para tabela `paciente`
 --
 
 INSERT INTO `paciente` (`id`, `nome`, `cpf`, `nascimento`, `id_convenio`) VALUES
@@ -188,16 +189,16 @@ INSERT INTO `paciente` (`id`, `nome`, `cpf`, `nascimento`, `id_convenio`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `perfil`
+-- Estrutura para tabela `perfil`
 --
 
-CREATE TABLE `perfil` (
+CREATE TABLE IF NOT EXISTS `perfil` (
   `id` int(11) NOT NULL,
   `descricao` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `perfil`
+-- Fazendo dump de dados para tabela `perfil`
 --
 
 INSERT INTO `perfil` (`id`, `descricao`) VALUES
@@ -209,18 +210,18 @@ INSERT INTO `perfil` (`id`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `permissao`
+-- Estrutura para tabela `permissao`
 --
 
-CREATE TABLE `permissao` (
+CREATE TABLE IF NOT EXISTS `permissao` (
   `id` int(11) NOT NULL,
   `descricao` varchar(100) NOT NULL,
   `url` varchar(300) DEFAULT NULL,
   `id_permissao_pai` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `permissao`
+-- Fazendo dump de dados para tabela `permissao`
 --
 
 INSERT INTO `permissao` (`id`, `descricao`, `url`, `id_permissao_pai`) VALUES
@@ -232,58 +233,59 @@ INSERT INTO `permissao` (`id`, `descricao`, `url`, `id_permissao_pai`) VALUES
 (7, 'Paciente', '/paciente', 2),
 (8, 'Ajuda', NULL, NULL),
 (10, 'Internação', '/internacao', 2),
-(15, 'Teste', '/teste', 14),
-(16, 'Iniciar Seleção', '/selecao/iniciar', 14),
-(18, 'Criar', '/checklist', 3),
+(15, 'Usuário', '/usuario', 1),
+(16, '', '/selecao/iniciar', 14),
+(18, 'Listar', '/checklist', 3),
 (19, 'UTI', '/checklist-resposta', 3);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `permissao_perfil`
+-- Estrutura para tabela `permissao_perfil`
 --
 
-CREATE TABLE `permissao_perfil` (
+CREATE TABLE IF NOT EXISTS `permissao_perfil` (
   `id_permissao` int(11) NOT NULL,
   `id_perfil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `permissao_perfil`
+-- Fazendo dump de dados para tabela `permissao_perfil`
 --
 
 INSERT INTO `permissao_perfil` (`id_permissao`, `id_perfil`) VALUES
 (1, 1),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(3, 1),
 (5, 1),
 (6, 1),
 (7, 1),
-(2, 1),
 (10, 1),
-(2, 4),
-(10, 4),
-(2, 3),
-(10, 3),
-(2, 2),
 (10, 2),
+(10, 3),
+(10, 4),
+(15, 1),
 (18, 1),
-(19, 1),
-(3, 1);
+(19, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `resposta_checklist`
+-- Estrutura para tabela `resposta_checklist`
 --
 
-CREATE TABLE `resposta_checklist` (
+CREATE TABLE IF NOT EXISTS `resposta_checklist` (
   `id` int(11) NOT NULL,
   `id_checklist` int(11) NOT NULL,
   `data_resposta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_internacao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `resposta_checklist`
+-- Fazendo dump de dados para tabela `resposta_checklist`
 --
 
 INSERT INTO `resposta_checklist` (`id`, `id_checklist`, `data_resposta`, `id_internacao`) VALUES
@@ -292,22 +294,23 @@ INSERT INTO `resposta_checklist` (`id`, `id_checklist`, `data_resposta`, `id_int
 (5, 1, '2018-11-24 02:29:54', 2),
 (6, 1, '2018-11-24 03:07:04', 2),
 (7, 1, '2018-11-27 02:30:43', 4),
-(8, 1, '2018-11-27 02:50:55', 2);
+(8, 1, '2018-11-27 02:50:55', 2),
+(9, 1, '2018-11-28 17:47:03', 4);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `resposta_checklist_item`
+-- Estrutura para tabela `resposta_checklist_item`
 --
 
-CREATE TABLE `resposta_checklist_item` (
+CREATE TABLE IF NOT EXISTS `resposta_checklist_item` (
   `id_resposta_checklist` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
   `id_resposta_alternativa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `resposta_checklist_item`
+-- Fazendo dump de dados para tabela `resposta_checklist_item`
 --
 
 INSERT INTO `resposta_checklist_item` (`id_resposta_checklist`, `id_item`, `id_resposta_alternativa`) VALUES
@@ -340,36 +343,41 @@ INSERT INTO `resposta_checklist_item` (`id_resposta_checklist`, `id_item`, `id_r
 (8, 2, 1),
 (8, 3, 5),
 (8, 5, 7),
-(8, 6, 9);
+(8, 6, 9),
+(9, 1, 3),
+(9, 2, 1),
+(9, 3, 6),
+(9, 5, 7),
+(9, 6, 9);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `setor`
+-- Estrutura para tabela `setor`
 --
 
-CREATE TABLE `setor` (
+CREATE TABLE IF NOT EXISTS `setor` (
   `id` int(11) NOT NULL,
   `nome` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `setor`
+-- Fazendo dump de dados para tabela `setor`
 --
 
 INSERT INTO `setor` (`id`, `nome`) VALUES
-(2, 'bbbbbbqqq'),
-(3, 'ASADASDAS'),
-(4, 'Molina'),
-(5, 'asdasdas');
+(2, 'UTI - TMO'),
+(3, 'UTI - NEONATAL'),
+(4, 'UTI - ESPECIALIZADA'),
+(5, 'UTI - SEMI-INTENSIVA');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuario`
+-- Estrutura para tabela `usuario`
 --
 
-CREATE TABLE `usuario` (
+CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(11) NOT NULL,
   `nome` varchar(60) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -377,39 +385,43 @@ CREATE TABLE `usuario` (
   `ativo` tinyint(1) NOT NULL DEFAULT '1',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cpf` varchar(45) CHARACTER SET dec8 NOT NULL,
-  `id_perfil` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_perfil` int(11) NOT NULL,
+  `chave` varchar(32) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `usuario`
+-- Fazendo dump de dados para tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `data_cadastro`, `cpf`, `id_perfil`) VALUES
-(3, 'Francisco Carlos Molina', 'francisco.molina@enap.gov.br', 'e10adc3949ba59abbe56e057f20f883e', 0, '2017-10-16 02:00:00', '00000000000', 1),
-(4, 'Admin', 'admin@enap.gov.br', '202cb962ac59075b964b07152d234b70', 1, '2017-11-01 02:00:00', '0000000000', 1),
-(22, 'Francisco Carlos Molina Duarte Júnior', 'francisco.molina', '93d36da30ded8bd17536d1c642636243', 1, '2017-11-17 19:53:50', '98920650187', 2),
-(23, 'teste', 'teste1@teste.com', '202cb962ac59075b964b07152d234b70', 1, '2017-11-17 19:57:20', '555.555.555-55', 3);
+INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `data_cadastro`, `cpf`, `id_perfil`, `chave`) VALUES
+(3, 'Francisco Carlos Molina', 'francisco.molina@enap.gov.br', 'c56d0e9a7ccec67b4ea131655038d604', 0, '2017-10-16 02:00:00', '00000000000', 1, '3c2be6e69e254eb6ac0dfece4b63ba01'),
+(4, 'Admin', 'admin@enap.gov.br', '202cb962ac59075b964b07152d234b70', 1, '2017-11-01 02:00:00', '0000000000', 1, '9654d70a804218ea38c50617e5c75435'),
+(22, 'Francisco Carlos Molina Duarte Júnior', 'francisco.molina', '93d36da30ded8bd17536d1c642636243', 1, '2017-11-17 19:53:50', '98920650187', 2, 'dcde4924e17a3c443dcaa7bdcf6bc8ee'),
+(23, 'teste', 'teste1@teste.com', '202cb962ac59075b964b07152d234b70', 1, '2017-11-17 19:57:20', '555.555.555-55', 3, 'ecf33f5b2170425128749c6d4473dde5'),
+(24, 'Eric Soares Dias', 'ericsoaresd@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 1, '2018-11-27 23:30:40', '444.444.444-44', 1, '189d4e66a41f85286085e7f8006a1925'),
+(25, 'Flaviano O. Silva', 'fosbsb@gmail.com', 'd3426d47a74ac758a7167846d80ddcdc', 1, '2018-11-27 23:31:22', '722.408.221-04', 1, '32439f3ce713c1224772abb81d942c99'),
+(26, 'Janaína de Paula Campos', 'janainasabrina@gmail.com', 'ba87017893b16b6fdad4ff18b391d56b', 1, '2018-11-28 02:00:43', '721.061.071-53', 2, '3f05aec20e0a23addaaf539c39b3d8b3');
 
 --
--- Indexes for dumped tables
+-- Índices de tabelas apagadas
 --
 
 --
--- Indexes for table `alternativa`
+-- Índices de tabela `alternativa`
 --
 ALTER TABLE `alternativa`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_alternativa_item1_idx` (`id_item`);
 
 --
--- Indexes for table `checklist`
+-- Índices de tabela `checklist`
 --
 ALTER TABLE `checklist`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_checklist_usuario1_idx` (`usuario_id`);
 
 --
--- Indexes for table `checklist_item`
+-- Índices de tabela `checklist_item`
 --
 ALTER TABLE `checklist_item`
   ADD PRIMARY KEY (`id_checklist`,`id_item`),
@@ -417,13 +429,13 @@ ALTER TABLE `checklist_item`
   ADD KEY `fk_checklist_has_item_checklist1_idx` (`id_checklist`);
 
 --
--- Indexes for table `convenio`
+-- Índices de tabela `convenio`
 --
 ALTER TABLE `convenio`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `internacao`
+-- Índices de tabela `internacao`
 --
 ALTER TABLE `internacao`
   ADD PRIMARY KEY (`id`),
@@ -431,13 +443,13 @@ ALTER TABLE `internacao`
   ADD KEY `fk_internacao_paciente1_idx` (`id_paciente`);
 
 --
--- Indexes for table `item`
+-- Índices de tabela `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `paciente`
+-- Índices de tabela `paciente`
 --
 ALTER TABLE `paciente`
   ADD PRIMARY KEY (`id`),
@@ -445,26 +457,27 @@ ALTER TABLE `paciente`
   ADD KEY `fk_paciente_convenio1_idx` (`id_convenio`);
 
 --
--- Indexes for table `perfil`
+-- Índices de tabela `perfil`
 --
 ALTER TABLE `perfil`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `permissao`
+-- Índices de tabela `permissao`
 --
 ALTER TABLE `permissao`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `permissao_perfil`
+-- Índices de tabela `permissao_perfil`
 --
 ALTER TABLE `permissao_perfil`
+  ADD UNIQUE KEY `id_permissao` (`id_permissao`,`id_perfil`),
   ADD KEY `fk_permissao_perfil_permissao1_idx` (`id_permissao`),
   ADD KEY `fk_permissao_perfil_perfil1_idx` (`id_perfil`);
 
 --
--- Indexes for table `resposta_checklist`
+-- Índices de tabela `resposta_checklist`
 --
 ALTER TABLE `resposta_checklist`
   ADD PRIMARY KEY (`id`),
@@ -472,7 +485,7 @@ ALTER TABLE `resposta_checklist`
   ADD KEY `fk_reposta_checklist_internacao1_idx` (`id_internacao`);
 
 --
--- Indexes for table `resposta_checklist_item`
+-- Índices de tabela `resposta_checklist_item`
 --
 ALTER TABLE `resposta_checklist_item`
   ADD KEY `fk_reposta_checklist_has_item_item1_idx` (`id_item`),
@@ -480,131 +493,132 @@ ALTER TABLE `resposta_checklist_item`
   ADD KEY `fk_reposta_checklist_item_alternativa1_idx` (`id_resposta_alternativa`);
 
 --
--- Indexes for table `setor`
+-- Índices de tabela `setor`
 --
 ALTER TABLE `setor`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `usuario`
+-- Índices de tabela `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `chave` (`chave`),
   ADD KEY `fk_usuario_perfil1_idx` (`id_perfil`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
 --
--- AUTO_INCREMENT for table `alternativa`
+-- AUTO_INCREMENT de tabela `alternativa`
 --
 ALTER TABLE `alternativa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
--- AUTO_INCREMENT for table `checklist`
+-- AUTO_INCREMENT de tabela `checklist`
 --
 ALTER TABLE `checklist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `convenio`
+-- AUTO_INCREMENT de tabela `convenio`
 --
 ALTER TABLE `convenio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `internacao`
+-- AUTO_INCREMENT de tabela `internacao`
 --
 ALTER TABLE `internacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `item`
+-- AUTO_INCREMENT de tabela `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
--- AUTO_INCREMENT for table `paciente`
+-- AUTO_INCREMENT de tabela `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 --
--- AUTO_INCREMENT for table `perfil`
+-- AUTO_INCREMENT de tabela `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `permissao`
+-- AUTO_INCREMENT de tabela `permissao`
 --
 ALTER TABLE `permissao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
--- AUTO_INCREMENT for table `resposta_checklist`
+-- AUTO_INCREMENT de tabela `resposta_checklist`
 --
 ALTER TABLE `resposta_checklist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT for table `setor`
+-- AUTO_INCREMENT de tabela `setor`
 --
 ALTER TABLE `setor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `usuario`
+-- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
--- Constraints for dumped tables
+-- Restrições para dumps de tabelas
 --
 
 --
--- Limitadores para a tabela `alternativa`
+-- Restrições para tabelas `alternativa`
 --
 ALTER TABLE `alternativa`
   ADD CONSTRAINT `fk_alternativa_item1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `checklist`
+-- Restrições para tabelas `checklist`
 --
 ALTER TABLE `checklist`
   ADD CONSTRAINT `fk_checklist_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `checklist_item`
+-- Restrições para tabelas `checklist_item`
 --
 ALTER TABLE `checklist_item`
   ADD CONSTRAINT `fk_checklist_has_item_checklist1` FOREIGN KEY (`id_checklist`) REFERENCES `checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_checklist_has_item_item1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `internacao`
+-- Restrições para tabelas `internacao`
 --
 ALTER TABLE `internacao`
   ADD CONSTRAINT `fk_internacao_paciente1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_internacao_setor1` FOREIGN KEY (`id_setor`) REFERENCES `setor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `paciente`
+-- Restrições para tabelas `paciente`
 --
 ALTER TABLE `paciente`
   ADD CONSTRAINT `fk_paciente_convenio1` FOREIGN KEY (`id_convenio`) REFERENCES `convenio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `permissao_perfil`
+-- Restrições para tabelas `permissao_perfil`
 --
 ALTER TABLE `permissao_perfil`
   ADD CONSTRAINT `fk_permissao_perfil_perfil1` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_permissao_perfil_permissao1` FOREIGN KEY (`id_permissao`) REFERENCES `permissao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `resposta_checklist`
+-- Restrições para tabelas `resposta_checklist`
 --
 ALTER TABLE `resposta_checklist`
   ADD CONSTRAINT `fk_reposta_checklist_checklist1` FOREIGN KEY (`id_checklist`) REFERENCES `checklist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_reposta_checklist_internacao1` FOREIGN KEY (`id_internacao`) REFERENCES `internacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `resposta_checklist_item`
+-- Restrições para tabelas `resposta_checklist_item`
 --
 ALTER TABLE `resposta_checklist_item`
   ADD CONSTRAINT `fk_reposta_checklist_has_item_item1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -612,8 +626,7 @@ ALTER TABLE `resposta_checklist_item`
   ADD CONSTRAINT `fk_reposta_checklist_item_alternativa1` FOREIGN KEY (`id_resposta_alternativa`) REFERENCES `alternativa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `usuario`
+-- Restrições para tabelas `usuario`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `fk_usuario_perfil1` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-COMMIT;
