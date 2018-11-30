@@ -1,10 +1,11 @@
 <?php 
-    $dashboard = new Dashboard();
-    $dashboard->getDashboardRespostasCheckListPorDia();
-    $setor_atual = $_REQUEST['setor'];
+$setor_atual = $_REQUEST['setor'];
+
+
+$dashboard = new Dashboard();
+$dashboard->getDashboardRespostasCheckListPorDia($setor_atual);
+    
 ?>       
-       
-      
         <div class="wrapper wrapper-content">
             <div class="container">
             <div class="row">
@@ -36,7 +37,7 @@
                                     <ul class="stat-list">
                                         <li>
                                             <h2 class="no-margins"><?php  printf("%02d",$dashboard->total["resposta_checklist"]) ?></h2>
-                                            <small>Total de respostas no período</small>
+                                            <small>Total de respostas no geral de todos os setores</small>
                                             <div class="stat-percent"><?php echo $dashboard->grafico_barras_inicial["porcetagem_resposta"];?>%</i></div>
                                             <div class="progress progress-mini">
                                                 <div style="width: <?php echo $dashboard->grafico_barras_inicial["porcetagem_resposta"];?>%;" class="progress-bar"></div>
@@ -179,7 +180,15 @@ $(document).ready(function() {
     };
 
     var barOptions = {
-        responsive: true
+        responsive: true,
+        scales: {
+			yAxes: [{
+				ticks: {
+					min: 0,
+					max: <?php echo $dashboard->grafico_barras_inicial["maior_valor_grafico"];?>
+				}
+			}]
+		}
     };
 
     var ctx2 = document.getElementById("barChartChecklist").getContext("2d");
