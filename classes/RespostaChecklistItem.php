@@ -11,7 +11,7 @@ class RespostaChecklistItem extends Base
 	}
 	
 	public function inserir($obj){
-		echo $sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, id_resposta_alternativa) 
+		$sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, id_resposta_alternativa) 
 				               VALUES ($obj->id_resposta_checklist, $obj->id_item, $obj->id_resposta_alternativa)";
         return  executarSql($sql);
 	}
