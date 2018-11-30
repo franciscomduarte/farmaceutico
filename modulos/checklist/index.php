@@ -51,7 +51,7 @@
         											<button onclick="editar(<?php echo $obj->id?>)">
         												<span class="glyphicon glyphicon-edit" title="Editar"></span>
         											</button>
-         											<button onclick="addItens(<?php echo $obj->id?>)">
+         											<button onclick="addItens(<?php echo $obj->id?>)" disabled="disabled">
         												<span class="glyphicon glyphicon-list" title="Adcionar Itens"></span>
         											</button>
         											<button onclick="excluir(<?php echo $obj->id?>)">
