@@ -45,6 +45,22 @@ $usuario = $_SESSION['usuario'];
                     	}
                     ?>
                     
+                   <li class="dropdown">
+                    	<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Checklists <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                        	<?php 
+                        	
+                            	$objChecklist = new Checklist();
+                            	$bundles = $objChecklist->listarAtivos();
+                            	foreach ($bundles as $bundle) {
+                        	?>
+                            	<li><a href="/checklist-resposta/<?php echo $bundle->id?>"><?php echo $bundle->sigla ?></a></li>
+                            <?php 
+                        		}
+                            ?>
+                        </ul>
+                    </li>
+                    
                 </ul>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>

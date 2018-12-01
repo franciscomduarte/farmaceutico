@@ -11,18 +11,30 @@ class Internacao extends Base
 	protected $paciente;
 	protected $convenio;
 	
+	protected $checklists = [];
+	
 	public function __construct(){
 	    $this->tabela   = "internacao";
+	    $this->tabela_relacionada = "internacao_checklist";
 	    $this->setor    = new Setor();
 	    $this->convenio = new Convenio();
 	    $this->paciente = new Paciente();
 	}
 	
 	public function inserir($obj){
-		echo $sql = "INSERT INTO ".$this->tabela." (id, numero_internacao, data_internacao, id_setor, id_paciente, id_convenio) 
+		$sql = "INSERT INTO ".$this->tabela." (id, numero_internacao, data_internacao, id_setor, id_paciente, id_convenio) 
                 VALUES (null, '$obj->numero_internacao', '$obj->data_internacao', ".$obj->setor->id.", 
 		                ".$obj->paciente->id.", ".$obj->convenio->id.")";
-		return executarSql($sql);
+	    executarSql($sql);
+	    
+	    $id_internacao_inserida = self::retornaIdInserido();
+	    
+	    // insere na tabela internacao_checklist
+	    foreach ($obj->checklists as $checklist) {
+	        $sqlRelacionado = "INSERT INTO ".$this->tabela_relacionada." (id_internacao, id_checklist)
+                               VALUES ($id_internacao_inserida, $checklist)";
+	        executarSql($sqlRelacionado);
+	    }
 	}
 	
 	public function editar($obj){
@@ -65,12 +77,14 @@ class Internacao extends Base
 	    return $internacoes;
 	}
 	
-	public function listarAtivas(){
+	public function listarAtivas($id_checklist){
 	    
 	    $sql = "SELECT *
-                FROM internacao i
+                FROM internacao i, internacao_checklist ic
                 WHERE 1 = 1
-                AND   i.data_saida is null
+                AND i.id = ic.id_internacao
+                AND i.data_saida is null
+                AND ic.id_checklist = $id_checklist
                 ORDER BY i.data_internacao ";
 	    $query = executarSql($sql);
 	    $array = $query->fetch_all(MYSQLI_ASSOC);

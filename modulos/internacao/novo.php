@@ -9,10 +9,15 @@ $paciente = new Paciente();
 $setor   = new Setor();
 $setores = $setor->listar();
 
+
+
 if($id) {
     $internacao  = new Internacao();
     $obj         = $internacao->listarPorId($id);
     $objPaciente = $obj->paciente;
+    
+    $objChecklist = new Checklist();
+    $bundles = $objChecklist->listarPendentesPorInternacao($id);
 }
 if(isset($_REQUEST['cpf'])) {
     $paciente->cpf = $_REQUEST['cpf'];
@@ -60,11 +65,11 @@ if(isset($_REQUEST['cpf'])) {
                         
                         
                         <div class="row">
-                        	<div class="col-sm-12"><label>Número da Internação *</label> <input type="text" value="<?php echo $obj->numero_internacao ? $obj->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required"></div>
+                        	<div class="col-sm-6"><label>Número da Internação *</label> <input type="text" value="<?php echo $obj->numero_internacao ? $obj->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required"></div>
+                       		<div class="col-sm-6"><label>Data da Internação *</label> <input type="date" value="<?php echo $obj->data_internacao ? formataDataMysql($obj->data_internacao) : null ?>" class="form-control" name="data_internacao" required="required"></div>
                         </div>
                         <div class="row">
-                        	<div class="col-sm-6"><label>Data da Internação *</label> <input type="date" value="<?php echo $obj->data_internacao ? formataDataMysql($obj->data_internacao) : null ?>" class="form-control" name="data_internacao" required="required"></div>
-                            <div class="col-sm-6">
+                        	<div class="col-sm-6">
         						<label>Setor *</label> 
                                	<div class="form-check">
         						<label class="form-check-label">
@@ -81,8 +86,25 @@ if(isset($_REQUEST['cpf'])) {
         						</label>
         						</div>
         					</div>
+                            <div class="col-sm-6">
+        						<label>Bundles *</label> 
+                               	<div class="form-check">
+        						<label class="form-check-label">
+        							<select class="form-control" name="id_checklists[]" required="required" multiple="multiple">
+        							<?php foreach ($bundles as $bundle) { ?>
+            							<option value="<?php echo $bundle->id?>" id="<?php echo $bundle->id ?>" <?php echo $obj->id_setor == $bundle->id ? 'selected' : ''?>>
+            							<?php echo $bundle->sigla; ?>
+            							</option>
+        							<?php
+        							} 
+        							?>	
+        							
+        							</select>						
+        						</label>
+        						</div>
+        					</div>
         				</div>
-                        
+        				
                         <div class="row">&nbsp;</div>  
                         <div>
                         	<button class="btn btn-white" type="button" onclick="history.go(-1);">Cancelar</button>

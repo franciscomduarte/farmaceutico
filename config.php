@@ -5,7 +5,7 @@
 ###################################################################
 define('NOME_SISTEMA', 'Sistema de Checklist para UTIs');
 define('SIGLA_SISTEMA', 'c.UTI');
-define('AMBIENTE','PROD');
+define('AMBIENTE','DEV');
 define('SETOR_ATUAL','5');
 
 ###################################################################
@@ -15,7 +15,7 @@ define('SETOR_ATUAL','5');
 $ip = getenv("REMOTE_ADDR");
 if($ip == '127.0.0.1' && AMBIENTE == "DEV") {
     define('HOST', 'localhost');
-    define('DBNAME', 'exemplo');
+    define('DBNAME', 'e2f10');
     define('CHARSET', 'utf8');
     define('USER', 'root');
     define('PASSWORD', '');

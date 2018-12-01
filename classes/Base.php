@@ -4,6 +4,7 @@ abstract class Base
 {
     
     protected $tabela;
+    protected $tabela_relacionada;
     protected $array;
     protected $chave;
     
@@ -46,6 +47,12 @@ abstract class Base
     
     protected function listarObjetos(){
         $sql   = "SELECT * FROM ".$this->tabela." WHERE 1=1 order by 2";
+        $query = executarSql($sql);
+        $this->array = $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    protected function listarObjetosAtivos(){
+        $sql   = "SELECT * FROM ".$this->tabela." WHERE 1=1 and ativo = 1 order by 2";
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
     }
