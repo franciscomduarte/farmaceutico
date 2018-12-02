@@ -35,8 +35,8 @@ class Dashboard{
         }
         
         $sql = "select (SELECT COUNT(*) FROM internacao WHERE 1=1 $sqlsetor) as total,
-                       (SELECT COUNT(*) FROM internacao WHERE data_saida is not null $sqlsetor) as dispensado,
-	                   (SELECT COUNT(*) FROM internacao WHERE data_saida is null $sqlsetor) as internado";  
+                       (SELECT COUNT(*) FROM internacao i, internacao_checklist ic WHERE i.id = ic.id_internacao and ic.data_saida is not null $sqlsetor) as dispensado,
+	                   (SELECT COUNT(*) FROM internacao i, internacao_checklist ic WHERE i.id = ic.id_internacao and ic.data_saida is null $sqlsetor) as internado";  
         
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
@@ -49,13 +49,13 @@ class Dashboard{
         if ($setor==NULL){
             $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta,
                     count(*) as total_respondido,
-                    (select count(*) from internacao where (data_saida is null or data_saida <= r.data_resposta)) as total_esperado
+                    (select count(*) from internacao i, internacao_checklist ic where 1 = 1 and i.id = ic.id_internacao and (ic.data_saida is null or ic.data_saida <= r.data_resposta)) as total_esperado
                     from resposta_checklist r, checklist c
                     where c.id = r.id_checklist
                     group by c.id, date_format(r.data_resposta,'%Y-%m-%d')";
         }else{
             $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta, count(*) as total_respondido,
-                    (select count(*) from internacao where (data_saida is null or data_saida <= r.data_resposta) and id_setor='$setor') as total_esperado
+                    (select count(*) from internacao i, internacao_checklist ic where 1 = 1 and i.id = ic.id_internacao and (data_saida is null or data_saida <= r.data_resposta) and id_setor='$setor') as total_esperado
                     from resposta_checklist r, checklist c, internacao i
                     where c.id = r.id_checklist
                     and   r.id_internacao = i.id

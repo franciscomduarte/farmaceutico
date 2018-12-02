@@ -39,9 +39,9 @@ class RespostaChecklist extends Base
         return $respostas_checklist;
     }
     
-    public function verificarPreenchimento($id){
+    public function verificarPreenchimento($id_internacao, $id_checklist){
         $sql = "SELECT * FROM `resposta_checklist` 
-                WHERE id_internacao = $id and date(data_resposta) = date(now())";
+                WHERE id_internacao = $id_internacao and id_checklist = $id_checklist and date(data_resposta) = date(now())";
         
         $query = executarSql($sql);
         $array = $query->fetch_all(MYSQLI_ASSOC);

@@ -1,6 +1,8 @@
 <?php 
+
+// dados da url
 $params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
-$id = $params[2];
+$id_checklist = $params[3];
 
 $obj = null;
 $objPaciente = null;
@@ -10,18 +12,21 @@ $setor   = new Setor();
 $setores = $setor->listar();
 
 
-
-if($id) {
-    $internacao  = new Internacao();
-    $obj         = $internacao->listarPorId($id);
-    $objPaciente = $obj->paciente;
-    
-    $objChecklist = new Checklist();
-    $bundles = $objChecklist->listarPendentesPorInternacao($id);
-}
-if(isset($_REQUEST['cpf'])) {
+if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
     $paciente->cpf = $_REQUEST['cpf'];
     $objPaciente =  $paciente->listarPorCpf($paciente);
+    if ($objPaciente != null) {
+        $objChecklist = new Checklist();
+        $bundles = $objChecklist->listarPendentesPorInternacao($objPaciente->id);
+        
+        // Verifica se o paciente já está em um checklist com internação ativa
+        $pacienteEmChecklist = count($objChecklist->listarAtivos()) - count($bundles);
+        if($pacienteEmChecklist > 0) {
+            aprensentaMensagem(ERROR, "Consta internção ativa para este paciente!");
+        }
+    } else {
+        aprensentaMensagem(ERROR, "Paciente não encontrado!");
+    }
 }
 
 ?>
@@ -47,13 +52,14 @@ if(isset($_REQUEST['cpf'])) {
            	</div>
            	<div class="hr-line-dashed"></div>
            	
-           	<?php if($objPaciente != null) {?>
+           	<?php if($objPaciente != null && !$pacienteEmChecklist) {?>
         	<div class="row">
             	<div class="col-sm-12">
                 	<form role="form" action="/internacao/gravar" method="post">
                 		<input type="hidden" name="id" value="<?php echo $obj->id ? $obj->id : null ?>">
                 		<input type="hidden" name="id_paciente" value="<?php echo $objPaciente->id ? $objPaciente->id : null ?>">
                 		<input type="hidden" name="id_convenio" value="<?php echo $objPaciente->convenio->id ? $objPaciente->convenio->id : null ?>">
+                		<input type="hidden" name="id_checklist" value="<?php echo $id_checklist ? $id_checklist : null ?>">
                     	<div class="row">
                         	<div class="col-sm-6"><label>Nome</label> <input type="text" value="<?php echo $objPaciente->nome ? $objPaciente->nome : null ?>" disabled="disabled" class="form-control" name="nome"></div>
                             <div class="col-sm-6"><label>CPF</label> <input type="text" value="<?php echo $objPaciente->cpf ? $objPaciente->cpf : null ?>" disabled="disabled" class="form-control" name="nome"></div>
@@ -92,7 +98,7 @@ if(isset($_REQUEST['cpf'])) {
         						<label class="form-check-label">
         							<select class="form-control" name="id_checklists[]" required="required" multiple="multiple">
         							<?php foreach ($bundles as $bundle) { ?>
-            							<option value="<?php echo $bundle->id?>" id="<?php echo $bundle->id ?>" <?php echo $obj->id_setor == $bundle->id ? 'selected' : ''?>>
+            							<option value="<?php echo $bundle->id?>" id="<?php echo $bundle->id ?>">
             							<?php echo $bundle->sigla; ?>
             							</option>
         							<?php

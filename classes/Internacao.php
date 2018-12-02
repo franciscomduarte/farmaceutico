@@ -6,7 +6,6 @@ class Internacao extends Base
 	protected $id;
 	protected $numero_internacao;
 	protected $data_internacao;
-	protected $data_saida;
 	protected $setor;
 	protected $paciente;
 	protected $convenio;
@@ -37,6 +36,12 @@ class Internacao extends Base
 	    }
 	}
 	
+	public function inserirTabelaRelacionada($id_internacao, $id_checklist){
+	        $sqlRelacionado = "INSERT INTO ".$this->tabela_relacionada." (id_internacao, id_checklist)
+                               VALUES ($id_internacao, $id_checklist)";
+	        executarSql($sqlRelacionado);
+	}
+	
 	public function editar($obj){
 		$sql = "UPDATE ".$this->tabela." 
                 SET numero_internacao = '$obj->numero_internacao', 
@@ -49,10 +54,10 @@ class Internacao extends Base
 		return executarSql($sql);
 	}
 	
-	public function atualizarDataSaida($id){
-	    $sql = "UPDATE ".$this->tabela."
+	public function atualizarDataSaida($id_internacao, $id_checklist){
+	    $sql = "UPDATE ".$this->tabela_relacionada."
                 SET data_saida = '" . date('Y-m-d H:i') . "'
-                WHERE id = $id ";
+                WHERE id_internacao = " . $id_internacao . " and id_checklist = " . $id_checklist ;
 	    return executarSql($sql);
 	}
 	
@@ -83,7 +88,7 @@ class Internacao extends Base
                 FROM internacao i, internacao_checklist ic
                 WHERE 1 = 1
                 AND i.id = ic.id_internacao
-                AND i.data_saida is null
+                AND ic.data_saida is null
                 AND ic.id_checklist = $id_checklist
                 ORDER BY i.data_internacao ";
 	    $query = executarSql($sql);

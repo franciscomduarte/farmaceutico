@@ -51,6 +51,6 @@
         }
     }
     
-    redirecionar("/checklist-resposta/resultado");
+    redirecionar("/checklist-resposta/" . $id_checklist);
 
 ?>

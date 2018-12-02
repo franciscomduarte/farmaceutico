@@ -7,6 +7,6 @@
 
 	#dados do formulario
 	$internacao = new Internacao();
-	$internacao->atualizarDataSaida($id_internacao, $id_checklist);
+	$internacao->inserirTabelaRelacionada($id_internacao, $id_checklist);
 	redirecionar("/checklist-resposta/".$id_checklist);
 ?>

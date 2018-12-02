@@ -80,16 +80,16 @@ class Checklist extends Base
 	
 	public function listarPendentesPorInternacao($id_paciente){
 	    
-	    echo $sql = "SELECT * FROM checklist where id NOT IN (SELECT c.id
+	   $sql = "SELECT * FROM checklist where id NOT IN (SELECT c.id
                 FROM checklist c, internacao_checklist ic, internacao i, paciente p
                 WHERE 1 = 1
                 AND c.id = ic.id_checklist
                 AND i.id = ic.id_internacao
-                AND i.data_saida is null
+                AND ic.data_saida is null
                 AND i.id_paciente = p.id
                 AND c.ativo = 1
                 AND p.id = $id_paciente) 
-                WHERE ativo = 1 ";
+                AND ativo = 1 ";
 
 	    $query = executarSql($sql);
 	    $array = $query->fetch_all(MYSQLI_ASSOC);
@@ -116,6 +116,7 @@ class Checklist extends Base
                 FROM checklist i, internacao_checklist ic
                 WHERE 1 = 1
                 AND i.id = ic.id_checklist
+                AND ic.data_saida is null
                 AND i.ativo = 1
                 AND ic.id_internacao = $id_internacao
                 ORDER BY i.id ";
