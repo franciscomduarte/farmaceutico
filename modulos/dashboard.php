@@ -28,7 +28,7 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div>
-                                   			 <canvas id="barChartChecklist" height="120"></canvas>
+                                   			 <canvas id="barChartChecklist" height="140"></canvas>
                                 		</div>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                 $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
                 echo '<div class="row">';
                 for ($i=0; $i < sizeof($questoes); $i++){ ?>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5><?php echo str_replace('"', '', $questoes[$i])?></h5>
@@ -54,7 +54,7 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                     </div>
                 </div>
                 <?php 
-                    if ((($i+1) % 4)==0){
+                    if ((($i+1) % 3)==0){
                         echo '</div><div class="row">';
                     }
                 }
@@ -232,7 +232,7 @@ $(document).ready(function() {
             }
         },
         size: {
-            height: 180
+            height: 165
         }
     });
 

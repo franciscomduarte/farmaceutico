@@ -191,7 +191,7 @@ class Dashboard{
             "labels"            => '"'.implode('","',$array_labels).'","Média Adesão"',
             "resposta_tipo_1"   => implode(',',$array_sim_porcentagem).",".($soma_sim/sizeof($array_sim_porcentagem)),
             "resposta_tipo_2"   => implode(',',$array_nao_porcentagem).",".($soma_nao/sizeof($array_nao_porcentagem)),
-            "maior_valor"       => 150    
+            "maior_valor"       => 120    
         );
         
     }
