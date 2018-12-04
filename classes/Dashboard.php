@@ -5,6 +5,7 @@ class Dashboard{
     protected $total;
     protected $total_internados;
     protected $grafico_barras_inicial;
+    protected $filtro_grafico_checklist;
         
     function __construct() {
         $sql = "SELECT TABLE_NAME, TABLE_ROWS 
@@ -35,8 +36,8 @@ class Dashboard{
         }
         
         $sql = "select (SELECT COUNT(*) FROM internacao WHERE 1=1 $sqlsetor) as total,
-                       (SELECT COUNT(*) FROM internacao i, internacao_checklist ic WHERE i.id = ic.id_internacao and ic.data_saida is not null $sqlsetor) as dispensado,
-	                   (SELECT COUNT(*) FROM internacao i, internacao_checklist ic WHERE i.id = ic.id_internacao and ic.data_saida is null $sqlsetor) as internado";  
+                       (SELECT COUNT(*) FROM internacao i, internacao_checklist ic WHERE i.id = ic.id_internacao $sqlsetor) as dispensado,
+	                   (SELECT COUNT(*) FROM internacao i, internacao_checklist ic WHERE i.id = ic.id_internacao $sqlsetor) as internado";  
         
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
@@ -49,13 +50,13 @@ class Dashboard{
         if ($setor==NULL){
             $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta,
                     count(*) as total_respondido,
-                    (select count(*) from internacao i, internacao_checklist ic where 1 = 1 and i.id = ic.id_internacao and (ic.data_saida is null or ic.data_saida <= r.data_resposta)) as total_esperado
+                    (select count(*) from internacao i, internacao_checklist ic where i.id = ic.id_internacao and (ic.data_saida is null or ic.data_saida <= r.data_resposta)) as total_esperado
                     from resposta_checklist r, checklist c
                     where c.id = r.id_checklist
                     group by c.id, date_format(r.data_resposta,'%Y-%m-%d')";
         }else{
             $sql = "select c.id, date_format(r.data_resposta,'%d/%m') as data_resposta, c.nome, c.meta, count(*) as total_respondido,
-                    (select count(*) from internacao i, internacao_checklist ic where 1 = 1 and i.id = ic.id_internacao and (data_saida is null or data_saida <= r.data_resposta) and id_setor='$setor') as total_esperado
+                    (select count(*) from internacao i, internacao_checklist ic where i.id = ic.id_internacao and (data_saida is null or data_saida <= r.data_resposta) and id_setor='$setor') as total_esperado
                     from resposta_checklist r, checklist c, internacao i
                     where c.id = r.id_checklist
                     and   r.id_internacao = i.id
@@ -101,6 +102,88 @@ class Dashboard{
                     "porcetagem_resposta"   => $porcentagem_resposta,
                     "maior_valor_grafico"   => round($maior_valor*1.25)
                 );
+    }
+    
+    public function getDashboarFiltroPorChecklist(){
+        
+        $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
+            	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
+                from resposta_checklist r, checklist c
+                group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist 
+                order by data_resposta desc limit 5";
+        
+        $query = executarSql($sql);
+        
+        $array_filtro = [];
+        
+        foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
+            $array_filtro[] = array("id_checklist" => $linha['id_checklist'],
+                                  "data_resposta" => $linha['data_resposta'],
+                                  "sigla"         => $linha['sigla'],
+                                  "label"         => $linha['sigla']." # ".formatarData($linha['data_resposta'])
+                             );   
+        }
+        return $array_filtro;
+    }
+    
+    public function getDashboarPorChecklist($filtro){
+        
+        $lista        = explode("|", $filtro);
+        $id_checklist = $lista[0];
+        $data_resposta_checklist = $lista[1];
+        
+        $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
+        		IFNULL((select count(id_resposta_alternativa)              
+        		 from resposta_checklist_item r, item i, alternativa a              
+        		 where r.id_item = i.id 
+        		 and   i.id = item.id
+        		 and   a.id = alternativa.id              
+        		 and   a.id = r.id_resposta_alternativa              
+        		 and   r.id_resposta_checklist in (select r.id as id_resposta    
+        		 								   from resposta_checklist r                        
+        		 								   where r.id_checklist = '".$id_checklist."'                        
+        		 								   and   date_format(r.data_resposta,'%Y-%m-%d') = '".$data_resposta_checklist."')              
+        		group by r.id_resposta_alternativa),0) as total_resposta 
+                from item, checklist_item c, alternativa
+                where item.id = c.id_item
+                and   alternativa.id_item = item.id
+                group by item.id, alternativa.id
+                order by item.enunciado, alternativa.descricao";
+        
+        
+        $query = executarSql($sql);
+        $enunciado = "";
+        $array_labels = [];
+        $array_nao    = [];
+        $array_sim    = [];
+        $maior_valor  = 0;
+        
+        foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
+            
+            if ($enunciado != $linha["enunciado"]){
+                $array_labels[] = $linha["enunciado"];
+                $enunciado = $linha["enunciado"];
+            }
+                
+            if (strtolower($linha["descricao"]) == "não")
+                $array_nao[] =  $linha["total_resposta"];
+            
+            if (strtolower($linha["descricao"]) == "sim")
+                $array_sim[] =  $linha["total_resposta"];
+            
+                if ($maior_valor < $linha['total_resposta'])
+                    $maior_valor = $linha['total_resposta'];
+                        
+        }
+        
+        $this->grafico_barras_inicial =
+        array(
+            "labels"            => '"'.implode('","',$array_labels).'"',
+            "resposta_tipo_1"   => implode(',',$array_sim),
+            "resposta_tipo_2"   => implode(',',$array_nao),
+            "maior_valor"       => round($maior_valor*1.30)    
+        );
+        
     }
        
 }

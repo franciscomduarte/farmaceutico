@@ -5,6 +5,7 @@ class Item extends Base
     protected $id;
 	protected $enunciado;
 	protected $tipo;
+	protected $meta;
 	protected $alternativas = [];
 	protected $checklist;
 	
@@ -15,8 +16,8 @@ class Item extends Base
 	
 	public function inserir($obj){
 	    try {
-    		$sql = "INSERT INTO ".$this->tabela." (id,enunciado,tipo) 
-    				               VALUES (null,'$obj->enunciado','$obj->tipo')";
+    		$sql = "INSERT INTO ".$this->tabela." (id,enunciado,tipo,meta) 
+    				               VALUES (null,'$obj->enunciado','$obj->tipo','$obj->meta')";
     		
     		retornaConexao()->begin_transaction();
     		
@@ -44,7 +45,8 @@ class Item extends Base
 	public function editar($obj){
 		$sql = "UPDATE ".$this->tabela."  
                 SET enunciado = '$obj->nome',
-					tipo 	  = '$obj->tipo' 
+					tipo 	  = '$obj->tipo',
+                    meta      = '$obj->meta'
                 WHERE id 	= $obj->id";
 		
 		$sqlItens = "";
@@ -103,7 +105,10 @@ class Item extends Base
 	}
 	
 	public function listarPorIdChecklist($id){
-	    $sql = "SELECT c.* FROM checklist as a, checklist_item as b, item as c WHERE 1=1 AND a.id = b.id_checklist AND c.id = b.id_item AND b.id_checklist = $id ";
+	    $sql = "SELECT c.* FROM checklist as a, checklist_item as b, item as c 
+                WHERE a.id = b.id_checklist 
+                AND c.id = b.id_item 
+                AND b.id_checklist = $id ";
 	    $query = executarSql($sql);
 	    $array = $query->fetch_all(MYSQLI_ASSOC);
 	    
@@ -114,6 +119,7 @@ class Item extends Base
 	        $item->id            = $linha['id'];
 	        $item->enunciado     = $linha['enunciado'];
 	        $item->tipo          = $linha['tipo'];
+	        $item->meta          = $linha['meta'];
 	        $itens[] = $item;
 	    }
 	    return $itens;

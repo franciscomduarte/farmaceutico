@@ -5,8 +5,7 @@
 ###################################################################
 define('NOME_SISTEMA', 'Sistema de Checklist para UTIs');
 define('SIGLA_SISTEMA', 'c.UTI');
-define('AMBIENTE','DEV');
-define('SETOR_ATUAL','5');
+define('AMBIENTE','PROD');
 
 ###################################################################
 ## PARAMENTROS DO BANCO DE DADOS
@@ -35,5 +34,10 @@ define('ADMINISTRADOR', 1);
 define('SERVIDOR', 2);
 define('RECRUTADOR', 3);
 define('EXTERNO', 4);
+
+###################################################################
+## PARAMETROS PARA DASHBOARD INICIAL
+###################################################################
+define('FILTRO_INICIAL','1|2018-11-30');
 
 ?>

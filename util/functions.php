@@ -110,4 +110,8 @@
 	    echo $status == '1' ? '<span class="label label-primary">Ativo</span>' : '<span class="label label-default">Inativo</span>';
 	}
 
+	function calculaPorcentagem($x,$y){
+	    echo $x*100/($x+$y);
+	}
+	
 ?>

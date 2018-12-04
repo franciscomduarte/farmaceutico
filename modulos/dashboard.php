@@ -1,9 +1,10 @@
 <?php 
-$setor_atual = $_REQUEST['setor'];
-
+$filtro_atual = $_REQUEST['filtro'];
+if (!isset($filtro_atual))
+    $filtro_atual = FILTRO_INICIAL;
 
 $dashboard = new Dashboard();
-$dashboard->getDashboardRespostasCheckListPorDia($setor_atual);
+$dashboard->getDashboarPorChecklist($filtro_atual);
     
 ?>       
         <div class="wrapper wrapper-content">
@@ -15,48 +16,45 @@ $dashboard->getDashboardRespostasCheckListPorDia($setor_atual);
                                 <h5>Checklists</h5>
                                 <div class="pull-right">
                                 	 <div class="btn-group">
-                                	 		<button type="button" onclick="location.href='/'" class="btn btn-xs btn-white <?php echo !isset($setor_atual) ? "active" : ""?>">Todos</button>
                                         <?php 
-                                            $setor = new Setor();
-                                            foreach ($setor->listar() as $setor) {
-                                                $setor_ativo = $setor->id == $setor_atual ? "active" : "";
-                                         ?>   
-                                            <button type="button" onclick="location.href='/?setor=<?php echo $setor->id?>'" class="btn btn-xs btn-white <?php echo $setor_ativo?>"><?php echo $setor->nome?></button>    
+                                            foreach ($dashboard->getDashboarFiltroPorChecklist() as $filtro) {
+                                                $filtro_ativo = $filtro['id_checklist']."|".$filtro['data_resposta'] == $filtro_atual ? "success active" : "white";?>   
+                                            <button type="button" onclick="location.href='/?filtro=<?php echo $filtro['id_checklist']."|".$filtro['data_resposta']?>'" class="btn btn-xs btn-<?php echo $filtro_ativo?>"><?php echo $filtro['label']?></button>    
                                         <?php }?>
                                     </div>
                                 </div>
                             </div>
                             <div class="ibox-content">
                                 <div class="row">
-                                <div class="col-lg-9">
-                                    <div>
-                               			 <canvas id="barChartChecklist" height="100"></canvas>
-                            		</div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <ul class="stat-list">
-                                        <li>
-                                            <h2 class="no-margins"><?php  printf("%02d",$dashboard->total["resposta_checklist"]) ?></h2>
-                                            <small>Total de respostas no geral de todos os setores</small>
-                                            <div class="stat-percent"><?php echo $dashboard->grafico_barras_inicial["porcetagem_resposta"];?>%</i></div>
-                                            <div class="progress progress-mini">
-                                                <div style="width: <?php echo $dashboard->grafico_barras_inicial["porcetagem_resposta"];?>%;" class="progress-bar"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ibox float-e-margins">
-                                                <div id="gauge"></div>
-                                            </div>
-                                        </li>
-                                        </ul>
+                                    <div class="col-lg-12">
+                                        <div>
+                                   			 <canvas id="barChartChecklist" height="120"></canvas>
+                                		</div>
                                     </div>
                                 </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
-            <div class="row">
+            </div>
+            
+           <div class="row">
+             <?php 
+                $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
+                for ($i=0; $i < sizeof($questoes); $i++){ ?>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5><?php echo str_replace('"', '', $questoes[$i])?></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div>
+                                <div id="gauge_<?php echo $i?>"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php }?>
+            </div>
             
 			 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
@@ -103,7 +101,7 @@ $dashboard->getDashboardRespostasCheckListPorDia($setor_atual);
                     </div>
                 </div>
                 
-                                <div class="col-md-2">
+                <div class="col-md-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">Total</span>
@@ -159,25 +157,25 @@ $dashboard->getDashboardRespostasCheckListPorDia($setor_atual);
 <script>
 $(document).ready(function() {
 	
-	var barData = {
-        labels: [<?php echo $dashboard->grafico_barras_inicial["dias"];?>],
-        datasets: [
-            {
-                label: "Previstos",
-                backgroundColor: 'rgba(220, 220, 220, 0.5)',
-                pointBorderColor: "#fff",
-                data: [<?php echo $dashboard->grafico_barras_inicial["previstos"];?>]
-            },
-            {
-                label: "Respondidos",
-                backgroundColor: 'rgba(26,179,148,0.5)',
-                borderColor: "rgba(26,179,148,0.7)",
-                pointBackgroundColor: "rgba(26,179,148,1)",
-                pointBorderColor: "#fff",
-                data: [<?php echo $dashboard->grafico_barras_inicial["respondidos"];?>]
-            }
-        ]
-    };
+  var barData = {
+	        labels: [<?php echo $dashboard->grafico_barras_inicial["labels"]?>],
+	        datasets: [
+	            {
+	            	label: "SIM",
+	                backgroundColor: 'rgba(26,179,148,0.5)',
+	                borderColor: "rgba(26,179,148,0.7)",
+	                pointBackgroundColor: "rgba(26,179,148,1)",
+	                pointBorderColor: "#fff",
+	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_1"]?>]
+	            },
+	            {
+	                label: "NÃO",
+	                backgroundColor: 'rgba(248, 172, 89, 0.5)',
+	                pointBorderColor: "#fff",
+	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_2"]?>]
+	            }
+	        ]
+	    };
 
     var barOptions = {
         responsive: true,
@@ -185,7 +183,7 @@ $(document).ready(function() {
 			yAxes: [{
 				ticks: {
 					min: 0,
-					max: <?php echo $dashboard->grafico_barras_inicial["maior_valor_grafico"];?>
+					max: <?php echo $dashboard->grafico_barras_inicial["maior_valor"]?>
 				}
 			}]
 		}
@@ -194,31 +192,23 @@ $(document).ready(function() {
     var ctx2 = document.getElementById("barChartChecklist").getContext("2d");
     new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
 
-    var radar = c3.generate({
-    	bindto: '#gauge',
+	
+	<?php 
+	$respostas_sim = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_1"]);
+	$respostas_nao = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_2"]);
+	for ($i=0; $i < sizeof($questoes); $i++){ 
+	?>
+	
+    var radar_<?php echo $i?> = c3.generate({
+    	bindto: '#gauge_<?php echo $i?>',
         data: {
-            columns: [
-                ['respostas', <?php echo $dashboard->grafico_barras_inicial["porcetagem_resposta"];?>]
-            ],
+            columns: [['SIM','<?php calculaPorcentagem($respostas_sim[$i],$respostas_nao[$i])?>'],['NÃO','<?php calculaPorcentagem($respostas_nao[$i],$respostas_sim[$i])?>']],
             type: 'gauge'
         },
-        gauge: {
-//            label: {
-//                format: function(value, ratio) {
-//                    return value;
-//                },
-//                show: false // to turn off the min/max labels.
-//            },
-//        min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
-//        max: 100, // 100 is default
-//        units: ' %',
-//        width: 39 // for adjusting arc thickness
-        },
+        gauge: {},
         color: {
             pattern: ['#FF0000', '#f4ae70', '#F6C600', '#8CD9C9'], // the three color levels for the percentage values.
             threshold: {
-//                unit: 'value', // percentage is default
-//                max: 200, // 100 is default
                 values: [30, 60, 90, 100]
             }
         },
@@ -228,9 +218,30 @@ $(document).ready(function() {
     });
 
     setTimeout(function () {
-    	radar.load({
-            columns: [['meta', <?php echo $dashboard->grafico_barras_inicial["meta_calculada"];?>]]
+    	radar_<?php echo $i?>.load({
+            columns: [['meta', "75"]]
         });
-    }, 2000);
+    }, 0);
+
+
+	<?php } ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 });
 </script>

@@ -155,45 +155,6 @@
 
     $(document).ready(function() {
 
-        var dataset = [
-            {
-                label: "Previstos",
-                data: data3,
-                color: "#1ab394",
-                bars: {
-                    show: true,
-                    align: "center",
-                    barWidth: 24 * 60 * 60 * 600,
-                    lineWidth:0
-                }
-
-            }, {
-                label: "Executados",
-                data: data2,
-                yaxis: 2,
-                color: "#1C84C6",
-                lines: {
-                    lineWidth:1,
-                        show: true,
-                        fill: true,
-                    fillColor: {
-                        colors: [{
-                            opacity: 0.2
-                        }, {
-                            opacity: 0.4
-                        }]
-                    }
-                },
-                splines: {
-                    show: false,
-                    tension: 0.6,
-                    lineWidth: 1,
-                    fill: 0.1
-                },
-            }
-        ];
-
-
         var options = {
             xaxis: {
                 mode: "time",
@@ -239,8 +200,6 @@
         }
 
         var previousPoint = null, previousLabel = null;
-
-        $.plot($("#flot-dashboard-chart"), dataset, options);
 
         var mapData = {
             "US": 298,
