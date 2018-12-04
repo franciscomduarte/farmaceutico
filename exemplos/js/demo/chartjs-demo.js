@@ -5,7 +5,7 @@ $(function () {
         datasets: [
 
             {
-                label: "Data 1",
+                label: "fadfa 1",
                 backgroundColor: 'rgba(26,179,148,0.5)',
                 borderColor: "rgba(26,179,148,0.7)",
                 pointBackgroundColor: "rgba(26,179,148,1)",
@@ -32,13 +32,13 @@ $(function () {
         labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [
             {
-                label: "Data 1",
+                label: "Teste 01",
                 backgroundColor: 'rgba(220, 220, 220, 0.5)',
                 pointBorderColor: "#fff",
                 data: [65, 59, 80, 81, 56, 55, 40]
             },
             {
-                label: "Data 2",
+                label: "Teste 02",
                 backgroundColor: 'rgba(26,179,148,0.5)',
                 borderColor: "rgba(26,179,148,0.7)",
                 pointBackgroundColor: "rgba(26,179,148,1)",
@@ -49,7 +49,24 @@ $(function () {
     };
 
     var barOptions = {
-        responsive: true
+        responsive: true,
+        events: false,
+        animation: {
+        	duration: 0,
+        	onComplete: function () {
+        	    // render the value of the chart above the bar
+        	    var ctx = this.chart.ctx;
+        	    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
+        	    ctx.fillStyle = this.chart.config.options.defaultFontColor;
+        	    ctx.textAlign = 'center';
+        	    ctx.textBaseline = 'bottom';
+        	    this.data.datasets.forEach(function (dataset) {
+        	        for (var i = 0; i < dataset.data.length; i++) {
+        	            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+        	            ctx.fillText(dataset.data[i]+'%', model.x, model.y - 5);
+        	        }
+        	    });
+        }}
     };
 
 

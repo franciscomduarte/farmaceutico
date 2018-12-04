@@ -178,21 +178,29 @@ $(document).ready(function() {
 	    };
 
     var barOptions = {
-    	animation: false,
         responsive: true,
-        tooltipTemplate: "<%= value %>",
-        tooltipFillColor: "rgba(0,0,0,0)",
-        tooltipFontColor: "#444",
-        tooltipEvents: [],
-        tooltipCaretSize: 0,
-        onAnimationComplete: function(){
-            this.showTooltip(this.datasets[0].bars, true);
-        },
+        events: false,
+        animation: {
+        	duration: 0,
+        	onComplete: function () {
+        	    // render the value of the chart above the bar
+        	    var ctx = this.chart.ctx;
+        	    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
+        	    ctx.fillStyle = this.chart.config.options.defaultFontColor;
+        	    ctx.textAlign = 'center';
+        	    ctx.textBaseline = 'bottom';
+        	    this.data.datasets.forEach(function (dataset) {
+        	        for (var i = 0; i < dataset.data.length; i++) {
+        	            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+        	            ctx.fillText(dataset.data[i]+'%', model.x, model.y - 5);
+        	        }
+        	    });
+        }},
         scales: {
 			yAxes: [{
 				ticks: {
 					min: 0,
-					max: <?php echo $dashboard->grafico_barras_inicial["maior_valor"]?>
+					max: 100
 				}
 			}]
 		}
