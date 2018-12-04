@@ -156,8 +156,8 @@ class Dashboard{
         $array_labels = [];
         $array_nao    = [];
         $array_sim    = [];
-	$array_nao_porcentagem = [];
-	$array_sim_porcentagem = [];
+	    $array_nao_porcentagem = [];
+	    $array_sim_porcentagem = [];
         $maior_valor  = 0;
         
         foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
@@ -178,17 +178,17 @@ class Dashboard{
                         
         }
         
-	for($i=0;$i<sizeof($array_sim);$i++){
-	   $array_sim_porcentagem[]=calculaPorcentagem($array_sim[$i],$array_nao[$i]);
-	   $array_nao_porcentagem[]=calculaPorcentagem($array_nao[$i],$array_sim[$i]);
-	}
+    	for($i=0;$i<sizeof($array_sim);$i++){
+    	   $array_sim_porcentagem[]=calculaPorcentagem($array_sim[$i],$array_nao[$i]);
+    	   $array_nao_porcentagem[]=calculaPorcentagem($array_nao[$i],$array_sim[$i]);
+    	}
 
         $this->grafico_barras_inicial =
         array(
             "labels"            => '"'.implode('","',$array_labels).'"',
             "resposta_tipo_1"   => implode(',',$array_sim_porcentagem),
             "resposta_tipo_2"   => implode(',',$array_nao_porcentagem),
-            "maior_valor"       => round($maior_valor*1.30)    
+            "maior_valor"       => 100    
         );
         
     }

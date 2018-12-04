@@ -111,7 +111,7 @@
 	}
 
 	function calculaPorcentagem($x,$y){
-	    echo $x*100/($x+$y);
+	    return $x*100/($x+$y);
 	}
 	
 ?>

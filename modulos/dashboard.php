@@ -178,7 +178,16 @@ $(document).ready(function() {
 	    };
 
     var barOptions = {
+    	animation: false,
         responsive: true,
+        tooltipTemplate: "<%= value %>",
+        tooltipFillColor: "rgba(0,0,0,0)",
+        tooltipFontColor: "#444",
+        tooltipEvents: [],
+        tooltipCaretSize: 0,
+        onAnimationComplete: function(){
+            this.showTooltip(this.datasets[0].bars, true);
+        },
         scales: {
 			yAxes: [{
 				ticks: {
@@ -195,14 +204,14 @@ $(document).ready(function() {
 	
 	<?php 
 	$respostas_sim = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_1"]);
-	$respostas_nao = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_2"]);
+	#$respostas_nao = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_2"]);
 	for ($i=0; $i < sizeof($questoes); $i++){ 
 	?>
 	
     var radar_<?php echo $i?> = c3.generate({
     	bindto: '#gauge_<?php echo $i?>',
         data: {
-            columns: [['SIM','<?php calculaPorcentagem($respostas_sim[$i],$respostas_nao[$i])?>']],
+            columns: [['SIM','<?php echo $respostas_sim[$i]?>']],
             type: 'gauge'
         },
         gauge: {},
