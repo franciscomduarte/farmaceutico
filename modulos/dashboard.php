@@ -202,7 +202,7 @@ $(document).ready(function() {
     var radar_<?php echo $i?> = c3.generate({
     	bindto: '#gauge_<?php echo $i?>',
         data: {
-            columns: [['SIM','<?php calculaPorcentagem($respostas_sim[$i],$respostas_nao[$i])?>'],['NÃO','<?php calculaPorcentagem($respostas_nao[$i],$respostas_sim[$i])?>']],
+            columns: [['SIM','<?php calculaPorcentagem($respostas_sim[$i],$respostas_nao[$i])?>']],
             type: 'gauge'
         },
         gauge: {},
