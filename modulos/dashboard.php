@@ -37,9 +37,9 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                     </div>
             </div>
             
-           <div class="row">
              <?php 
                 $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
+                echo '<div class="row">';
                 for ($i=0; $i < sizeof($questoes); $i++){ ?>
                 <div class="col-lg-3">
                     <div class="ibox float-e-margins">
@@ -53,10 +53,17 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                         </div>
                     </div>
                 </div>
-                <?php }?>
-            </div>
+                <?php 
+                    if ((($i+1) % 4)==0){
+                        echo '</div><div class="row">';
+                    }
+                }
+                ?>
             
-			 <div class="col-lg-4">
+            <?php echo '</div>'?>
+            
+            <div class="row">
+			    <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-warning pull-right">Qtd</span>
@@ -195,14 +202,9 @@ $(document).ready(function() {
         	            ctx.fillText(dataset.data[i]+'%', model.x, model.y - 5);
         	        }
         	    });
-        }},
+        	}},
         scales: {
-			yAxes: [{
-				ticks: {
-					min: 0,
-					max: 100
-				}
-			}]
+			yAxes: [{ticks: {min: 0, max: <?php echo $dashboard->grafico_barras_inicial["maior_valor"]?>}}]
 		}
     };
 

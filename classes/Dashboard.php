@@ -177,18 +177,21 @@ class Dashboard{
                     $maior_valor = $linha['total_resposta'];
                         
         }
-        
+        $soma_sim=0;
+        $soma_nao=0;
     	for($i=0;$i<sizeof($array_sim);$i++){
     	   $array_sim_porcentagem[]=calculaPorcentagem($array_sim[$i],$array_nao[$i]);
     	   $array_nao_porcentagem[]=calculaPorcentagem($array_nao[$i],$array_sim[$i]);
+    	   $soma_sim += calculaPorcentagem($array_sim[$i],$array_nao[$i]);
+    	   $soma_nao += calculaPorcentagem($array_nao[$i],$array_sim[$i]);
     	}
 
         $this->grafico_barras_inicial =
         array(
-            "labels"            => '"'.implode('","',$array_labels).'"',
-            "resposta_tipo_1"   => implode(',',$array_sim_porcentagem),
-            "resposta_tipo_2"   => implode(',',$array_nao_porcentagem),
-            "maior_valor"       => 100    
+            "labels"            => '"'.implode('","',$array_labels).'","Média Adesão"',
+            "resposta_tipo_1"   => implode(',',$array_sim_porcentagem).",".($soma_sim/sizeof($array_sim_porcentagem)),
+            "resposta_tipo_2"   => implode(',',$array_nao_porcentagem).",".($soma_nao/sizeof($array_nao_porcentagem)),
+            "maior_valor"       => 150    
         );
         
     }
