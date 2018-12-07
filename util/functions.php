@@ -114,4 +114,10 @@
 	    return $x*100/($x+$y);
 	}
 	
+	function calculaPorcentagemTotal($x,$y) {
+	    return ($y*100)/$x;
+	}
+	
+	
+	
 ?>

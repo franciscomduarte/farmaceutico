@@ -186,14 +186,37 @@ class Dashboard{
     	   $soma_nao += calculaPorcentagem($array_nao[$i],$array_sim[$i]);
     	}
 
+    	$array_total = $this->getPacientesPrevistosRespondidos($id_checklist, $data_resposta_checklist);
+    	
         $this->grafico_barras_inicial =
         array(
             "labels"            => '"'.implode('","',$array_labels).'","Média Adesão"',
             "resposta_tipo_1"   => implode(',',$array_sim_porcentagem).",".($soma_sim/sizeof($array_sim_porcentagem)),
             "resposta_tipo_2"   => implode(',',$array_nao_porcentagem).",".($soma_nao/sizeof($array_nao_porcentagem)),
-            "maior_valor"       => 120    
+            "maior_valor"       => 120,
+            "total_previsto"    => $array_total["total_previsto"],
+            "total_respondido"  => $array_total["total_respondido"]
         );
         
+    }
+    
+    private function getPacientesPrevistosRespondidos($id_checklist,$data_saida){
+        
+        $sql = "select (select count(*) 
+                        from internacao_checklist 
+                        where id_checklist = '".$id_checklist."' 
+                        and (data_saida is null or date_format(data_saida,'%Y-%m-%d') <= '".$data_saida."') 
+                        group by id_checklist) as total_previsto, 
+                       (select count(*) 
+                         from resposta_checklist 
+                         where id_checklist = '".$id_checklist."'                        
+        		 		 and   date_format(data_resposta,'%Y-%m-%d') = '".$data_saida."'
+                         group by date_format(data_resposta,'%Y-%m-%d'), id_checklist) as total_respondido";
+        
+        $query = executarSql($sql);
+        $this->array = $query->fetch_all(MYSQLI_ASSOC);
+                
+        return $this->array[0];
     }
        
 }

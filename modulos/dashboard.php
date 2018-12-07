@@ -16,20 +16,68 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                                 <h5>Checklists</h5>
                                 <div class="pull-right">
                                 	 <div class="btn-group">
-                                        <?php 
-                                            foreach ($dashboard->getDashboarFiltroPorChecklist() as $filtro) {
-                                                $filtro_ativo = $filtro['id_checklist']."|".$filtro['data_resposta'] == $filtro_atual ? "success active" : "white";?>   
-                                            <button type="button" onclick="location.href='/?filtro=<?php echo $filtro['id_checklist']."|".$filtro['data_resposta']?>'" class="btn btn-xs btn-<?php echo $filtro_ativo?>"><?php echo $filtro['label']?></button>    
-                                        <?php }?>
+                                	 	<select name="filtro" id="filtro_dashboard" class="select2_demo_2 form-control select2-hidden-accessible">
+            								<?php
+            								
+            								foreach ( $dashboard->getDashboarFiltroPorChecklist() as $filtro) {
+            								    $filtro_ativo = $filtro['id_checklist']."|".$filtro['data_resposta'] == $filtro_atual ? "selected" : "";
+            									?>
+            									<option value="<?php echo $filtro['id_checklist']."|".$filtro['data_resposta'] ?>" <?php echo $filtro_ativo?>> <?php echo $filtro['label']?> </option>
+            								<?php
+            								}
+            								?>
+            	                    		</select>
                                     </div>
                                 </div>
                             </div>
                             <div class="ibox-content">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-9">
                                         <div>
                                    			 <canvas id="barChartChecklist" height="140"></canvas>
                                 		</div>
+                                    </div>
+                                    <div class="col-md-3">
+<!--                                         <div class="ibox-content"> -->
+                                         	<div class="ibox">
+                           					 	<span class="label label-warning pull-right">Qtd</span>
+                            				 	<h5>Resumo</h5>
+                       						 </div>
+                                            <div>
+                                                <div>
+                                                    <span>Adesão Respostas</span>
+                                                    <small class="pull-right"><?php echo $dashboard->grafico_barras_inicial["total_previsto"]."/".$dashboard->grafico_barras_inicial["total_respondido"]?> pacientes</small>
+                                                </div>
+                                                <div class="progress progress-small">
+                                                    <div style="width: <?php echo $total_porcentagem = calculaPorcentagemTotal($dashboard->grafico_barras_inicial["total_previsto"], $dashboard->grafico_barras_inicial["total_respondido"])?>%;" class="progress-bar <?php echo $total_porcentagem <= 50 ? "progress-bar-danger" : "a"?>"></div>
+                                                </div>
+            									<!-- 
+                                                <div>
+                                                    <span>Bandwidth</span>
+                                                    <small class="pull-right">20 GB</small>
+                                                </div>
+                                                <div class="progress progress-small">
+                                                    <div style="width: 50%;" class="progress-bar"></div>
+                                                </div>
+            
+                                                <div>
+                                                    <span>Activity</span>
+                                                    <small class="pull-right">73%</small>
+                                                </div>
+                                                <div class="progress progress-small">
+                                                    <div style="width: 40%;" class="progress-bar"></div>
+                                                </div>
+            
+                                                <div>
+                                                    <span>FTP</span>
+                                                    <small class="pull-right">400 GB</small>
+                                                </div>
+                                                <div class="progress progress-small">
+                                                    <div style="width: 20%;" class="progress-bar progress-bar-danger"></div>
+                                                </div>
+                                                -->
+                                            </div>
+<!--                                         </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -162,6 +210,10 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
         </div>
         
 <script>
+$('#filtro_dashboard').change(function(){
+    location.href="/?filtro="+($(this).val());
+});
+
 $(document).ready(function() {
 	
   var barData = {
@@ -210,8 +262,34 @@ $(document).ready(function() {
 
     var ctx2 = document.getElementById("barChartChecklist").getContext("2d");
     new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
+//Grafico Total
+	var radar_total = c3.generate({
+    	bindto: '#gauge_total',
+        data: {
+            columns: [['PREVISTOS','<?php echo $dashboard->grafico_barras_inicial["total_previsto"]?>'],
+            	      ['RESPONDIDOS','<?php echo $dashboard->grafico_barras_inicial["total_respondido"]?>']],
+            type: 'gauge'
+        },
+        gauge: {
+			label: 
+				{
+					format: function (value, ratio) {
+			    	return value;
+		    	}
+	    	}
+        },
+        color: {
+            pattern: ['#FF0000', '#f4ae70', '#F6C600', '#8CD9C9'], // the three color levels for the percentage values.
+            threshold: {
+                values: [30, 60, 90, 100]
+            }
+        },
+        size: {
+            height: 120
+        }
+    });
 
-	
+// Graficos Questões	
 	<?php 
 	$respostas_sim = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_1"]);
 	#$respostas_nao = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_2"]);
@@ -244,23 +322,6 @@ $(document).ready(function() {
 
 
 	<?php } ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
 });
 </script>
