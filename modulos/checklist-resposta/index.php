@@ -103,9 +103,13 @@ $interenacoes = $obj->listarAtivas($id_checklist);
                                 </div>
 							</td>
 							<td>
+								<?php if ($status == null) {?>
 								<button onclick="dar_alta(<?php echo $internacao->id?>, <?php echo $cl->id ?>)">
-									<span title="Dar alta">Alta</span>
+									<span title="Remover">Alta</span>
 								</button>
+								<?php } else { ?>
+									<span>-</span>
+								<?php }?>
 							</td>
 							<td>
 								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?> - <small><?php echo formatarData($status->data_internacao) ?></small>
@@ -123,7 +127,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
     		function dar_alta(id_internacao, id_checklist){
     			apresentaConfirmacao();
     			swal({
-                    title: "Tem certeza que deseja dar alta ao paciente do checklist?",
+                    title: "Tem certeza que deseja remover o paciente do checklist?",
                     text: "Você não poderá desfazer essa operação.",
                     type: "warning",
                     showCancelButton: true,

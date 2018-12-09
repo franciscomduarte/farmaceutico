@@ -11,21 +11,25 @@ $paciente = new Paciente();
 $setor   = new Setor();
 $setores = $setor->listar();
 
-
 if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
-    $paciente->cpf = $_REQUEST['cpf'];
-    $objPaciente =  $paciente->listarPorCpf($paciente);
-    if ($objPaciente != null) {
-        $objChecklist = new Checklist();
-        $bundles = $objChecklist->listarPendentesPorInternacao($objPaciente->id);
+    $cpf = $_REQUEST['cpf'];
+    if(validaCPF($cpf)){
+        $paciente->cpf = removeCaracteresCPF($cpf);
+        $objPaciente =  $paciente->listarPorCpf($paciente);
+        if ($objPaciente != null) {
+            $objChecklist = new Checklist();
+            $bundles = $objChecklist->listarPendentesPorInternacao($objPaciente->id);
         
         // Verifica se o paciente já está em um checklist com internação ativa
-        $pacienteEmChecklist = count($objChecklist->listarAtivos()) - count($bundles);
-        if($pacienteEmChecklist > 0) {
-            aprensentaMensagem(ERROR, "Consta internção ativa para este paciente!");
+            $pacienteEmChecklist = count($objChecklist->listarAtivos()) - count($bundles);
+            if($pacienteEmChecklist > 0) {
+                aprensentaMensagem(ERROR, "Consta internção ativa para este paciente!");
+            }
+        } else {
+            aprensentaMensagem(ERROR, "Paciente não encontrado!");
         }
     } else {
-        aprensentaMensagem(ERROR, "Paciente não encontrado!");
+        aprensentaMensagem(ERROR, "CPF inválido!");
     }
 }
 
@@ -43,7 +47,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 	<fieldset style="border: solid 1px;">
                 		<label>Consulte o paciente</label>
                         <div>
-                        	<div class="form-group col-sm-8"><input type="text" placeholder="Informe o cpf do paciente" class="form-control" name="cpf"></div>
+                        	<div class="form-group col-sm-8"><input type="text" placeholder="Informe o cpf do paciente" class="form-control" name="cpf" id="input_cpf" data-mask="999.999.999-99"/><span id="cpf"></span></div>
                             <button class="btn btn-primary" type="submit">Pesquisar</button>
                         </div>
                     </fieldset>
@@ -130,3 +134,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
        	</div>
     </div>
 </div>
+
+<script>
+
+</script>

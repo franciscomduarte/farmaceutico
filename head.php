@@ -46,6 +46,7 @@
 
 <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
+    <script src="/js/sistema.js"></script>
 
 	<script type="text/javascript">
 
@@ -62,6 +63,14 @@
         $('.dual_select').bootstrapDualListbox({
             selectorMinimalHeight: 160
         });
+
+    	$("#input_cpf").keypress(function(){
+    		 $("#cpf").html(CPF.valida($(this).val()));
+    	});
+
+    	$("#input_cpf").blur(function(){
+    		  $("#cpf").html(CPF.valida($(this).val()));
+    	});
 
 	});
 
