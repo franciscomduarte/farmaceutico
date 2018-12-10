@@ -46,7 +46,7 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                                             <div>
                                                 <div>
                                                     <span>Adesão Respostas</span>
-                                                    <small class="pull-right"><?php echo $dashboard->grafico_barras_inicial["total_previsto"]."/".$dashboard->grafico_barras_inicial["total_respondido"]?> pacientes</small>
+                                                    <small class="pull-right"><?php echo $dashboard->grafico_barras_inicial["total_respondido"]."/".$dashboard->grafico_barras_inicial["total_previsto"]?> pacientes</small>
                                                 </div>
                                                 <div class="progress progress-small">
                                                     <div style="width: <?php echo $total_porcentagem = calculaPorcentagemTotal($dashboard->grafico_barras_inicial["total_previsto"], $dashboard->grafico_barras_inicial["total_respondido"])?>%;" class="progress-bar <?php echo $total_porcentagem <= 50 ? "progress-bar-danger" : "a"?>"></div>
