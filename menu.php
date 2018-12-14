@@ -46,7 +46,7 @@ $usuario = $_SESSION['usuario'];
                     ?>
                     
                    <li class="dropdown">
-                    	<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Checklists <span class="caret"></span></a>
+                    	<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Bundles <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                         	<?php 
                         	
