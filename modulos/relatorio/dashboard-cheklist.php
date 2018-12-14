@@ -1,12 +1,14 @@
-<?php 
+<?php
 $filtro_atual = $_REQUEST['filtro'];
-if (!isset($filtro_atual))
-    $filtro_atual = FILTRO_INICIAL;
 
-$dashboard = new Dashboard();
-$dashboard->getDashboarPorChecklist($filtro_atual);
+$filtro_cheklist = array(
+        "id_checklist" => $_REQUEST['id_checklist'],
+        "id_setor"     => $_REQUEST['id_setor']
+);
     
-?>       
+    $dashboard = new Dashboard();
+    
+    ?>
         <div class="wrapper wrapper-content">
             <div class="container">
             <div class="row">
@@ -19,8 +21,12 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                                 	 	<select name="filtro" id="filtro_dashboard" class="select2_demo_2 form-control select2-hidden-accessible">
             								<?php
             								
-            								foreach ( $dashboard->getDashboarFiltroPorChecklist() as $filtro) {
+            								foreach ( $dashboard->getDashboarFiltroPorChecklist($filtro_cheklist["id_checklist"],$filtro_cheklist["id_setor"]) as $filtro) {
+            								    if (!isset($filtro_atual))
+            								        $filtro_atual = $filtro['id_checklist']."|".$filtro['data_resposta'];
+            								    
             								    $filtro_ativo = $filtro['id_checklist']."|".$filtro['data_resposta'] == $filtro_atual ? "selected" : "";
+            								    
             									?>
             									<option value="<?php echo $filtro['id_checklist']."|".$filtro['data_resposta'] ?>" <?php echo $filtro_ativo?>> <?php echo $filtro['label']?> </option>
             								<?php
@@ -28,8 +34,14 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
             								?>
             	                    		</select>
                                     </div>
+                                    
                                 </div>
+                                
                             </div>
+<?php     
+#Atualizando os dados do dashboard
+$dashboard->getDashboarPorChecklist($filtro_atual); 
+?>                            
                             <div class="ibox-content">
                                 <div class="row">
                                     <div class="col-lg-9">
@@ -325,3 +337,4 @@ $(document).ready(function() {
     
 });
 </script>
+

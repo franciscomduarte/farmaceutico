@@ -104,13 +104,25 @@ class Dashboard{
                 );
     }
     
-    public function getDashboarFiltroPorChecklist(){
+    public function getDashboarFiltroPorChecklist($id_cheklist=NULL,$id_setor=NULL){
         
         $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
             	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
                 from resposta_checklist r, checklist c
                 group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist 
-                order by data_resposta desc limit 5";
+                order by data_resposta desc";
+        
+        if (isset($id_cheklist) && isset($id_setor)){
+            
+            $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
+            	           c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
+                    from resposta_checklist r, checklist c, internacao_checklist ic
+                    where r.id_checklist = ic.id_checklist 
+                    and   r.id_checklist = '".$id_cheklist."' 
+                    and   ic.id_internacao in (select id from internacao where id_setor = '".$id_setor."')
+                    group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist 
+                    order by data_resposta desc";
+        }
         
         $query = executarSql($sql);
         
@@ -131,6 +143,7 @@ class Dashboard{
         $lista        = explode("|", $filtro);
         $id_checklist = $lista[0];
         $data_resposta_checklist = $lista[1];
+        
         
         $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
         		IFNULL((select count(id_resposta_alternativa)              
@@ -190,9 +203,9 @@ class Dashboard{
     	
         $this->grafico_barras_inicial =
         array(
-            "labels"            => '"'.implode('","',$array_labels).'","Média Adesão"',
-            "resposta_tipo_1"   => implode(',',$array_sim_porcentagem).",".($soma_sim/sizeof($array_sim_porcentagem)),
-            "resposta_tipo_2"   => implode(',',$array_nao_porcentagem).",".($soma_nao/sizeof($array_nao_porcentagem)),
+            "labels"            => '"Adesão Bundle","'.implode('","',$array_labels).'"',
+            "resposta_tipo_1"   => ($soma_sim/sizeof($array_sim_porcentagem)).",".implode(',',$array_sim_porcentagem),
+            "resposta_tipo_2"   => ($soma_nao/sizeof($array_nao_porcentagem)).",".implode(',',$array_nao_porcentagem),
             "maior_valor"       => 120,
             "total_previsto"    => $array_total["total_previsto"],
             "total_respondido"  => $array_total["total_respondido"]

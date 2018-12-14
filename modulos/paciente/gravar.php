@@ -18,7 +18,7 @@
     	}
     	redirecionar("/paciente");
     } else {
-        aprensentaMensagem(ERRO, "CPF inválido.");
+        aprensentaMensagem(ERROR, "CPF inválido.");
     }
 
 ?>
