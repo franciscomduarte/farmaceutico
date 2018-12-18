@@ -2,7 +2,7 @@
 
 // dados da url
 $params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
-$id_checklist = $params[3];
+$id_checklist = $params[2];
 
 $obj = null;
 $objPaciente = null;
@@ -43,7 +43,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
         <div class="ibox-content">
         	<div class="row">
             	<div class="col-sm-12">
-                	<form role="form" action="#" method="post">
+                	<form role="form" action="" method="post">
                 	<fieldset style="border: solid 1px;">
                 		<label>Consulte o paciente</label>
                         <div>
@@ -63,7 +63,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 		<input type="hidden" name="id" value="<?php echo $obj->id ? $obj->id : null ?>">
                 		<input type="hidden" name="id_paciente" value="<?php echo $objPaciente->id ? $objPaciente->id : null ?>">
                 		<input type="hidden" name="id_convenio" value="<?php echo $objPaciente->convenio->id ? $objPaciente->convenio->id : null ?>">
-                		<input type="hidden" name="id_checklist" value="<?php echo $id_checklist ? $id_checklist : null ?>">
+                		<input type="hidden" name="id_checklist" value="<?php echo $id_checklist ? $id_checklist : 1 // TODO ajustar, pois se não tiver ele pegará sempre o primeiro checklist ?>">
                     	<div class="row">
                         	<div class="col-sm-6"><label>Nome</label> <input type="text" value="<?php echo $objPaciente->nome ? $objPaciente->nome : null ?>" disabled="disabled" class="form-control" name="nome"></div>
                             <div class="col-sm-6"><label>CPF</label> <input type="text" value="<?php echo $objPaciente->cpf ? $objPaciente->cpf : null ?>" disabled="disabled" class="form-control" name="nome"></div>

@@ -1,7 +1,7 @@
 <?php
 
 $params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
-$id_checklist = $params[1];
+echo $id_checklist = $params[1];
 
 $objChecklist = new Checklist();
 $cl = $objChecklist->listarPorId($id_checklist);
