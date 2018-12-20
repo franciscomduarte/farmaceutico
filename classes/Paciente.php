@@ -7,6 +7,8 @@ class Paciente extends Base
 	protected $nome;
 	protected $cpf;
 	protected $nascimento;
+	protected $genero;
+	protected $registro;
 	
 	protected $convenio;
 	
@@ -15,8 +17,8 @@ class Paciente extends Base
 	}
 	
 	public function inserir($obj) {
-		$sql = "INSERT INTO paciente (id, nome, cpf, nascimento, id_convenio) 
-                VALUES (null, '$obj->nome', '$obj->cpf', '$obj->nascimento', ".$obj->convenio->id.")";
+		$sql = "INSERT INTO paciente (id, nome, cpf, nascimento, genero, registro, id_convenio) 
+                VALUES (null, '$obj->nome', '$obj->cpf', '$obj->nascimento', '$obj->genero','$obj->registro', ".$obj->convenio->id.")";
 		$result = executarSql($sql);
 		if($result->errno != null){
 		    if ($result->errno == 1062) {
@@ -33,6 +35,8 @@ class Paciente extends Base
                 SET nome = '$obj->nome',
                     cpf = '$obj->cpf',
                     nascimento = '$obj->nascimento',
+                    genero = '$obj->genero',
+                    registro = '$obj->registro',
                     id_convenio = ".$obj->convenio->id."
                 WHERE id = $obj->id ";
 		return executarSql($sql);
@@ -50,6 +54,8 @@ class Paciente extends Base
 	        $paciente->nome          = $linha['nome'];
 	        $paciente->cpf           = $linha['cpf'];
 	        $paciente->nascimento    = $linha['nascimento'];
+	        $paciente->genero    = $linha['genero'];
+	        $paciente->registro    = $linha['registro'];
 	        $paciente->convenio      = $paciente->convenio->listarPorId($linha['id_convenio']);
 	        $pacientes[]             = $paciente;
 	    }
@@ -68,6 +74,8 @@ class Paciente extends Base
 	        $paciente->nome          = $linha['nome'];
 	        $paciente->cpf           = $linha['cpf'];
 	        $paciente->nascimento    = $linha['nascimento'];
+	        $paciente->genero    = $linha['genero'];
+	        $paciente->registro    = $linha['registro'];
 	        $paciente->convenio = $convenio->listarPorId($linha['id_convenio']);
 	    }
 	    return $paciente;
@@ -88,6 +96,8 @@ class Paciente extends Base
 	        $paciente->nome          = $linha['nome'];
 	        $paciente->cpf           = $linha['cpf'];
 	        $paciente->nascimento    = $linha['nascimento'];
+	        $paciente->genero    = $linha['genero'];
+	        $paciente->registro    = $linha['registro'];
 	        $paciente->convenio      = $convenio->listarPorId($linha['id_convenio']);
 	    }
 	    return $paciente;
