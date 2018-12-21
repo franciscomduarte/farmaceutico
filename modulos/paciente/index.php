@@ -68,6 +68,8 @@
 					                        <th>CPF</th>
 					                        <th>Nascimento</th>
 					                        <th>Convênio</th>
+					                        <th>Gênero</th>
+					                        <th>Registro</th>
 					                        <th>Ações</th>
 					                    </tr>
 	                    			</tfoot>

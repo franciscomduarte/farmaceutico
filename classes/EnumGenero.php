@@ -3,10 +3,10 @@
 class EnumGenero
 {
 
-    public const GENERO = array(
+    public const GENEROS = array(
         'MASCULINO' => 'Masculino',
         'FEMININO' => 'Feminino',
-        'OUTRO' => 'Outro',
+        'OUTRO' => 'Outro'
     );
 }
 

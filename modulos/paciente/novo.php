@@ -19,26 +19,37 @@ if($id) {
         </div>
         <div class="ibox-content">
         	<div class="row">
-            	<div class="col-sm-8 b-r">
+            	<div class="col-sm-12">
                 	<form role="form" action="/paciente/gravar" method="post">
                 		<input type="hidden" name="id" value="<?php echo $obj->id ? $obj->id : null ?>">
                     	<div class="form-group"><label>Nome</label> <input type="text" value="<?php echo $obj->nome ? $obj->nome : null ?>" placeholder="Nome do paciente" class="form-control" name="nome"></div>
                         <div class="form-group"><label>CPF</label> <input data-mask="999.999.999-99" type="text" value="<?php echo $obj->cpf ? $obj->cpf : null ?>" placeholder="CPF do paciente" class="form-control" name="cpf"></div>
-                        <div class="form-group"><label>Nascimento</label> <input type="date" value="<?php echo $obj->nascimento ? $obj->nascimento : null ?>" placeholder="Data de nascimento do paciente" class="form-control" name="nascimento"></div>
                        	
 						<div class="form-group">
 							<label>Gênero</label>
 							
 							<select name="genero" class="select2_demo_2 form-control select2-hidden-accessible">
 							<option value="">-- Selecione --</option>
-							<?php
-							    foreach (EnumGenero::GENERO as $key => $genero) { ?>
-									<option value="<?php echo $key ?>" <?php echo ($key == $obj->genero ? 'selected="selected"' : '')?>> <?php echo $key." - ".$genero?> </option>
-							<?php } ?>
+							<option value="MASCULINO" <?php echo ("MASCULINO" == $obj->genero ? 'selected="selected"' : '')?>>Masculino</option>
+							<option value="FEMININO" <?php echo ("FEMININO" == $obj->genero ? 'selected="selected"' : '')?>>Feminino</option>
+							<option value="OUTRO" <?php echo ("OUTRO" == $obj->genero ? 'selected="selected"' : '')?>>Outro</option>
                     		</select>
 						</div>
+						
+						<div class="form-group">
+							<label for="db">Nascimento</label>
+							<div class="input-group">
+								<input class="form-control" id="db" type="text"
+									data-role="datebox"
+									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br"}' 
+									readonly="readonly"
+									name="nascimento"
+									value="<?php echo formatarData($obj->nascimento)  ?>">
+							</div>
+						</div>
+						
                        	<div class="form-group"><label>Registro de Internação</label> 
-                       		<textarea value="<?php echo $obj->registro ? $obj->registro : null ?>" placeholder="Registro de internação" class="form-control" name="registro"></textarea>
+                       		<textarea placeholder="Registro de internação" class="form-control" name="registro"><?php echo $obj->registro ? $obj->registro : "" ?></textarea>
                        	</div>
                   
                        	<div class="form-group">
@@ -61,12 +72,8 @@ if($id) {
 							</select>						
 						</label>
 						</div>
-						
-						
-						
-						</div>
-                        
-                        <div>
+
+						<div>
                         	<button class="btn btn-white" type="button" onclick="history.go(-1);">Cancelar</button>
                             <button class="btn btn-primary" type="submit">Salvar</button>
                         </div>

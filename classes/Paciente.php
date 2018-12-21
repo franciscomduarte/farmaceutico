@@ -17,7 +17,7 @@ class Paciente extends Base
 	}
 	
 	public function inserir($obj) {
-		$sql = "INSERT INTO paciente (id, nome, cpf, nascimento, genero, registro, id_convenio) 
+		echo $sql = "INSERT INTO paciente (id, nome, cpf, nascimento, genero, registro, id_convenio) 
                 VALUES (null, '$obj->nome', '$obj->cpf', '$obj->nascimento', '$obj->genero','$obj->registro', ".$obj->convenio->id.")";
 		$result = executarSql($sql);
 		if($result->errno != null){

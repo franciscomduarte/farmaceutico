@@ -100,7 +100,7 @@
 	
 	function formatarData($date){
 		$date = date_create($date);
-		return date_format($date, 'd/m/y');
+		return date_format($date, 'd/m/Y');
 	}
 
 	function formatarDataHora($date){
@@ -108,6 +108,13 @@
 	       $date = date_create($date);
 	       return date_format($date, 'd/m/Y H:i:s');
 	    }
+	}
+	
+	function dateEmMysql($dateSql){
+	    $ano= substr($dateSql, 6);
+	    $mes= substr($dateSql, 3,-5);
+	    $dia= substr($dateSql, 0,-8);
+	    return $ano."-".$mes."-".$dia;
 	}
 	
 	function formataDataMysql($date){

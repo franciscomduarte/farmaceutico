@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <html>
+
 	<head>
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,6 +30,10 @@
    	 	<link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
    		<link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
    		<link href="/css/plugins/c3-0.6.9/c3.css" rel="stylesheet">
+   		
+   		<link rel="stylesheet" href="/css/datebox/jtsage-datebox-4.4.1.bootstrap.min.css">
+    	<link rel="stylesheet" href="/css/datebox/syntax.css">
+   		
 	</head>
 	
 	<script src="/js/jquery-3.1.1.min.js"></script>
@@ -47,6 +51,10 @@
 <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
     <script src="/js/sistema.js"></script>
+    
+
+    <script src="/js/datebox/jtsage-datebox-4.4.1.bootstrap.min.js"></script>
+	<script src="/js/datebox/initial.js"></script>
 
 	<script type="text/javascript">
 
