@@ -76,7 +76,19 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                         
                         <div class="row">
                         	<div class="col-sm-6"><label>Número da Internação *</label> <input type="text" value="<?php echo $obj->numero_internacao ? $obj->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required"></div>
-                       		<div class="col-sm-6"><label>Data da Internação *</label> <input type="date" value="<?php echo $obj->data_internacao ? formataDataMysql($obj->data_internacao) : null ?>" class="form-control" name="data_internacao" required="required"></div>
+                        	<div class="col-sm-6">
+    							<label for="db">Data da Internação *</label>
+    							<div class="input-group">
+    								<input class="form-control" id="db" type="text"
+    									data-role="datebox"
+    									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br"}' 
+    									readonly="readonly"
+    									name="data_internacao"
+    									value="<?php echo formatarData($obj->data_internacao)  ?>"
+    									required="required">
+    							</div>
+							</div>
+                        
                         </div>
                         <div class="row">
                         	<div class="col-sm-6">
