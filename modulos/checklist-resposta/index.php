@@ -1,7 +1,7 @@
 <?php
 
 $params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
-echo $id_checklist = $params[1];
+$id_checklist = $params[1];
 
 $objChecklist = new Checklist();
 $cl = $objChecklist->listarPorId($id_checklist);
@@ -25,15 +25,10 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 				<table class="table table-hover no-margins">
 					<thead>
 						<tr>
-							<th>Id</th>
 							<th>Paciente</th>
-							<th>Nr. Internação</th>
-							<th>Data Entrada</th>
-							<th>Dias Internado</th>
-							<th>Responder</th>
+							<th>Quest.</th>
 							<th>Adicionar</th>
-							<th>Dar alta?</th>
-							<th>Respondido Hoje?</th>
+							<th>Alta?</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,16 +38,11 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 						    $status = $respostaChecklist->verificarPreenchimento($internacao->id, $cl->id);
 						?>
 						<tr>
-							<td><small><?php echo $internacao->id ?></small></td>
 							<td><small><?php echo $internacao->paciente->nome ?></small></td>
-							<td><small><?php echo $internacao->numero_internacao ?></small></td>
-							<td><small><?php echo formatarData($internacao->data_internacao) ?></small></td>
-							<td class="text-navy"> <small class="label label-primary"><i class="fa fa-clock-o"></i> <?php echo diffDate(date('Y-m-d H:i'), $internacao->data_internacao)?></small></td>
+							<!-- <td class="text-navy"> <small class="label label-primary"><i class="fa fa-clock-o"></i> <?php echo diffDate(date('Y-m-d H:i'), $internacao->data_internacao)?></small></td> -->
 							<td>
     							<div class="form-group">
                                         <div class="col-sm-10">
-                                            <div class="input-group m-b">
-                                                <div class="input-group-btn">
                                                     <button <?php echo $status != null ? "disabled" : ""?> onclick="responder(<?php echo $cl->id ?>,<?php echo $internacao->id?>)" tabindex="-1" class="btn btn-white" type="button"><?php echo $cl->sigla ?></button>
                                                     <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
                                                     
@@ -70,16 +60,12 @@ $interenacoes = $obj->listarAtivas($id_checklist);
                                                     		}
                                                         ?>
                                                     </ul>
-                                                </div>
-                                        </div>
                                     </div>
                                 </div>
 							</td>
 							<td>
 								<div class="form-group">
     								<div class="col-sm-10">
-                                        <div class="input-group m-b">
-                                            <div class="input-group-btn">
                                                 <button tabindex="-1" class="btn btn-white" type="button">Selecione</button>
                                                 <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
                                                 
@@ -97,8 +83,6 @@ $interenacoes = $obj->listarAtivas($id_checklist);
     								        	   <?php }
                         							?>	
                         						</ul>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 							</td>
@@ -111,9 +95,9 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 									<span>-</span>
 								<?php }?>
 							</td>
-							<td>
-								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?> - <small><?php echo formatarData($status->data_internacao) ?></small>
-							</td>
+							<!--  <td align="center">
+								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?></small>
+							</td>-->
 						</tr>
 						<?php }?>
 					</tbody>
