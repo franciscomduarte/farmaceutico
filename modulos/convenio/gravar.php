@@ -3,7 +3,7 @@
 	#dados do formulario
     $convenio = new Convenio();
     $convenio->id   = $_REQUEST['id'];
-    $convenio->nome = $_REQUEST['nome'];
+    $convenio->nome = strtoupper($_REQUEST['nome']);
 	
     if($convenio->id){
         $convenio->editar($convenio);

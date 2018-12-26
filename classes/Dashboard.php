@@ -130,9 +130,9 @@ class Dashboard{
         
         foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
             $array_filtro[] = array("id_checklist" => $linha['id_checklist'],
-                                  "data_resposta" => $linha['data_resposta'],
-                                  "sigla"         => $linha['sigla'],
-                                  "label"         => $linha['sigla']." # ".formatarData($linha['data_resposta'])
+                                    "data_resposta" => $linha['data_resposta'],
+                                    "sigla"         => $linha['sigla'],
+                                    "label"         => $linha['sigla']." # ".formatarData($linha['data_resposta'])
                              );   
         }
         return $array_filtro;
@@ -177,7 +177,7 @@ class Dashboard{
             
             if ($enunciado != $linha["enunciado"]){
                 $array_labels[] = $linha["enunciado"];
-                $enunciado = $linha["enunciado"];
+                $enunciado      = $linha["enunciado"];
             }
                 
             if (strtolower($linha["descricao"]) == "não")

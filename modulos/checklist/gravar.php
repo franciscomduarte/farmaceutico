@@ -4,7 +4,7 @@
 	$checklist         = new Checklist();
 	
 	$checklist->id 	   = $_REQUEST['id'];
-	$checklist->nome   = $_REQUEST['nome'];
+	$checklist->nome   = strtoupper($_REQUEST['nome']);
 	$checklist->ativo  = $_REQUEST['ativo'];
 	$checklist->meta   = $_REQUEST['meta'];
 		

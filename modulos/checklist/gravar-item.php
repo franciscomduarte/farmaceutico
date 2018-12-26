@@ -7,7 +7,7 @@
      	$item  = new Item();
     	
     	$item->id        = $_REQUEST['id_item'];
-    	$item->enunciado = $_REQUEST['enunciado'];
+    	$item->enunciado = strtoupper($_REQUEST['enunciado']);
     	$item->tipo		 = $_REQUEST['tipo'];
     	$item->checklist = $checklist;
         
