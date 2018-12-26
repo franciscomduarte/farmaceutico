@@ -28,7 +28,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 
 						<div class="form-group col-xs-6">
 							<div class="form-group">
-								<label>Nome</label> <input type="text"
+								<label>Nome</label><span style="color: red;"> *</span> <input type="text"
 									value="<?php echo $obj->nome ? $obj->nome : null ?>"
 									placeholder="Insira o nome" class="form-control" name="nome"
 									required="required" <?php disableInput($view)?>>
@@ -37,7 +37,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 
 						<div class="form-group col-xs-6">
 							<div class="form-group">
-								<label>Email</label> <input type="email"
+								<label>Email</label><span style="color: red;"> *</span> <input type="email"
 									value="<?php echo $obj->email ? $obj->email : null ?>"
 									placeholder="Insira o email" class="form-control" name="email"
 									required="required" <?php disableInput($view)?>>
@@ -46,7 +46,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 
 						<div class="form-group col-xs-6">
 							<div class="form-group">
-								<label>Senha</label> <input type="password"
+								<label>Senha</label><span style="color: red;"> *</span> <input type="password"
 									value="<?php echo $obj->senha ? $obj->senha : null ?>"
 									placeholder="Insira a senha" class="form-control" name="senha"
 									required="required" <?php disableInput($view)?>>
@@ -55,9 +55,9 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 
 						<div class="form-group col-xs-6">
 							<div class="form-group">
-								<label>Perfil</label>
+								<label>Perfil</label><span style="color: red;"> *</span>
 								
-								<select name="perfil"
+								<select name="perfil" required="required"
 								class="select2_demo_2 form-control select2-hidden-accessible" <?php disableInput($view)?>>
 								<option value="">-- Selecione --</option>
 								<?php
@@ -76,7 +76,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 
 						<div class="form-group col-xs-6">
 							<div class="form-group">
-								<label>CPF</label> <input type="text"
+								<label>CPF</label><span style="color: red;"> *</span> <input type="text"
 									value="<?php echo $obj->cpf ? $obj->cpf : null ?>"
 									placeholder="Insira o CPF" class="form-control" name="cpf"
 									required="required" data-mask="999.999.999-99" <?php disableInput($view)?>>
@@ -85,7 +85,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 
 						<div class="form-group col-xs-4 ">
 							<p>
-								<label>Status</label>
+								<label>Status</label><span style="color: red;"> *</span>
 							</p>
 							<div class="radio radio-info radio-inline">
 								<input type="radio" id="ativo" value="1" name="ativo" <?php disableInput($view)?>

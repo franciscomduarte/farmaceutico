@@ -45,9 +45,9 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
             	<div class="col-sm-12">
                 	<form role="form" action="" method="post">
                 	<fieldset style="border: solid 1px;">
-                		<label>Consulte o paciente</label>
+                		<label>Consulte o paciente</label><span style="color: red;"> *</span> 
                         <div>
-                        	<div class="form-group col-sm-8"><input type="text" placeholder="Informe o cpf do paciente" class="form-control" name="cpf" id="input_cpf" data-mask="999.999.999-99"/><span id="cpf"></span></div>
+                        	<div class="form-group col-sm-8"><input required="required" type="text" placeholder="Informe o cpf do paciente" class="form-control" name="cpf" id="input_cpf" data-mask="999.999.999-99"/><span id="cpf"></span></div>
                             <button class="btn btn-primary" type="submit">Pesquisar</button>
                         </div>
                     </fieldset>
@@ -75,9 +75,9 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                         
                         
                         <div class="row">
-                        	<div class="col-sm-6"><label>Número da Internação *</label> <input type="text" value="<?php echo $obj->numero_internacao ? $obj->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required"></div>
+                        	<div class="col-sm-6"><label>Número da Internação</label><span style="color: red;"> *</span> <input type="text" value="<?php echo $obj->numero_internacao ? $obj->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required"></div>
                         	<div class="col-sm-6">
-    							<label for="db">Data da Internação *</label>
+    							<label for="db">Data da Internação</label><span style="color: red;"> *</span> 
     							<div class="input-group">
     								<input class="form-control" id="db" type="text"
     									data-role="datebox"
@@ -92,7 +92,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                         </div>
                         <div class="row">
                         	<div class="col-sm-6">
-        						<label>Setor *</label> 
+        						<label>Setor</label><span style="color: red;"> *</span>  
                                	<div class="form-check">
         						<label class="form-check-label">
         							<select class="form-control" name="id_setor" required="required">
@@ -109,7 +109,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
         						</div>
         					</div>
                             <div class="col-sm-6">
-        						<label>Bundles *</label> 
+        						<label>Bundles</label><span style="color: red;"> *</span>  
                                	<div class="form-check">
         						<label class="form-check-label">
         							<select class="form-control" name="id_checklists[]" required="required" multiple="multiple">
