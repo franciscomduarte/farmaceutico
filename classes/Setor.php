@@ -34,6 +34,31 @@ class Setor extends Base
 		
 	}
 	
+	public function listarComChecklist($id_checklist){
+	    
+	    $sql = "select i.id_setor, concat(s.nome,' (',count(i.id_setor),')') as nome_sigla
+                from   resposta_checklist r, internacao i, setor s
+                where  i.id = r.id_internacao
+                and    i.id_setor = s.id
+                and    r.id_checklist = '".$id_checklist."' 
+                group by i.id_setor";
+	    
+	    $this->array = executarSql($sql);
+	    
+	    $setores = [];
+	    
+	    foreach ($this->array as $linha) {
+	        $setor = new Setor();
+	        $setor->id            = $linha['id_setor'];
+	        $setor->nome          = $linha['nome_sigla'];
+	        $setores[] = $setor;
+	    }
+	    return $setores;
+	    
+	}
+	
+	
+	
 	public function listarPorId($id){
 		self::listarObjetosPorId($id);
 		
