@@ -17,6 +17,8 @@
 
 	if ($controlador == 'index' && $acao == 'index') {
 	    require_once 'dashboard.php';
+	} else if ($controlador == 'dashboard-checklist' && $acao == 'index') {
+	    require_once 'dashboard-checklist.php';
 	} else if ($controlador == 'index') {
 		require_once ($modulo . '.php');
 	} else if ( is_file ( $modulo . DIRECTORY_SEPARATOR . $pagina )) {

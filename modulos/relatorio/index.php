@@ -15,13 +15,13 @@ $filtro = array(
 	<div class="ibox float-e-margins">
 		<div class="ibox-title">
 			<h5>
-				Relatório de Checklist por Setor
+				Relatório de Checklist por Unidade
 			</h5>
 		</div>
 		<div class="ibox-content">
 			<div class="row">
 
-				<form role="form" action="/relatorio/dashboard-cheklist" method="post">
+				<form role="form" action="../dashboard-checklist" method="post">
 					<div class="form-group col-xs-12 m-sm">
 
 					<div class="form-group col-xs-6">
@@ -52,12 +52,15 @@ $filtro = array(
 								<select name="id_setor" class="select2_demo_2 form-control select2-hidden-accessible" required="required">
 								<option value="">-- Selecione --</option>
 								<?php
-								$setor = new Setor();
-								$listaSetor = $setor->listar();
-								foreach ($listaSetor as $obj) {
-									?>
-									<option value="<?php echo $obj->id ?>" <?php echo ($filtro["id_setor"] == $obj->id ? 'selected="selected"' : '')?>> <?php echo $obj->nome?> </option>
-								<?php
+								if (isset($filtro["id_checklist"])){
+    								$setor = new Setor();
+    								$listaSetor = $setor->listarComChecklist($filtro["id_checklist"]);
+    								
+    								foreach ($listaSetor as $obj) {
+    									?>
+    									<option value="<?php echo $obj->id ?>" <?php echo ($filtro["id_setor"] == $obj->id ? 'selected="selected"' : '')?>> <?php echo $obj->nome?> </option>
+    								<?php
+    								}
 								}
 								?>
 	                    		</select>

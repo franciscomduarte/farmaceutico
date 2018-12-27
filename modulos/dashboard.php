@@ -1,9 +1,12 @@
 <?php 
 $filtro_atual = $_REQUEST['filtro'];
-if (!isset($filtro_atual))
-    $filtro_atual = FILTRO_INICIAL;
-
 $dashboard = new Dashboard();
+
+if (!isset($filtro_atual)){
+    $dashboard->definirDataFiltroCheckListInicial();
+    $filtro_atual = FILTRO_INICIAL;
+}
+
 $dashboard->getDashboarPorChecklist($filtro_atual);
     
 ?>       

@@ -107,21 +107,25 @@ class Dashboard{
     public function getDashboarFiltroPorChecklist($id_cheklist=NULL,$id_setor=NULL){
         
         $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
-            	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
-                from resposta_checklist r, checklist c
-                group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist 
-                order by data_resposta desc";
+                	   c.sigla, r.id_checklist
+                from   resposta_checklist r, internacao i, checklist c
+                where  i.id = r.id_internacao
+                and    c.id = r.id_checklist
+                group by date_format(r.data_resposta,'%Y-%m-%d') 
+                order by r.data_resposta desc";
         
         if (isset($id_cheklist) && isset($id_setor)){
             
             $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
-            	           c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
-                    from resposta_checklist r, checklist c, internacao_checklist ic
-                    where r.id_checklist = ic.id_checklist 
-                    and   r.id_checklist = '".$id_cheklist."' 
-                    and   ic.id_internacao in (select id from internacao where id_setor = '".$id_setor."')
-                    group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist 
-                    order by data_resposta desc";
+                	   c.sigla, r.id_checklist
+                from   resposta_checklist r, internacao i, checklist c
+                where  i.id = r.id_internacao
+                and    c.id = r.id_checklist
+                and    c.id = '".$id_cheklist."' 
+                and    i.id_setor = '".$id_setor."' 
+                group by date_format(r.data_resposta,'%Y-%m-%d')  
+                order by r.data_resposta desc";
+
         }
         
         $query = executarSql($sql);
@@ -129,13 +133,28 @@ class Dashboard{
         $array_filtro = [];
         
         foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
-            $array_filtro[] = array("id_checklist" => $linha['id_checklist'],
+            $array_filtro[] = array("id_checklist"  => $linha['id_checklist'],
                                     "data_resposta" => $linha['data_resposta'],
                                     "sigla"         => $linha['sigla'],
                                     "label"         => $linha['sigla']." # ".formatarData($linha['data_resposta'])
                              );   
         }
         return $array_filtro;
+    }
+    
+    public function definirDataFiltroCheckListInicial($filtro=NULL){
+        $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
+            	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
+                from resposta_checklist r, checklist c
+                group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist
+                order by data_resposta desc limit 1";
+        
+        $query = executarSql($sql);
+        
+        foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
+           $filtro_retorno = $linha['id_checklist']."|".$linha['data_resposta'];
+        }
+        define('FILTRO_INICIAL', $filtro_retorno);
     }
     
     public function getDashboarPorChecklist($filtro){
