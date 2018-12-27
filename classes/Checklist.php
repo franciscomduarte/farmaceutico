@@ -82,6 +82,32 @@ class Checklist extends Base
 	    return $checklists;
 	}
 	
+	public function listarAtivosCount(){
+	    $sql   = "SELECT c.id, c.nome, c.sigla, c.cor, count(i.id_checklist) as total 
+                    FROM checklist c, internacao_checklist i 
+                    WHERE c.id = i.id_checklist
+                    and c.ativo = 1
+                    and i.data_saida is null 
+                    group by c.id
+                    order by c.sigla";
+	    $query = executarSql($sql);
+	    $this->array = $query->fetch_all(MYSQLI_ASSOC);
+
+	    $checklists = [];
+	    
+	    foreach ($this->array as $linha) {
+	        $checklist = new Checklist();
+	        $checklist->id            = $linha['id'];
+	        $checklist->nome          = $linha['nome'];
+	        $checklist->sigla         = $linha['sigla']." (".$linha['total'].")";
+	        $checklist->cor           = $linha['cor'];
+	        
+	        $checklists[] = $checklist;
+	    }
+	    return $checklists;
+	}
+	
+	
 	public function listarPendentesPorInternacao($id_paciente){
 	    
 	   $sql = "SELECT * FROM checklist where id NOT IN (SELECT c.id
