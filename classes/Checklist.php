@@ -9,6 +9,7 @@ class Checklist extends Base
 	protected $ativo;
 	protected $meta;
 	protected $sigla;
+	protected $cor;
 	protected $itens = [];
 	
 	public function __construct(){
@@ -17,8 +18,8 @@ class Checklist extends Base
 	}
 	
 	public function inserir($obj){
-		$sql = "INSERT INTO ".$this->tabela." (id,nome,usuario_id,ativo,meta,sigla) 
-				               VALUES (null,'$obj->nome','".$_SESSION['usuario']['id']."',$obj->ativo,'$obj->meta','$obj->nome')";
+		$sql = "INSERT INTO ".$this->tabela." (id,nome,usuario_id,ativo,meta,sigla, cor) 
+				               VALUES (null,'$obj->nome','".$_SESSION['usuario']['id']."',$obj->ativo,'$obj->meta','$obj->sigla','$obj->cor')";
         
         return  executarSql($sql);
 	}
@@ -29,6 +30,7 @@ class Checklist extends Base
 					ativo 	= '$obj->ativo',
                     meta    = '$obj->meta',
                     sigla   = '$obj->sigla'
+                    cor   = '$obj->cor'
                 WHERE id 	= $obj->id";
 		
 		return executarSql($sql);
@@ -52,6 +54,7 @@ class Checklist extends Base
 		    $checklist->ativo         = $linha['ativo'];
 		    $checklist->meta          = $linha['meta'];
 		    $checklist->sigla          = $linha['sigla'];
+		    $checklist->cor          = $linha['cor'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 		    
 		    $checklists[] = $checklist;
@@ -71,6 +74,7 @@ class Checklist extends Base
 	        $checklist->ativo         = $linha['ativo'];
 	        $checklist->meta          = $linha['meta'];
 	        $checklist->sigla          = $linha['sigla'];
+	        $checklist->cor          = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 	        
 	        $checklists[] = $checklist;
@@ -103,6 +107,7 @@ class Checklist extends Base
 	        $checklist->ativo         = $linha['ativo'];
 	        $checklist->meta          = $linha['meta'];
 	        $checklist->sigla          = $linha['sigla'];
+	        $checklist->cor          = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 	        
 	        $checklists[] = $checklist;
@@ -132,6 +137,7 @@ class Checklist extends Base
 	        $checklist->ativo         = $linha['ativo'];
 	        $checklist->meta          = $linha['meta'];
 	        $checklist->sigla          = $linha['sigla'];
+	        $checklist->cor          = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 	        
 	        $checklists[] = $checklist;
@@ -151,6 +157,7 @@ class Checklist extends Base
 		    $checklist->ativo         = $linha['ativo'];
 		    $checklist->meta          = $linha['meta'];
 		    $checklist->sigla          = $linha['sigla'];
+		    $checklist->cor          = $linha['cor'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
 		}
 		

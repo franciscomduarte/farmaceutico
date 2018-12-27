@@ -30,9 +30,12 @@
    	 	<link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
    		<link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
    		<link href="/css/plugins/c3-0.6.9/c3.css" rel="stylesheet">
+   		<link href="/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
    		
    		<link rel="stylesheet" href="/css/datebox/jtsage-datebox-4.4.1.bootstrap.min.css">
     	<link rel="stylesheet" href="/css/datebox/syntax.css">
+    	
+    	
    		
 	</head>
 	
@@ -47,6 +50,7 @@
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
     <script src="/js/plugins/steps/jquery.steps.min.js"></script>
     <script src="/js/plugins/summernote/summernote.min.js"></script>
+    <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 
 <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
@@ -61,6 +65,8 @@
 	$(document).ready(function() {
 
         $('.summernote').summernote();
+
+        $('.colorpicker').colorpicker();
 
         $(".datepicker").datepicker( {
       	  format: "mm-yyyy",

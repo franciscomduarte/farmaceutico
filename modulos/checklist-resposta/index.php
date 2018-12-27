@@ -16,7 +16,19 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
 				<h5>Pacientes na UTI - <?php echo $cl->sigla ?></h5>
+				
+
+				
 				<div class="ibox-tools">
+					<?php 
+                    $objChecklist = new Checklist();
+                    $bundles = $objChecklist->listarAtivos();
+                    foreach ($bundles as $bundle) {
+                    ?>
+                    	<a class="btn btn-info btn-xs" style="color: white; background: <?php echo $bundle->cor ?>; border-color: <?php echo $bundle->cor ?>" href="/checklist-resposta/<?php echo $bundle->id?>"><?php echo $bundle->sigla ?></a>
+                    <?php 
+                    }
+                    ?>
 					<button type="button" class="btn btn-info" onclick="location.href='/paciente/novo/<?php echo $cl->id ?>'">Novo Paciente</button>
 					<button type="button" class="btn btn-info" onclick="location.href='/internacao/novo/<?php echo $cl->id ?>'">Incluir no CkeckList</button>
 				</div>
@@ -43,30 +55,24 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 							<td>
     							<div class="form-group">
                                         <div class="col-sm-10">
-                                                    <button <?php echo $status != null ? "disabled" : ""?> onclick="responder(<?php echo $cl->id ?>,<?php echo $internacao->id?>)" tabindex="-1" class="btn btn-white" type="button"><?php echo $cl->sigla ?></button>
-                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
-                                                    
-                                                    <ul class="dropdown-menu">
-                                                        <?php 
-                                                        	$objChecklist = new Checklist();
-                                                        	$bundles = $objChecklist->listarAtivasPorInternacao($internacao->id);
-                                                        	foreach ($bundles as $bundle) {
-                                                        	    $statusPreenchimento = $respostaChecklist->verificarPreenchimento($internacao->id, $bundle->id);
-                                                        	    if($cl->id != $bundle->id){
-                                                    	?>
-                                                        			<li><a onclick="responder(<?php echo $bundle->id ?>,<?php echo $internacao->id?>)" href="#" <?php echo $statusPreenchimento != null ? "style='pointer-events: none' color: #1ab394" : "" ?>><?php echo $bundle->sigla ?><?php echo $statusPreenchimento != null ? "<span align='right'><i class='fa fa-check text-navy'></i></span>" : "<i class='fa fa-warning'></i>"?></a></li>
-                                                        <?php 
-                                                        	    }
-                                                    		}
-                                                        ?>
-                                                    </ul>
+                                            <?php 
+                                            	$objChecklist = new Checklist();
+                                            	$bundles = $objChecklist->listarAtivasPorInternacao($internacao->id);
+                                            	foreach ($bundles as $bundle) {
+                                            	    $statusPreenchimento = $respostaChecklist->verificarPreenchimento($internacao->id, $bundle->id);
+                                            	    if($cl->id == $bundle->id){
+                                        	?>
+                                            			<button <?php echo $statusPreenchimento != null ? "disabled" : "" ?> class="btn btn-info btn-xs" style="color: white; background: <?php echo $bundle->cor ?>; border-color: <?php echo $bundle->cor ?>" onclick="responder(<?php echo $bundle->id ?>,<?php echo $internacao->id?>)">Responder</button>
+                                            <?php 
+                                            	    }
+                                        		}
+                                            ?>
                                     </div>
                                 </div>
 							</td>
 							<td>
 								<div class="form-group">
     								<div class="col-sm-10">
-                                                <button tabindex="-1" class="btn btn-white" type="button">Selecione</button>
                                                 <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
                                                 
                                                 <ul class="dropdown-menu">
@@ -88,7 +94,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 							</td>
 							<td>
 								<?php if ($status == null) {?>
-								<button onclick="dar_alta(<?php echo $internacao->id?>, <?php echo $cl->id ?>)">
+								<button class="btn btn-info btn-xs" onclick="dar_alta(<?php echo $internacao->id?>, <?php echo $cl->id ?>)">
 									<span title="Remover">Alta</span>
 								</button>
 								<?php } else { ?>
