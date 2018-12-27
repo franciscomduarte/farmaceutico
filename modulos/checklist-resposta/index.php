@@ -22,7 +22,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 				<div class="ibox-tools">
 					<?php 
                     $objChecklist = new Checklist();
-                    $bundles = $objChecklist->listarAtivos();
+                    $bundles = $objChecklist->listarAtivosCount();
                     foreach ($bundles as $bundle) {
                     ?>
                     	<a class="btn btn-info btn-xs" style="color: white; background: <?php echo $bundle->cor ?>; border-color: <?php echo $bundle->cor ?>" href="/checklist-resposta/<?php echo $bundle->id?>"><?php echo $bundle->sigla ?></a>
@@ -95,7 +95,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 							<td>
 								<?php if ($status == null) {?>
 								<button class="btn btn-info btn-xs" onclick="dar_alta(<?php echo $internacao->id?>, <?php echo $cl->id ?>)">
-									<span title="Remover">Alta</span>
+									<span title="Remover">Dar Alta</span>
 								</button>
 								<?php } else { ?>
 									<span>-</span>

@@ -51,7 +51,7 @@ $usuario = $_SESSION['usuario'];
                         	<?php 
                         	
                             	$objChecklist = new Checklist();
-                            	$bundles = $objChecklist->listarAtivos();
+                            	$bundles = $objChecklist->listarAtivosCount();
                             	foreach ($bundles as $bundle) {
                         	?>
                             	<li><a href="/checklist-resposta/<?php echo $bundle->id?>"><?php echo $bundle->sigla ?></a></li>
