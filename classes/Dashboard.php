@@ -203,7 +203,7 @@ class Dashboard{
     	
         $this->grafico_barras_inicial =
         array(
-            "labels"            => '"Adesão Bundle","'.implode('","',$array_labels).'"',
+            "labels"            => '"ADESÃO BUNDLE","'.implode('","',$array_labels).'"',
             "resposta_tipo_1"   => ($soma_sim/sizeof($array_sim_porcentagem)).",".implode(',',$array_sim_porcentagem),
             "resposta_tipo_2"   => ($soma_nao/sizeof($array_nao_porcentagem)).",".implode(',',$array_nao_porcentagem),
             "maior_valor"       => 120,
@@ -215,16 +215,22 @@ class Dashboard{
     
     private function getPacientesPrevistosRespondidos($id_checklist,$data_saida){
         
+        $sql_where = "select i.id 
+					  from internacao_checklist c, internacao i
+					  where i.id = c.id_internacao
+					  and c.id_checklist = '".$id_checklist."' 
+					  and i.data_internacao <= '".$data_saida."' 
+					  and (c.data_saida is null or date_format(c.data_saida,'%Y-%m-%d') = '".$data_saida."'))";
+        
         $sql = "select (select count(*) 
-                        from internacao_checklist 
-                        where id_checklist = '".$id_checklist."' 
-                        and (data_saida is null or date_format(data_saida,'%Y-%m-%d') <= '".$data_saida."') 
-                        group by id_checklist) as total_previsto, 
-                       (select count(*) 
-                         from resposta_checklist 
-                         where id_checklist = '".$id_checklist."'                        
-        		 		 and   date_format(data_resposta,'%Y-%m-%d') = '".$data_saida."'
-                         group by date_format(data_resposta,'%Y-%m-%d'), id_checklist) as total_respondido";
+        		        from internacao_checklist where id_checklist = '".$id_checklist."' 
+        		        and id_internacao in ($sql_where)
+        		        as total_previsto, 
+        	           (select count(*) 
+        		        from resposta_checklist where id_checklist = '".$id_checklist."' 
+        		        and date_format(data_resposta,'%Y-%m-%d') = '".$data_saida."' 
+                        and id_internacao in ($sql_where)
+        		        as total_respondido"; 
         
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
