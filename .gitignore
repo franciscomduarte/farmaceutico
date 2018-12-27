@@ -2,3 +2,4 @@
 *.buildpath
 *.DS_Store
 *.project
+/config.php
