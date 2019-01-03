@@ -98,9 +98,15 @@
 		return ($item/$total)*100;
 	}
 	
-	function formatarData($date){
+	function formatarData($date,$mensal=false){
 		$date = date_create($date);
-		return date_format($date, 'd/m/Y');
+		
+		if (!$mensal){
+		    $data_formatada = date_format($date, 'd/m/Y');
+		}else{
+		    $data_formatada = strftime('%b/%Y', strtotime(date_format($date, 'Y-m-d')));
+		}
+		return strtoupper($data_formatada);
 	}
 
 	function formatarDataHora($date){

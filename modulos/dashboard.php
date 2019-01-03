@@ -1,13 +1,14 @@
 <?php 
+
 $filtro_atual = $_REQUEST['filtro'];
 $dashboard = new Dashboard();
 
 if (!isset($filtro_atual)){
-    $dashboard->definirDataFiltroCheckListInicial();
+    $dashboard->definirDataFiltroCheckListInicial(NULL,true);
     $filtro_atual = FILTRO_INICIAL;
 }
 
-$dashboard->getDashboarPorChecklist($filtro_atual);
+$dashboard->getDashboarPorChecklist($filtro_atual,true);
     
 ?>       
         <div class="wrapper wrapper-content">
@@ -22,7 +23,7 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                                 	 	<select name="filtro" id="filtro_dashboard" class="select2_demo_2 form-control select2-hidden-accessible">
             								<?php
             								
-            								foreach ( $dashboard->getDashboarFiltroPorChecklist() as $filtro) {
+            								foreach ( $dashboard->getDashboarFiltroPorChecklist(NULL,NULL,true) as $filtro) {
             								    $filtro_ativo = $filtro['id_checklist']."|".$filtro['data_resposta'] == $filtro_atual ? "selected" : "";
             									?>
             									<option value="<?php echo $filtro['id_checklist']."|".$filtro['data_resposta'] ?>" <?php echo $filtro_ativo?>> <?php echo $filtro['label']?> </option>

@@ -104,28 +104,50 @@ class Dashboard{
                 );
     }
     
-    public function getDashboarFiltroPorChecklist($id_cheklist=NULL,$id_setor=NULL){
+    public function getDashboarFiltroPorChecklist($id_cheklist=NULL,$id_setor=NULL,$mensal=false){
         
-        $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
-                	   c.sigla, r.id_checklist
-                from   resposta_checklist r, internacao i, checklist c
-                where  i.id = r.id_internacao
-                and    c.id = r.id_checklist
-                group by date_format(r.data_resposta,'%Y-%m-%d') 
-                order by r.data_resposta desc";
         
-        if (isset($id_cheklist) && isset($id_setor)){
-            
+        if(!$mensal){
             $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
                 	   c.sigla, r.id_checklist
                 from   resposta_checklist r, internacao i, checklist c
                 where  i.id = r.id_internacao
                 and    c.id = r.id_checklist
-                and    c.id = '".$id_cheklist."' 
-                and    i.id_setor = '".$id_setor."' 
-                group by date_format(r.data_resposta,'%Y-%m-%d')  
+                group by date_format(r.data_resposta,'%Y-%m-%d')
                 order by r.data_resposta desc";
-
+        }else{
+            $sql = "select r.id, date_format(r.data_resposta,'%Y-%m') as data_resposta,
+                	   c.sigla, r.id_checklist
+                from   resposta_checklist r, internacao i, checklist c
+                where  i.id = r.id_internacao
+                and    c.id = r.id_checklist
+                group by date_format(r.data_resposta,'%Y-%m')
+                order by r.data_resposta desc";
+        }
+        
+        if (isset($id_cheklist) && isset($id_setor)){
+            
+            if(!$mensal){
+                $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
+                    	   c.sigla, r.id_checklist
+                    from   resposta_checklist r, internacao i, checklist c
+                    where  i.id = r.id_internacao
+                    and    c.id = r.id_checklist
+                    and    c.id = '".$id_cheklist."' 
+                    and    i.id_setor = '".$id_setor."' 
+                    group by date_format(r.data_resposta,'%Y-%m-%d')  
+                    order by r.data_resposta desc";
+            }else{
+                $sql = "select r.id, date_format(r.data_resposta,'%Y-%m') as data_resposta,
+                    	   c.sigla, r.id_checklist
+                    from   resposta_checklist r, internacao i, checklist c
+                    where  i.id = r.id_internacao
+                    and    c.id = r.id_checklist
+                    and    c.id = '".$id_cheklist."'
+                    and    i.id_setor = '".$id_setor."'
+                    group by date_format(r.data_resposta,'%Y-%m')
+                    order by r.data_resposta desc";
+            }
         }
         
         $query = executarSql($sql);
@@ -136,18 +158,27 @@ class Dashboard{
             $array_filtro[] = array("id_checklist"  => $linha['id_checklist'],
                                     "data_resposta" => $linha['data_resposta'],
                                     "sigla"         => $linha['sigla'],
-                                    "label"         => $linha['sigla']." # ".formatarData($linha['data_resposta'])
+                                    "label"         => $linha['sigla']." # ".formatarData($linha['data_resposta'],$mensal)
                              );   
         }
         return $array_filtro;
     }
     
-    public function definirDataFiltroCheckListInicial($filtro=NULL){
-        $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
+    public function definirDataFiltroCheckListInicial($filtro=NULL,$mensal=false){
+        
+        if(!$mensal){
+            $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
             	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
                 from resposta_checklist r, checklist c
                 group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist
                 order by data_resposta desc limit 1";
+        }else{
+            $sql = "select r.id, date_format(r.data_resposta,'%Y-%m') as data_resposta,
+            	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
+                from resposta_checklist r, checklist c
+                group by  date_format(r.data_resposta,'%Y-%m'), r.id_checklist
+                order by data_resposta desc limit 1";
+        }
         
         $query = executarSql($sql);
         
@@ -157,31 +188,49 @@ class Dashboard{
         define('FILTRO_INICIAL', $filtro_retorno);
     }
     
-    public function getDashboarPorChecklist($filtro){
+    public function getDashboarPorChecklist($filtro,$mensal=false){
         
         $lista        = explode("|", $filtro);
         $id_checklist = $lista[0];
         $data_resposta_checklist = $lista[1];
         
-        
-        $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
-        		IFNULL((select count(id_resposta_alternativa)              
-        		 from resposta_checklist_item r, item i, alternativa a              
-        		 where r.id_item = i.id 
+        if(!$mensal){
+            $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
+            		IFNULL((select count(id_resposta_alternativa)              
+            		 from resposta_checklist_item r, item i, alternativa a              
+            		 where r.id_item = i.id 
+            		 and   i.id = item.id
+            		 and   a.id = alternativa.id              
+            		 and   a.id = r.id_resposta_alternativa              
+            		 and   r.id_resposta_checklist in (select r.id as id_resposta    
+            		 								   from resposta_checklist r                        
+            		 								   where r.id_checklist = '".$id_checklist."'                        
+            		 								   and   date_format(r.data_resposta,'%Y-%m-%d') = '".$data_resposta_checklist."')              
+            		group by r.id_resposta_alternativa),0) as total_resposta 
+                    from item, checklist_item c, alternativa
+                    where item.id = c.id_item
+                    and   alternativa.id_item = item.id
+                    group by item.id, alternativa.id
+                    order by item.enunciado, alternativa.descricao";
+        }else{
+            $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
+        		IFNULL((select count(id_resposta_alternativa)
+        		 from resposta_checklist_item r, item i, alternativa a
+        		 where r.id_item = i.id
         		 and   i.id = item.id
-        		 and   a.id = alternativa.id              
-        		 and   a.id = r.id_resposta_alternativa              
-        		 and   r.id_resposta_checklist in (select r.id as id_resposta    
-        		 								   from resposta_checklist r                        
-        		 								   where r.id_checklist = '".$id_checklist."'                        
-        		 								   and   date_format(r.data_resposta,'%Y-%m-%d') = '".$data_resposta_checklist."')              
-        		group by r.id_resposta_alternativa),0) as total_resposta 
+        		 and   a.id = alternativa.id
+        		 and   a.id = r.id_resposta_alternativa
+        		 and   r.id_resposta_checklist in (select r.id as id_resposta
+        		 								   from resposta_checklist r
+        		 								   where r.id_checklist = '".$id_checklist."'
+        		 								   and   date_format(r.data_resposta,'%Y-%m') = '".$data_resposta_checklist."')
+        		group by r.id_resposta_alternativa),0) as total_resposta
                 from item, checklist_item c, alternativa
                 where item.id = c.id_item
                 and   alternativa.id_item = item.id
                 group by item.id, alternativa.id
                 order by item.enunciado, alternativa.descricao";
-        
+        }
         
         $query = executarSql($sql);
         $enunciado = "";
@@ -218,7 +267,7 @@ class Dashboard{
     	   $soma_nao += calculaPorcentagem($array_nao[$i],$array_sim[$i]);
     	}
 
-    	$array_total = $this->getPacientesPrevistosRespondidos($id_checklist, $data_resposta_checklist);
+    	$array_total = $this->getPacientesPrevistosRespondidos($id_checklist, $data_resposta_checklist, $mensal);
     	
         $this->grafico_barras_inicial =
         array(
@@ -231,25 +280,51 @@ class Dashboard{
         );
         
     }
+
     
-    private function getPacientesPrevistosRespondidos($id_checklist,$data_saida){
+    private function getPacientesPrevistosRespondidos($id_checklist,$data_saida,$mensal=false){
         
-        $sql_where = "select i.id 
-					  from internacao_checklist c, internacao i
-					  where i.id = c.id_internacao
-					  and c.id_checklist = '".$id_checklist."' 
-					  and i.data_internacao <= '".$data_saida."' 
-					  and (c.data_saida is null or date_format(c.data_saida,'%Y-%m-%d') = '".$data_saida."'))";
+        if(!$mensal){
         
-        $sql = "select (select count(*) 
-        		        from internacao_checklist where id_checklist = '".$id_checklist."' 
-        		        and id_internacao in ($sql_where)
-        		        as total_previsto, 
-        	           (select count(*) 
-        		        from resposta_checklist where id_checklist = '".$id_checklist."' 
-        		        and date_format(data_resposta,'%Y-%m-%d') = '".$data_saida."' 
-                        and id_internacao in ($sql_where)
-        		        as total_respondido"; 
+            $sql_where = "select i.id 
+    					  from internacao_checklist c, internacao i
+    					  where i.id = c.id_internacao
+    					  and c.id_checklist = '".$id_checklist."' 
+    					  and i.data_internacao <= '".$data_saida."' 
+    					  and (c.data_saida is null or date_format(c.data_saida,'%Y-%m-%d') = '".$data_saida."'))";
+            
+            $sql = "select (select count(*) 
+            		        from internacao_checklist where id_checklist = '".$id_checklist."' 
+            		        and id_internacao in ($sql_where)
+            		        as total_previsto, 
+            	           (select count(*) 
+            		        from resposta_checklist where id_checklist = '".$id_checklist."' 
+            		        and date_format(data_resposta,'%Y-%m-%d') = '".$data_saida."' 
+                            and id_internacao in ($sql_where)
+            		        as total_respondido"; 
+        
+        }else{
+            
+            $sql_where = "select i.id
+    					  from internacao_checklist c, internacao i
+    					  where i.id = c.id_internacao
+    					  and c.id_checklist = '".$id_checklist."'
+    					  and date_format(i.data_internacao,'%Y-%m') = '".$data_saida."'
+    					  and (c.data_saida is null or date_format(c.data_saida,'%Y-%m') = '".$data_saida."'))";
+            
+            $sql = "select (select count(*)
+            		        from internacao_checklist where id_checklist = '".$id_checklist."'
+            		        and id_internacao in ($sql_where)
+            		        as total_previsto,
+            	           (select count(*)
+            		        from resposta_checklist where id_checklist = '".$id_checklist."'
+            		        and date_format(data_resposta,'%Y-%m') = '".$data_saida."'
+                            and id_internacao in ($sql_where)
+            		        as total_respondido"; 
+            
+        }
+        
+        
         
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
