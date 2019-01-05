@@ -51,6 +51,9 @@
     <script src="/js/plugins/steps/jquery.steps.min.js"></script>
     <script src="/js/plugins/summernote/summernote.min.js"></script>
     <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+    
+    <!-- Steps -->
+    <script src="/js/plugins/steps/jquery.steps.min.js"></script>
 
 <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
@@ -67,6 +70,8 @@
         $('.summernote').summernote();
 
         $('.colorpicker').colorpicker();
+
+        $("#wizard").steps();
 
         $(".datepicker").datepicker( {
       	  format: "mm-yyyy",

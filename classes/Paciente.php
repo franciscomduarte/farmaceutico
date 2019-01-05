@@ -9,7 +9,6 @@ class Paciente extends Base
 	protected $nascimento;
 	protected $genero;
 	protected $registro;
-	
 	protected $convenio;
 	
 	public function __construct(){

@@ -4,7 +4,7 @@
     $cpf = 	$_REQUEST['cpf'];
     if(validaCPF($cpf)) {
         $paciente               = new Paciente();
-        $paciente->id           = $_REQUEST['id'];
+        $paciente->id           = $_REQUEST['id_paciente'];
         $paciente->nome         = strtoupper($_REQUEST['nome']);
         $paciente->cpf          = removeCaracteresCPF($cpf);
         $paciente->nascimento   = dateEmMysql($_REQUEST['nascimento'] );
@@ -17,9 +17,25 @@
             $paciente->editar($paciente);
     	} else {
     	    $paciente->inserir($paciente);
+    	    $paciente->id = $paciente->retornaIdInserido();
     	}
     	
-    	redirecionar("/paciente");
+    	#dados do formulario de internacao
+    	$internacao = new Internacao();
+    	echo $internacao->id = $_REQUEST['id_internacao'];
+    	$internacao->numero_internacao = $_REQUEST['numero_internacao'];
+    	$internacao->data_internacao = dateEmMysql($_REQUEST['data_internacao']);
+    	$internacao->setor->id = $_REQUEST['id_setor'];
+    	$internacao->paciente->id = $paciente->id;
+    	$internacao->convenio->id = $_REQUEST['id_convenio'];
+    	$internacao->checklists = $_REQUEST['id_checklists'];
+    	if($internacao->id){
+    	   $internacao->editar($internacao);
+    	} else {
+    	    $internacao->inserir($internacao);
+    	}
+    	
+    	//redirecionar("/paciente");
     } else {
         aprensentaMensagem(ERROR, "CPF inválido.");
     }

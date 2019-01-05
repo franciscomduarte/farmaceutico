@@ -29,8 +29,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
                     <?php 
                     }
                     ?>
-					<button type="button" class="btn btn-info" onclick="location.href='/paciente/novo/<?php echo $cl->id ?>'">Novo Paciente</button>
-					<button type="button" class="btn btn-info" onclick="location.href='/internacao/novo/<?php echo $cl->id ?>'">Incluir no CkeckList</button>
+					<button type="button" class="btn btn-info" onclick="location.href='/paciente/novo/<?php echo $cl->id ?>'">Incluir no CkeckList</button>
 				</div>
 			</div>
 			<div class="ibox-content">
@@ -95,7 +94,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 							<td>
 								<?php if ($status == null) {?>
 								<button class="btn btn-info btn-xs" onclick="dar_alta(<?php echo $internacao->id?>, <?php echo $cl->id ?>)">
-									<span title="Remover">Dar Alta</span>
+									<span title="Remover">Remover do Checklist</span>
 								</button>
 								<?php } else { ?>
 									<span>-</span>

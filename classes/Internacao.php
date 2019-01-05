@@ -21,7 +21,7 @@ class Internacao extends Base
 	}
 	
 	public function inserir($obj){
-		$sql = "INSERT INTO ".$this->tabela." (id, numero_internacao, data_internacao, id_setor, id_paciente, id_convenio) 
+		echo $sql = "INSERT INTO ".$this->tabela." (id, numero_internacao, data_internacao, id_setor, id_paciente, id_convenio) 
                 VALUES (null, '$obj->numero_internacao', '$obj->data_internacao', ".$obj->setor->id.", 
 		                ".$obj->paciente->id.", ".$obj->convenio->id.")";
 	    executarSql($sql);
@@ -30,7 +30,7 @@ class Internacao extends Base
 	    
 	    // insere na tabela internacao_checklist
 	    foreach ($obj->checklists as $checklist) {
-	        $sqlRelacionado = "INSERT INTO ".$this->tabela_relacionada." (id_internacao, id_checklist)
+	        echo $sqlRelacionado = "INSERT INTO ".$this->tabela_relacionada." (id_internacao, id_checklist)
                                VALUES ($id_internacao_inserida, $checklist)";
 	        executarSql($sqlRelacionado);
 	    }
@@ -51,7 +51,14 @@ class Internacao extends Base
                 id_convenio = ".$obj->convenio->id."
                 WHERE id = $obj->id ";
 		
-		return executarSql($sql);
+	   executarSql($sql);
+	   
+	   // insere na tabela internacao_checklist
+	   foreach ($obj->checklists as $checklist) {
+	       echo $sqlRelacionado = "INSERT INTO ".$this->tabela_relacionada." (id_internacao, id_checklist)
+                               VALUES ($obj->id, $checklist)";
+	       executarSql($sqlRelacionado);
+	   }
 	}
 	
 	public function atualizarDataSaida($id_internacao, $id_checklist){
