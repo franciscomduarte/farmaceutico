@@ -1,7 +1,8 @@
 <?php 
 
+    $id_checklist = $_REQUEST['id_checklist'];
 	#dados do formulario
-    $cpf = 	$_REQUEST['cpf'];
+    echo $cpf = 	$_REQUEST['cpf'];
     if(validaCPF($cpf)) {
         $paciente               = new Paciente();
         $paciente->id           = $_REQUEST['id_paciente'];
@@ -35,9 +36,11 @@
     	    $internacao->inserir($internacao);
     	}
     	
-    	//redirecionar("/paciente");
+    	redirecionar("/checklist-resposta/" . $id_checklist);
     } else {
-        aprensentaMensagem(ERROR, "CPF inválido.");
+        echo $cpf;
+        echo "aaa";
+       // aprensentaMensagem(ERROR, "CPF inválido.");
     }
 
 ?>

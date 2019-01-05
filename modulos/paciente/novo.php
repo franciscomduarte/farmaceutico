@@ -27,7 +27,8 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
             aprensentaMensagem(ERROR, "Paciente não encontrado! Preencha os campos para criar uma nova internação");
         }
     } else {
-        aprensentaMensagem(ERROR, "CPF inválido!");
+        echo $cpf;
+        //aprensentaMensagem(ERROR, "CPF inválido!");
     }
 }
 
@@ -63,12 +64,12 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                                 		<input type="hidden" name="id_checklist" value="<?php echo $id_checklist ? $id_checklist : 1 // TODO ajustar, pois se não tiver ele pegará sempre o primeiro checklist ?>">
                                 		<input type="hidden" name="id_internacao" value="<?php echo $objInternacao->id ? $objInternacao->id : null ?>">
  
-                                    	<div class="form-group col-sm-6"><label>Nome</label><span style="color: red;"> *</span> <input <?php echo $objPaciente != null ? "disabled" : "" ?> required="required" type="text" value="<?php echo $objPaciente->nome ? $objPaciente->nome : null ?>" placeholder="Nome do paciente" class="form-control" name="nome"></div>
-                                        <div class="form-group col-sm-6"><label>CPF</label><span style="color: red;"> *</span> <input <?php echo $objPaciente != null ? "disabled" : "" ?> required="required" data-mask="999.999.999-99" type="text" value="<?php echo $objPaciente->cpf ? $objPaciente->cpf : mask($paciente->cpf,'###.###.###-##') ?>" placeholder="CPF do paciente" class="form-control" name="cpf"></div>
+                                    	<div class="form-group col-sm-6"><label>Nome</label><span style="color: red;"> *</span> <input <?php echo $objPaciente != null ? "readonly" : "" ?> required="required" type="text" value="<?php echo $objPaciente->nome ? $objPaciente->nome : null ?>" placeholder="Nome do paciente" class="form-control" name="nome"></div>
+                                        <div class="form-group col-sm-6"><label>CPF</label><span style="color: red;"> *</span> <input  <?php echo $objPaciente != null ? "readonly" : "" ?> required="required" data-mask="999.999.999-99" type="text" value="<?php echo $objPaciente->cpf ? mask($objPaciente->cpf,'###.###.###-##') : mask($paciente->cpf,'###.###.###-##') ?>" placeholder="CPF do paciente" class="form-control" name="cpf"></div>
                                        	
                 						<div class="form-group col-sm-6">
                 							<label>Gênero</label><span style="color: red;"> *</span>
-                							<select <?php echo $objPaciente != null ? "disabled" : "" ?> name="genero" required="required" class="select2_demo_2 form-control select2-hidden-accessible">
+                							<select <?php echo $objPaciente != null ? "readonly" : "" ?> name="genero" required="required" class="select2_demo_2 form-control select2-hidden-accessible">
                 							<option value="">-- Selecione --</option>
                 							<option value="MASCULINO" <?php echo ("MASCULINO" == $objPaciente->genero ? 'selected="selected"' : '')?>>Masculino</option>
                 							<option value="FEMININO" <?php echo ("FEMININO" == $objPaciente->genero ? 'selected="selected"' : '')?>>Feminino</option>
@@ -79,7 +80,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 						<div class="form-group col-sm-6">
                 							<label for="db">Nascimento</label><span style="color: red;"> *</span>
                 							<div class="input-group">
-                								<input <?php echo $objPaciente != null ? "disabled" : "" ?> class="form-control" id="db" type="text" required="required"
+                								<input <?php echo $objPaciente != null ? "readonly" : "" ?> class="form-control" id="db" type="text" required="required"
                 									data-role="datebox"
                 									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br"}' 
                 									readonly="readonly"
@@ -90,7 +91,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 						
                                        	<div class="form-group col-sm-6">
                 							<label>Convênio</label><span style="color: red;"> *</span> 
-                									<select <?php echo $objPaciente != null ? "disabled" : "" ?> class="select2_demo_2 form-control select2-hidden-accessible" name="id_convenio" required="required">
+                									<select <?php echo $objPaciente != null ? "readonly" : "" ?> class="select2_demo_2 form-control select2-hidden-accessible" name="id_convenio" required="required">
                 										<option value="">-- Selecione --</option>
                 										<?php foreach ($objConvenio as $c) { 
                 							             ?>
@@ -108,13 +109,13 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 						
                 						<div class="form-group col-sm-6">
                                         	<label>Número da Internação</label><span style="color: red;"> *</span> 
-                                        	<input <?php echo $objPaciente != null ? "disabled" : "" ?> type="text" value="<?php echo $objInternacao->numero_internacao ? $objInternacao->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required">
+                                        	<input <?php echo $objPaciente != null ? "readonly" : "" ?> type="text" value="<?php echo $objInternacao->numero_internacao ? $objInternacao->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required">
                                         </div>
                                         
                     					<div class="form-group col-sm-6">
                     						<label for="db">Data da Internação</label><span style="color: red;"> *</span> 
                     						<div class="input-group">
-                    						<input <?php echo $objPaciente != null ? "disabled" : "" ?> class="form-control" id="db" type="text"
+                    						<input <?php echo $objPaciente != null ? "readonly" : "" ?> class="form-control" id="db" type="text"
                     									data-role="datebox"
                     									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br"}' 
                     									readonly="readonly"
