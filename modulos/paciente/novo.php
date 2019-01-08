@@ -82,7 +82,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 							<div class="input-group">
                 								<input <?php echo $objPaciente != null ? "readonly" : "" ?> class="form-control" id="db" type="text" required="required"
                 									data-role="datebox"
-                									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br"}' 
+                									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br", "afterToday":false,"beforeToday":true}' 
                 									readonly="readonly"
                 									name="nascimento"
                 									value="<?php echo formatarData($objPaciente->nascimento)  ?>">
@@ -117,7 +117,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                     						<div class="input-group">
                     						<input <?php echo $objPaciente != null ? "readonly" : "" ?> class="form-control" id="db" type="text"
                     									data-role="datebox"
-                    									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br"}' 
+                    									data-options='{"mode":"datebox","useInline":false,"useInlineAlign":"center", "useLang":"pt-br", "afterToday":true,"beforeToday":false}' 
                     									readonly="readonly"
                     									name="data_internacao"
                     									value="<?php echo formatarData($objInternacao->data_internacao)  ?>"
