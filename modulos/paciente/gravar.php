@@ -36,11 +36,9 @@
     	    $internacao->inserir($internacao);
     	}
     	
-    	redirecionar("/checklist-resposta/" . $id_checklist);
+    	//redirecionar("/checklist-resposta/" . $id_checklist);
     } else {
-        echo $cpf;
-        echo "aaa";
-       // aprensentaMensagem(ERROR, "CPF inválido.");
+       aprensentaMensagem(ERROR, "CPF inválido.");
     }
 
 ?>

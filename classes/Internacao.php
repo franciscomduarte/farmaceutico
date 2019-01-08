@@ -121,9 +121,11 @@ class Internacao extends Base
 	
 	public function listarInternacaoPorCpf($cpf){
 		$sql = "SELECT i.numero_internacao, i.id as id, p.id as id_paciente, p.id_convenio as id_convenio, p.cpf, i.id_setor as id_setor
-                FROM internacao i, paciente p 
+                FROM internacao i, paciente p, internacao_checklist c
                 WHERE i.id_paciente = p.id 
-                AND   p.cpf = '$cpf' 
+                AND i.id = c.id_internacao
+                AND p.cpf = '$cpf'
+                AND c.data_saida is null 
                 ORDER BY i.data_internacao desc limit 1 ";
 		$query = executarSql($sql);
 		$array = $query->fetch_all(MYSQLI_ASSOC);

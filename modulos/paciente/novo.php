@@ -109,7 +109,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 						
                 						<div class="form-group col-sm-6">
                                         	<label>Número da Internação</label><span style="color: red;"> *</span> 
-                                        	<input <?php echo $objPaciente != null ? "readonly" : "" ?> type="text" value="<?php echo $objInternacao->numero_internacao ? $objInternacao->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required">
+                                        	<input <?php echo $objInternacao != null ? "readonly" : "" ?> type="text" value="<?php echo $objInternacao->numero_internacao ? $objInternacao->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required">
                                         </div>
                                         
                     					<div class="form-group col-sm-6">
