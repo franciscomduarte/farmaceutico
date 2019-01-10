@@ -74,6 +74,23 @@ $dashboard->getDashboarPorChecklist($filtro_atual);
                         </div>
                     </div>
             </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            
+                            <div class="pull">
+                                <h5>Legenda</h5>
+                                 <div class="btn-group" style="padding-top: 5px;">
+                                    <span class="pull-right label label-danger"> < 90%</span>
+                                    <span class="pull-right label label-warning" style="background-color: #F6C600; color: black;"> < 99%</span>
+                                    <span class="pull-right label label-primary"> 100%</span>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+           		</div>
+		 	</div>
             
              <?php 
                 $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
@@ -121,18 +138,19 @@ $(document).ready(function() {
 	                pointBorderColor: "#fff",
 	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_1"]?>]
 	            },
-	            {
-	                label: "NÃO",
-	                backgroundColor: 'rgba(248, 172, 89, 0.5)',
-	                pointBorderColor: "#fff",
-	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_2"]?>]
-	            }
+// 	            {
+// 	                label: "NÃO",
+// 	                backgroundColor: 'rgba(248, 172, 89, 0.5)',
+// 	                pointBorderColor: "#fff",
+//	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_2"]?>]
+// 	            }
 	        ]
 	    };
 
     var barOptions = {
         responsive: true,
         events: false,
+        legend: false,
         animation: {
         	duration: 0,
         	onComplete: function () {
@@ -172,9 +190,9 @@ $(document).ready(function() {
         },
         gauge: {},
         color: {
-            pattern: ['#FF0000', '#f4ae70', '#F6C600', '#8CD9C9'], // the three color levels for the percentage values.
+            pattern: ['#FF0000', '#F6C600', '#1ab394'], // the three color levels for the percentage values.
             threshold: {
-                values: [30, 60, 90, 100]
+                values: [89, 99, 100]
             }
         },
         size: {
@@ -184,7 +202,7 @@ $(document).ready(function() {
 
     setTimeout(function () {
     	radar_<?php echo $i?>.load({
-            columns: [['meta', "100"]]
+            columns: [['META', "100"]]
         });
     }, 0);
 

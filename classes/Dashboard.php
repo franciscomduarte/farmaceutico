@@ -168,13 +168,13 @@ class Dashboard{
         
         if(!$mensal){
             $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
-            	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
+            	       c.sigla, r.id_checklist, count(*) as total_respostas
                 from resposta_checklist r, checklist c
                 group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist
                 order by data_resposta desc limit 1";
         }else{
             $sql = "select r.id, date_format(r.data_resposta,'%Y-%m') as data_resposta,
-            	       c.sigla, r.id_checklist, r.id_internacao, count(*) as total_respostas
+            	       c.sigla, r.id_checklist, count(*) as total_respostas
                 from resposta_checklist r, checklist c
                 group by  date_format(r.data_resposta,'%Y-%m'), r.id_checklist
                 order by data_resposta desc limit 1";
@@ -323,8 +323,6 @@ class Dashboard{
             		        as total_respondido"; 
             
         }
-        
-        
         
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
