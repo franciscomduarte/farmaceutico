@@ -70,9 +70,10 @@ class Internacao extends Base
 	
 	public function listar(){
 		self::listarObjetos();
-	    $internacoes = [];
+		$internacoes = array();
 	    
 	    foreach ($this->array as $linha) {
+	        
 	        $internacao = new Internacao();
 	        $convenio   = new Convenio();
 	        $paciente   = new Paciente();
@@ -102,7 +103,9 @@ class Internacao extends Base
 	    $array = $query->fetch_all(MYSQLI_ASSOC);
 	    
 	    $internacoes = array();
+
 	    foreach ($array as $linha) {
+	        
 	        $internacao = new Internacao();
 	        $convenio   = new Convenio();
 	        $paciente   = new Paciente();
@@ -131,10 +134,12 @@ class Internacao extends Base
 		$array = $query->fetch_all(MYSQLI_ASSOC);
 		
 		$internacao = null;
+		
 		foreach ($array as $linha) {
+		    
 		    $internacao = new Internacao();
-		    $convenio = new Convenio();
-		    $paciente = new Paciente();
+		    $convenio   = new Convenio();
+		    $paciente   = new Paciente();
 		    $setor   = new Setor();
 		    
 		    $internacao->id = $linha['id'];
@@ -149,13 +154,13 @@ class Internacao extends Base
 	
 	public function listarPorId($id){
 	    self::listarObjetosPorId($id);
-	    
-	    $internacao = new Internacao();
-	    $convenio   = new Convenio();
-	    $paciente   = new Paciente();
-	    $setor   = new Setor();
-	    
 	    foreach ($this->array as $linha) {
+	        
+	        $internacao = new Internacao();
+	        $convenio   = new Convenio();
+	        $paciente   = new Paciente();
+	        $setor   = new Setor();
+	        
 	        $internacao->id = $linha['id'];
 	        $internacao->numero_internacao = $linha['numero_internacao'];
 	        $internacao->data_internacao = $linha['data_internacao'];

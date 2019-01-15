@@ -32,6 +32,9 @@
    		<link href="/css/plugins/c3-0.6.9/c3.css" rel="stylesheet">
    		<link href="/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
    		
+   		<link href="/css/plugins/select2/select2.min.css" rel="stylesheet">
+   		
+   		
    		<link rel="stylesheet" href="/css/datebox/jtsage-datebox-4.4.1.bootstrap.min.css">
     	<link rel="stylesheet" href="/css/datebox/syntax.css">
     	
@@ -59,6 +62,8 @@
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
     <script src="/js/sistema.js"></script>
     
+    <script src="/js/plugins/select2/select2.full.min.js"></script>
+    
 
     <script src="/js/datebox/jtsage-datebox-4.4.1.bootstrap.min.js"></script>
 	<script src="/js/datebox/initial.js"></script>
@@ -71,6 +76,8 @@
 
         $('.colorpicker').colorpicker();
 
+        $(".select2_demo_2").select2();
+        
         $("#wizard").steps();
 
         $(".datepicker").datepicker( {

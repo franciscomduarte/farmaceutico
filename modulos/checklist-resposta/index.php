@@ -4,10 +4,14 @@ $params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
 $id_checklist = $params[1];
 
 $objChecklist = new Checklist();
-$cl = $objChecklist->listarPorId($id_checklist);
+$cl = array();
+if($id_checklist) {
+    $cl[] = $objChecklist->listarPorId($id_checklist);
+} else {
+    $cl = $objChecklist->listarAtivos();
+}
 
-$obj = new Internacao();
-$interenacoes = $obj->listarAtivas($id_checklist);
+
 
 ?>
 
@@ -15,11 +19,12 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 	<div class="col-lg-12">
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
-				<h5>Pacientes na UTI - <?php echo $cl->sigla ?></h5>
+				<h5>Pacientes na UTI</h5>
 				
 
 				
 				<div class="ibox-tools">
+					<a class="btn btn-info btn-xs" style="color: white; background: red; border-color: white" href="/checklist-resposta">Todos</a>
 					<?php 
                     $objChecklist = new Checklist();
                     $bundles = $objChecklist->listarAtivosCount();
@@ -29,7 +34,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
                     <?php 
                     }
                     ?>
-					<button type="button" class="btn btn-info" onclick="location.href='/paciente/novo/<?php echo $cl->id ?>'">Incluir no CkeckList</button>
+					<button type="button" class="btn btn-info" onclick="location.href='/paciente/novo'">Incluir em CkeckList</button>
 				</div>
 			</div>
 			<div class="ibox-content">
@@ -45,12 +50,13 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 					<tbody>
 						<?php 
 						$respostaChecklist = new RespostaChecklist();
-						foreach ($interenacoes as $internacao) {
-						    $status = $respostaChecklist->verificarPreenchimento($internacao->id, $cl->id);
+						foreach ($cl as $checklist) {
+						    $internacoes = $checklist->internacoes;
+						    foreach ($internacoes as $internacao) {
+						        $status = $respostaChecklist->verificarPreenchimento($internacao->id, $checklist->id);
 						?>
 						<tr>
 							<td><small><?php echo $internacao->paciente->nome ?></small></td>
-							<!-- <td class="text-navy"> <small class="label label-primary"><i class="fa fa-clock-o"></i> <?php echo diffDate(date('Y-m-d H:i'), $internacao->data_internacao)?></small></td> -->
 							<td>
     							<div class="form-group">
                                         <div class="col-sm-10">
@@ -59,7 +65,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
                                             	$bundles = $objChecklist->listarAtivasPorInternacao($internacao->id);
                                             	foreach ($bundles as $bundle) {
                                             	    $statusPreenchimento = $respostaChecklist->verificarPreenchimento($internacao->id, $bundle->id);
-                                            	    if($cl->id == $bundle->id){
+                                            	    if($checklist->id == $bundle->id){
                                         	?>
                                             			<button <?php echo $statusPreenchimento != null ? "disabled" : "" ?> class="btn btn-info btn-xs" style="color: white; background: <?php echo $bundle->cor ?>; border-color: <?php echo $bundle->cor ?>" onclick="responder(<?php echo $bundle->id ?>,<?php echo $internacao->id?>)">Responder</button>
                                             <?php 
@@ -93,7 +99,7 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 							</td>
 							<td>
 								<?php if ($status == null) {?>
-								<button class="btn btn-info btn-xs" onclick="dar_alta(<?php echo $internacao->id?>, <?php echo $cl->id ?>)">
+								<button class="btn btn-info btn-xs" onclick="dar_alta(<?php echo $internacao->id?>, <?php echo $checklist->id ?>)">
 									<span title="Remover">Remover do Checklist</span>
 								</button>
 								<?php } else { ?>
@@ -104,7 +110,9 @@ $interenacoes = $obj->listarAtivas($id_checklist);
 								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?></small>
 							</td>-->
 						</tr>
-						<?php }?>
+						<?php }
+						}
+						?>
 					</tbody>
 				</table>
 			</div>

@@ -12,6 +12,9 @@ class Checklist extends Base
 	protected $cor;
 	protected $itens = [];
 	
+	// internações ativas no checklist
+    protected $internacoes = [];
+	
 	public function __construct(){
 	    $this->tabela = "checklist";
 	    $this->usuario = new Usuario();
@@ -46,6 +49,8 @@ class Checklist extends Base
 		self::listarObjetos();
 		$checklists = [];
 		
+		$internacao = new Internacao();
+		
 		foreach ($this->array as $linha) {
 		    $checklist = new Checklist();
 		    $checklist->id            = $linha['id'];
@@ -56,6 +61,7 @@ class Checklist extends Base
 		    $checklist->sigla          = $linha['sigla'];
 		    $checklist->cor          = $linha['cor'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
+		    $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
 		    
 		    $checklists[] = $checklist;
 		}
@@ -66,6 +72,7 @@ class Checklist extends Base
 	    self::listarObjetosAtivos();
 	    $checklists = [];
 	    
+	    $internacao = new Internacao();
 	    foreach ($this->array as $linha) {
 	        $checklist = new Checklist();
 	        $checklist->id            = $linha['id'];
@@ -76,6 +83,7 @@ class Checklist extends Base
 	        $checklist->sigla          = $linha['sigla'];
 	        $checklist->cor          = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
+	        $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
 	        
 	        $checklists[] = $checklist;
 	    }
@@ -125,6 +133,9 @@ class Checklist extends Base
 	    $array = $query->fetch_all(MYSQLI_ASSOC);
 	    
 	    $checklists = array();
+	    
+	    $internacao = new Internacao();
+	    
 	    foreach ($array as $linha) {
 	        $checklist = new Checklist();
 	        $checklist->id            = $linha['id'];
@@ -135,6 +146,7 @@ class Checklist extends Base
 	        $checklist->sigla          = $linha['sigla'];
 	        $checklist->cor          = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
+	        $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
 	        
 	        $checklists[] = $checklist;
 	    }
@@ -155,6 +167,7 @@ class Checklist extends Base
 	    $array = $query->fetch_all(MYSQLI_ASSOC);
 	    
 	    $checklists = array();
+	    $internacao = new Internacao();
 	    foreach ($array as $linha) {
 	        $checklist = new Checklist();
 	        $checklist->id            = $linha['id'];
@@ -165,6 +178,7 @@ class Checklist extends Base
 	        $checklist->sigla          = $linha['sigla'];
 	        $checklist->cor          = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
+	        $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
 	        
 	        $checklists[] = $checklist;
 	    }
@@ -175,7 +189,7 @@ class Checklist extends Base
 		self::listarObjetosPorId($id);
 		
 		$checklist = new Checklist();
-		
+		$internacao = new Internacao();
 		foreach ($this->array as $linha) {
 		    $checklist->id            = $linha['id'];
 		    $checklist->nome          = $linha['nome'];
@@ -185,6 +199,7 @@ class Checklist extends Base
 		    $checklist->sigla          = $linha['sigla'];
 		    $checklist->cor          = $linha['cor'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
+		    $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
 		}
 		
 		return $checklist;
@@ -202,6 +217,7 @@ class Checklist extends Base
 	}
 		
 	public function deletar($id){
+	    #TODO
 		#fazer consulta no checklist_resposta pra verificar se já tem resposta
 		#se tiver não pode excluir.
 	    self::deletar($id);

@@ -1,10 +1,5 @@
 <?php 
 
-    #var_dump($_REQUEST);
-    
-    #echo "<br>";
-    #echo "<br>";
-    #echo "<br>";
     
     $id_checklist = $_REQUEST['id_checklist'];
     $resposta_checklist = new RespostaChecklist();

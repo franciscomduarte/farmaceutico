@@ -3,7 +3,17 @@ require_once 'config.php';
 $usuario = $_SESSION['usuario']; 
 ?>
 
+<style>
+    .overlay { }
+
+    @media only screen and (min-width: 768px){
+        .overlay { display: none; }
+    }
+</style>
+
 <body class="top-navigation">
+
+
     <div id="wrapper">
 
         <nav class="navbar navbar-static-top" role="navigation">
@@ -11,8 +21,12 @@ $usuario = $_SESSION['usuario'];
                 <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                     <i class="fa fa-reorder"></i>
                 </button>
-                <a href="/" class="navbar-brand"><?php echo SIGLA_SISTEMA." - ".NOME_SISTEMA?></a>
+                <div  style='z-index: 0;'><a href="/" class="navbar-brand"><?php echo SIGLA_SISTEMA." - ".NOME_SISTEMA?></a></div>
+                <div style='z-index: 1;'>
+                	<a class="navbar-toggle overlay" type="button"> Cadastrados	</a>
+                </div>
             </div>
+            
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
                     <li class="active">
@@ -48,6 +62,7 @@ $usuario = $_SESSION['usuario'];
                    <li class="dropdown">
                     	<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Bundles <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
+                        	<li><a href="/checklist-resposta">Todos</a></li>
                         	<?php 
                         	
                             	$objChecklist = new Checklist();
