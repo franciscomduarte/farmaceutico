@@ -20,7 +20,7 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
                                 <h5>Checklists</h5>
                                 <div class="pull-right">
                                 	 <div class="btn-group">
-                                	 	<select name="filtro" id="filtro_dashboard" class="select2_demo_2 form-control select2-hidden-accessible">
+                                	 	<select name="filtro" id="filtro_dashboard" class="form-control">
             								<?php
             								
             								foreach ( $dashboard->getDashboarFiltroPorChecklist(NULL,NULL,true) as $filtro) {

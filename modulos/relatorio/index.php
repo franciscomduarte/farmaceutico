@@ -28,7 +28,7 @@ $filtro = array(
 							<div class="form-group">
 								<label>Tipos Checklist</label>
 								
-								<select name="id_checklist" id="carrega_checklist" class="select2_demo_2 form-control select2-hidden-accessible" required="required">
+								<select name="id_checklist" id="carrega_checklist" class="form-control" required="required">
 								<option value="">-- Selecione --</option>
 								<?php
 								$checklist = new Checklist();
@@ -49,7 +49,7 @@ $filtro = array(
 							<div class="form-group">
 								<label>Setor</label>
 								
-								<select name="id_setor" class="select2_demo_2 form-control select2-hidden-accessible" required="required">
+								<select name="id_setor" class="form-control" required="required">
 								<option value="">-- Selecione --</option>
 								<?php
 								if (isset($filtro["id_checklist"])){

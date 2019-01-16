@@ -23,7 +23,7 @@ $dashboard = new Dashboard();
                                 	 		<button type="button" class="btn btn-info" onclick="location.href='/relatorio'">Novo Filtro</button>
                                 	 	</div>
                                 	 	<div class="col-lg-8">
-                                	 	<select name="filtro" id="filtro_dashboard" class="select2_demo_2 form-control select2-hidden-accessible">
+                                	 	<select name="filtro" id="filtro_dashboard" class="form-control">
             								<?php
             								
             								foreach ( $dashboard->getDashboarFiltroPorChecklist($filtro_cheklist["id_checklist"],$filtro_cheklist["id_setor"]) as $filtro) {

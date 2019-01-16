@@ -46,7 +46,7 @@ if (isset($_SESSION['item'])){
 							<div class="form-group">
 								<label>Tipo de Questão</label>
 								
-								<select name="tipo" class="select2_demo_2 form-control select2-hidden-accessible">
+								<select name="tipo" class="form-control">
 								<option value="">-- Selecione --</option>
 								<?php
 								    foreach (EnumTipoItem::TIPOS_QUESTOES as $key => $tipo) { ?>

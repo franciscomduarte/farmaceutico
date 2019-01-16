@@ -59,7 +59,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 								<label>Perfil</label>
 								
 								<select name="perfil"
-								class="select2_demo_2 form-control select2-hidden-accessible" <?php disableInput($view)?>>
+								class="form-control" <?php disableInput($view)?>>
 								<option value="">-- Selecione --</option>
 								<?php
 								$perfil = new Perfil();

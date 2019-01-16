@@ -139,7 +139,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 						</div>
                 						<div class="form-group col-sm-6">
                     						<label>Bundles</label><span style="color: red;"> *</span>  
-                        						 	<select class="select2_demo_2 form-control" multiple="multiple" name="id_checklists[]" required="required">
+                        						 	<select class="select2_demo_2_checklist form-control" multiple="multiple" name="id_checklists[]" required="required">
                         							<?php foreach ($bundles as $bundle) { ?>
                             							<option value="<?php echo $bundle->id?>" id="<?php echo $bundle->id ?>">
                             							<?php echo $bundle->sigla; ?>

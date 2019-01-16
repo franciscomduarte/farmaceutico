@@ -76,7 +76,7 @@
 
         $('.colorpicker').colorpicker();
 
-        $(".select2_demo_2").select2();
+        $(".select2_demo_2_checklist").select2();
         
         $("#wizard").steps();
 
