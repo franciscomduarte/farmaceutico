@@ -23,7 +23,7 @@ $usuario = $_SESSION['usuario'];
                 </button>
                 <div  style='z-index: 0;'><a href="/" class="navbar-brand"><?php echo SIGLA_SISTEMA." - ".NOME_SISTEMA?></a></div>
                 <div style='z-index: 1;'>
-                	<a class="navbar-toggle overlay" type="button" href="/checklist-resposta"> Cadastrados	</a>
+                	<a class="navbar-toggle overlay" type="button" href="/checklist-resposta"> Novo Cadastro</a>
                 </div>
             </div>
             
