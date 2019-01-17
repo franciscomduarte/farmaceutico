@@ -5,9 +5,13 @@ $usuario = $_SESSION['usuario'];
 
 <style>
     .overlay { }
+    .overlay_1 { }
 
     @media only screen and (min-width: 768px){
         .overlay { display: none; }
+    }
+    @media only screen and (max-width: 768px){
+        .overlay_1 { display: none; }
     }
 </style>
 
@@ -21,9 +25,11 @@ $usuario = $_SESSION['usuario'];
                 <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                     <i class="fa fa-reorder"></i>
                 </button>
-                <div  style='z-index: 0;'><a href="/" class="navbar-brand"><?php echo SIGLA_SISTEMA." - ".NOME_SISTEMA?></a></div>
+                <div  style='z-index: 0;'><a href="/" class="navbar-brand overlay_1"><?php echo SIGLA_SISTEMA." - ".NOME_SISTEMA ?></a></div>
                 <div style='z-index: 1;'>
-                	<a class="navbar-toggle overlay" type="button" href="/checklist-resposta"> Novo Cadastro</a>
+                	<a href="/" class="navbar-brand overlay"><?php echo SIGLA_SISTEMA ?></a>
+                	<a class="navbar-toggle overlay" type="button" href="/checklist-resposta"> Cadastrados </a>
+                	<a class="navbar-toggle overlay" type="button" href="/paciente/novo"> Novo Cadastro </a>
                 </div>
             </div>
             
