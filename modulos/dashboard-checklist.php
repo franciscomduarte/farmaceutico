@@ -17,12 +17,11 @@ $dashboard = new Dashboard();
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5>Checklists | <span style="color: #1ab394;">UNIDADE: <?php echo $setor->nome?></span></h5>
+                                <span class="pull-right label label-info" style="padding: 10px; font-size: small; cursor: pointer;" onclick="location.href='/relatorio'">Novo filtro</span>
+                                <!-- button type="button" class="btn-sl btn-info" onclick="location.href='/relatorio'">Filtro</button> -->
                                 <div class="pull-right">
                                 	 <div class="btn-group">
-                                	 	<div class="col-lg-4">
-                                	 		<button type="button" class="btn btn-info" onclick="location.href='/relatorio'">Novo Filtro</button>
-                                	 	</div>
-                                	 	<div class="col-lg-8">
+                                	 	<div class="col-lg-12">
                                 	 	<select name="filtro" id="filtro_dashboard" class="form-control">
             								<?php
             								
