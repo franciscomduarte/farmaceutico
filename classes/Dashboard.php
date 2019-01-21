@@ -113,7 +113,7 @@ class Dashboard{
                 from   resposta_checklist r, internacao i, checklist c
                 where  i.id = r.id_internacao
                 and    c.id = r.id_checklist
-                group by date_format(r.data_resposta,'%Y-%m-%d')
+                group by date_format(r.data_resposta,'%Y-%m-%d'), c.sigla
                 order by r.data_resposta desc";
         }else{
             $sql = "select r.id, date_format(r.data_resposta,'%Y-%m') as data_resposta,
@@ -121,7 +121,7 @@ class Dashboard{
                 from   resposta_checklist r, internacao i, checklist c
                 where  i.id = r.id_internacao
                 and    c.id = r.id_checklist
-                group by date_format(r.data_resposta,'%Y-%m')
+                group by date_format(r.data_resposta,'%Y-%m'), c.sigla
                 order by r.data_resposta desc";
         }
         
@@ -135,7 +135,7 @@ class Dashboard{
                     and    c.id = r.id_checklist
                     and    c.id = '".$id_cheklist."' 
                     and    i.id_setor = '".$id_setor."' 
-                    group by date_format(r.data_resposta,'%Y-%m-%d')  
+                    group by date_format(r.data_resposta,'%Y-%m-%d') , c.sigla
                     order by r.data_resposta desc";
             }else{
                 $sql = "select r.id, date_format(r.data_resposta,'%Y-%m') as data_resposta,
@@ -145,7 +145,7 @@ class Dashboard{
                     and    c.id = r.id_checklist
                     and    c.id = '".$id_cheklist."'
                     and    i.id_setor = '".$id_setor."'
-                    group by date_format(r.data_resposta,'%Y-%m')
+                    group by date_format(r.data_resposta,'%Y-%m'), c.sigla
                     order by r.data_resposta desc";
             }
         }
@@ -168,16 +168,18 @@ class Dashboard{
         
         if(!$mensal){
             $sql = "select r.id, date_format(r.data_resposta,'%Y-%m-%d') as data_resposta,
-            	       c.sigla, r.id_checklist, count(*) as total_respostas
-                from resposta_checklist r, checklist c
-                group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist
-                order by data_resposta desc limit 1";
+            	    c.sigla, r.id_checklist, count(*) as total_respostas
+                    from resposta_checklist r, checklist c
+                    where r.id_checklist = c.id
+                    group by  date_format(r.data_resposta,'%Y-%m-%d'), r.id_checklist
+                    order by data_resposta desc limit 1";
         }else{
             $sql = "select r.id, date_format(r.data_resposta,'%Y-%m') as data_resposta,
-            	       c.sigla, r.id_checklist, count(*) as total_respostas
-                from resposta_checklist r, checklist c
-                group by  date_format(r.data_resposta,'%Y-%m'), r.id_checklist
-                order by data_resposta desc limit 1";
+            	    c.sigla, r.id_checklist, count(*) as total_respostas
+                    from resposta_checklist r, checklist c
+                    where r.id_checklist = c.id
+                    group by  date_format(r.data_resposta,'%Y-%m'), r.id_checklist
+                    order by data_resposta desc limit 1";
         }
         
         $query = executarSql($sql);
@@ -210,6 +212,7 @@ class Dashboard{
                     from item, checklist_item c, alternativa
                     where item.id = c.id_item
                     and   alternativa.id_item = item.id
+                    and   c.id_checklist = '".$id_checklist."' 
                     group by item.id, alternativa.id
                     order by item.enunciado, alternativa.descricao";
         }else{
@@ -228,6 +231,7 @@ class Dashboard{
                 from item, checklist_item c, alternativa
                 where item.id = c.id_item
                 and   alternativa.id_item = item.id
+                and   c.id_checklist = '".$id_checklist."' 
                 group by item.id, alternativa.id
                 order by item.enunciado, alternativa.descricao";
         }
