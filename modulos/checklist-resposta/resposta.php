@@ -29,7 +29,7 @@
 							$itensChecklist = $item->listarPorIdChecklist($id_checklist);
                                 foreach ($itensChecklist as $i) { ?>
                                 	<div class="form-group">
-                                		<label class="control-label"><?php echo $i->enunciado ?><br/><small class="text-navy">Custom elements</small></label>
+                                		<label class="text-navy"><?php echo $i->enunciado ?><br/></label>
                                 	
                                 	<?php $objAlternativa = new Alternativa(); 
                                 	      $alternativas =$objAlternativa->listarComItem($i->id);

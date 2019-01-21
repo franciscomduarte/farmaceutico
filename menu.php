@@ -6,13 +6,38 @@ $usuario = $_SESSION['usuario'];
 <style>
     .overlay { }
     .overlay_1 { }
-
-    @media only screen and (min-width: 768px){
-        .overlay { display: none; }
-    }
-    @media only screen and (max-width: 768px){
+    
+    /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
         .overlay_1 { display: none; }
     }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (min-width : 480px) {
+        .overlay_1 { display: none; }
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+        .overlay_1 { display: none; }
+    }
+
+/*     /* Medium Devices, Desktops */ */
+/*     @media only screen and (min-width : 992px) { */
+/*         .overlay_1 { display: none; } */
+/*     } */
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1366px) {
+        .overlay_1 { display: none; }   
+    }
+    
+/*     @media only screen and (min-width: 768px){ */
+/*         .overlay { display: none; } */
+/*     } */
+/*     @media only screen and (max-width: 768px){ */
+/*         .overlay_1 { display: none; } */
+/*     } */
 </style>
 
 <body class="top-navigation">
@@ -81,6 +106,9 @@ $usuario = $_SESSION['usuario'];
                             ?>
                         </ul>
                     </li>
+                    
+                    <li><a class="navbar-toggle overlay btn btn-outline btn-primary dim" type="button" href="/checklist-resposta" title="Cadastrados"><i class="fa fa-list-alt"></i> </a></li>
+                	<li><a class="navbar-toggle overlay btn btn-outline btn-primary dim" type="button" href="/paciente/novo" title="Novo Cadastro"><i class="fa fa-plus"></i></a></li>
                     
                 </ul>
                 <ul class="nav navbar-top-links navbar-right">
