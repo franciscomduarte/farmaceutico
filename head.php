@@ -44,29 +44,28 @@
 	
 	<script src="/js/jquery-3.1.1.min.js"></script>
     <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="/js/plugins/validate/jquery.validate.min.js"></script> 
+    <script src="/js/plugins/validate/jquery.validate.min.js" defer="defer"></script> 
     <script src="/js/plugins/dataTables/datatables.min.js"></script>
-    <script src="/js/md5/md5.min.js"></script>
-    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
-    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <script src="/js/md5/md5.min.js" defer="defer"></script>
+    <script src="/js/plugins/sweetalert/sweetalert.min.js" defer="defer"></script>
+    <script src="/js/plugins/toastr/toastr.min.js" defer="defer"></script>
     <!-- ChartJS-->
-    <script src="/js/plugins/chartJs/Chart.min.js"></script>
-    <script src="/js/plugins/steps/jquery.steps.min.js"></script>
-    <script src="/js/plugins/summernote/summernote.min.js"></script>
-    <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+    <script src="/js/plugins/chartJs/Chart.min.js" defer="defer"></script>
+    <script src="/js/plugins/steps/jquery.steps.min.js" defer="defer"></script>
+    <script src="/js/plugins/summernote/summernote.min.js" defer="defer"></script>
+    <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js" defer="defer"></script>
     
     <!-- Steps -->
-    <script src="/js/plugins/steps/jquery.steps.min.js"></script>
+    <script src="/js/plugins/steps/jquery.steps.min.js" defer="defer"></script>
 
 <!-- ChartJS-->
-    <script src="/js/plugins/chartJs/Chart.min.js"></script>
     <script src="/js/sistema.js"></script>
     
-    <script src="/js/plugins/select2/select2.full.min.js"></script>
+    <script src="/js/plugins/select2/select2.full.min.js" defer="defer"></script>
     
 
-    <script src="/js/datebox/jtsage-datebox-4.4.1.bootstrap.min.js"></script>
-	<script src="/js/datebox/initial.min.js"></script>
+    <script src="/js/datebox/jtsage-datebox-4.4.1.bootstrap.min.js" defer="defer"></script>
+	<script src="/js/datebox/initial.min.js" defer="defer"></script>
 
 	<script type="text/javascript">
 
