@@ -8,7 +8,7 @@
 	function redirecionar($pagina) {
 	    echo "<html>";
 	    echo "<head>";
-	    echo "<meta http-equiv=\"refresh\" content=\"0.5;URL='$pagina\"'>";
+	    echo "<meta http-equiv=\"refresh\" content=\"0.1;URL='$pagina\"'>";
         echo "</head>";
         echo "<body>";
         echo '<center>		
