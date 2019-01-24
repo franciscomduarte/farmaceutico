@@ -8,55 +8,55 @@
 	    <title><?php echo NOME_SISTEMA?></title>
 	    
 	    <link href="/css/bootstrap.min.css" rel="stylesheet">
-	    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
-	    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
-	    <link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
-    	<link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+	    <link href="/font-awesome/css/font-awesome.mim.css">
+	    <link href="/css/plugins/iCheck/custom.min.css" rel="stylesheet">
+	    <link href="/css/plugins/dropzone/basic.min.css" rel="stylesheet">
+    	<link href="/css/plugins/dropzone/dropzone.min.css" rel="stylesheet">
     	<link href="/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
-    	<link href="/css/plugins/codemirror/codemirror.css" rel="stylesheet">
+    	<link href="/css/plugins/codemirror/codemirror.min.css" rel="stylesheet">
 	    <!-- Toastr style -->
 	    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 	    <!-- Gritter -->
-	    <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
-	    <link href="/css/animate.css" rel="stylesheet">
-	    <link href="/css/style.css" rel="stylesheet">
-	    <link href="/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-	    <link rel="stylesheet" type="text/css" href="/css/editor/editor.dataTables.min.css">
-	    <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+	    <link href="/js/plugins/gritter/jquery.gritter.min.css" rel="stylesheet">
+	    <link href="/css/animate.min.css" rel="stylesheet">
+	    <link href="/css/style.min.css" rel="stylesheet">
+	    <link href="/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.min.css" rel="stylesheet">
+	    <link href="/css/editor/editor.dataTables.min.css" rel="stylesheet" type="text/css" >
+	    <link href="/css/plugins/datapicker/datepicker3.min.css" rel="stylesheet">
 	    <link href="/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
-   	 	<link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+   	 	<link href="/css/plugins/sweetalert/sweetalert.min.css" rel="stylesheet">
    	 	<link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-   	 	<link href="/css/plugins/steps/jquery.steps.css" rel="stylesheet">
-   	 	<link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
-   		<link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-   		<link href="/css/plugins/c3-0.6.9/c3.css" rel="stylesheet">
+   	 	<link href="/css/plugins/steps/jquery.steps.min.css" rel="stylesheet">
+   	 	<link href="/css/plugins/summernote/summernote.min.css" rel="stylesheet">
+   		<link href="/css/plugins/summernote/summernote-bs3.min.css" rel="stylesheet">
+   		<link href="/css/plugins/c3-0.6.9/c3.min.css" rel="stylesheet">
    		<link href="/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
    		
    		<link href="/css/plugins/select2/select2.min.css" rel="stylesheet">
    		
    		
    		<link rel="stylesheet" href="/css/datebox/jtsage-datebox-4.4.1.bootstrap.min.css">
-    	<link rel="stylesheet" href="/css/datebox/syntax.css">
+    	<link rel="stylesheet" href="/css/datebox/syntax.min.css">
     	
     	
    		
 	</head>
 	
 	<script src="/js/jquery-3.1.1.min.js"></script>
-    <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="/js/plugins/validate/jquery.validate.min.js"></script> 
+    <script src="/js/plugins/jquery-ui/jquery-ui.min.js" async="async"></script>
+    <script src="/js/plugins/validate/jquery.validate.min.js" defer="defer"></script> 
     <script src="/js/plugins/dataTables/datatables.min.js"></script>
-    <script src="/js/md5/md5.min.js"></script>
-    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
-    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <script src="/js/md5/md5.min.js" defer="defer"></script>
+    <script src="/js/plugins/sweetalert/sweetalert.min.js" defer="defer"></script>
+    <script src="/js/plugins/toastr/toastr.min.js" defer="defer"></script>
     <!-- ChartJS-->
-    <script src="/js/plugins/chartJs/Chart.min.js"></script>
-    <script src="/js/plugins/steps/jquery.steps.min.js"></script>
-    <script src="/js/plugins/summernote/summernote.min.js"></script>
-    <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+    <script src="/js/plugins/chartJs/Chart.min.js" async="async"></script>
+    <script src="/js/plugins/steps/jquery.steps.min.js" defer="defer"></script>
+    <script src="/js/plugins/summernote/summernote.min.js" defer="defer"></script>
+    <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js" defer="defer"></script>
     
     <!-- Steps -->
-    <script src="/js/plugins/steps/jquery.steps.min.js"></script>
+    <script src="/js/plugins/steps/jquery.steps.min.js" defer="defer"></script>
 
 <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
