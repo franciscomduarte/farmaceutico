@@ -11,21 +11,21 @@
 	
     <!-- Mainly scripts -->
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/plugins/metisMenu/jquery.metisMenu.js" defer="defer"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.min.js" defer="defer"></script>
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js" defer="defer"></script>
       
     <!-- Flot -->
-    <script src="/js/plugins/flot/jquery.flot.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.min.js"></script>
     <script src="/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.spline.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script src="js/plugins/flot/jquery.flot.symbol.js"></script>
-    <script src="js/plugins/flot/jquery.flot.time.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.spline.min.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.resize.min.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.pie.min.js"></script>
+    <script src="js/plugins/flot/jquery.flot.symbol.min.js"></script>
+    <script src="js/plugins/flot/jquery.flot.time.min.js"></script>
 
     <!-- Peity -->
     <script src="/js/plugins/peity/jquery.peity.min.js" defer="defer"></script>
-    <script src="/js/demo/peity-demo.js" defer="defer"></script>
+    <script src="/js/demo/peity-demo.min.js" defer="defer"></script>
 
     <!-- Custom and plugin javascript -->
     <script src="/js/inspinia.js"></script>
@@ -38,7 +38,7 @@
     <script src="/js/plugins/sparkline/jquery.sparkline.min.js" defer="defer"></script>
 
     <!-- Sparkline demo data  -->
-    <script src="/js/demo/sparkline-demo.js" defer="defer"></script>
+    <script src="/js/demo/sparkline-demo.min.js" defer="defer"></script>
 
     <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js" defer="defer"></script>
@@ -52,13 +52,13 @@
     <script src="/js/plugins/jasny/jasny-bootstrap.min.js" defer="defer"></script>
 
     <!-- DROPZONE -->
-    <script src="/js/plugins/dropzone/dropzone.js" defer="defer"></script>
+    <script src="/js/plugins/dropzone/dropzone.min.js" defer="defer"></script>
 
     <!-- CodeMirror -->
-    <script src="/js/plugins/codemirror/codemirror.js" defer="defer"></script>
-    <script src="/js/plugins/codemirror/mode/xml/xml.js" defer="defer"></script>
+    <script src="/js/plugins/codemirror/codemirror.min.js" defer="defer"></script>
+    <script src="/js/plugins/codemirror/mode/xml/xml.min.js" defer="defer"></script>
     
-    <script src="/js/plugins/dualListbox/jquery.bootstrap-duallistbox.js" defer="defer"></script>
+    <script src="/js/plugins/dualListbox/jquery.bootstrap-duallistbox.min.js" defer="defer"></script>
 
     <!-- jQuery UI -->
     <script src="js/plugins/jquery-ui/jquery-ui.min.js" defer="defer"></script>
@@ -68,11 +68,11 @@
     <script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" defer="defer"></script>
 
     <!-- EayPIE -->
-    <script src="js/plugins/easypiechart/jquery.easypiechart.js" defer="defer"></script>
+    <script src="js/plugins/easypiechart/jquery.easypiechart.min.js" defer="defer"></script>
 
     <!-- d3 and c3 charts -->
     <script src="js/plugins/c3-0.6.9/d3-5.4.0.min.js" defer="defer"></script>
-    <script src="js/plugins/c3-0.6.9/c3.js" defer="defer"></script>
+    <script src="js/plugins/c3-0.6.9/c3.min.js" defer="defer"></script>
  
     <script>
 
