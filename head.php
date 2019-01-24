@@ -1,16 +1,14 @@
-<!DOCTYPE html>
 <html>
 
 	<head>
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="Description" content="Sistema de Monitoramento de Checklists">
 	
 	    <title><?php echo NOME_SISTEMA?></title>
 	    
 	    <link href="/css/bootstrap.min.css" rel="stylesheet">
-	    <link href="/font-awesome/css/font-awesome.mim.css">
+	    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
 	    <link href="/css/plugins/iCheck/custom.min.css" rel="stylesheet">
 	    <link href="/css/plugins/dropzone/basic.min.css" rel="stylesheet">
     	<link href="/css/plugins/dropzone/dropzone.min.css" rel="stylesheet">
@@ -23,7 +21,7 @@
 	    <link href="/css/animate.min.css" rel="stylesheet">
 	    <link href="/css/style.min.css" rel="stylesheet">
 	    <link href="/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.min.css" rel="stylesheet">
-	    <link href="/css/editor/editor.dataTables.min.css" rel="stylesheet" type="text/css" >
+	    <link rel="stylesheet" type="text/css" href="/css/editor/editor.dataTables.min.css">
 	    <link href="/css/plugins/datapicker/datepicker3.min.css" rel="stylesheet">
 	    <link href="/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
    	 	<link href="/css/plugins/sweetalert/sweetalert.min.css" rel="stylesheet">
@@ -45,20 +43,20 @@
 	</head>
 	
 	<script src="/js/jquery-3.1.1.min.js"></script>
-    <script src="/js/plugins/jquery-ui/jquery-ui.min.js" async="async"></script>
-    <script src="/js/plugins/validate/jquery.validate.min.js" defer="defer"></script> 
+    <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script> 
     <script src="/js/plugins/dataTables/datatables.min.js"></script>
-    <script src="/js/md5/md5.min.js" defer="defer"></script>
-    <script src="/js/plugins/sweetalert/sweetalert.min.js" defer="defer"></script>
-    <script src="/js/plugins/toastr/toastr.min.js" defer="defer"></script>
+    <script src="/js/md5/md5.min.js"></script>
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
     <!-- ChartJS-->
-    <script src="/js/plugins/chartJs/Chart.min.js" async="async"></script>
-    <script src="/js/plugins/steps/jquery.steps.min.js" defer="defer"></script>
-    <script src="/js/plugins/summernote/summernote.min.js" defer="defer"></script>
-    <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js" defer="defer"></script>
+    <script src="/js/plugins/chartJs/Chart.min.js"></script>
+    <script src="/js/plugins/steps/jquery.steps.min.js"></script>
+    <script src="/js/plugins/summernote/summernote.min.js"></script>
+    <script src="/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
     
     <!-- Steps -->
-    <script src="/js/plugins/steps/jquery.steps.min.js" defer="defer"></script>
+    <script src="/js/plugins/steps/jquery.steps.min.js"></script>
 
 <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.js"></script>
@@ -68,7 +66,7 @@
     
 
     <script src="/js/datebox/jtsage-datebox-4.4.1.bootstrap.min.js"></script>
-	<script src="/js/datebox/initial.js"></script>
+	<script src="/js/datebox/initial.min.js"></script>
 
 	<script type="text/javascript">
 

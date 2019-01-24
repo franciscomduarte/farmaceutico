@@ -52,7 +52,7 @@
     <script src="/js/plugins/jasny/jasny-bootstrap.min.js" defer="defer"></script>
 
     <!-- DROPZONE -->
-    <script src="/js/plugins/dropzone/dropzone.min.js" defer="defer"></script>
+    <script src="/js/plugins/dropzone/dropzone.min.js"></script>
 
     <!-- CodeMirror -->
     <script src="/js/plugins/codemirror/codemirror.min.js" defer="defer"></script>
