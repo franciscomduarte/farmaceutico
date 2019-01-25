@@ -9,6 +9,8 @@
 	</div>
 	</div>
 	
+	<script src="/js/plugins/dataTables/datatables.min.js" async="async"></script>
+	
     <!-- Mainly scripts -->
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.min.js" defer="defer"></script>
@@ -28,7 +30,7 @@
     <script src="/js/demo/peity-demo.min.js" defer="defer"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="/js/inspinia.js"></script>
+    <script src="/js/inspinia.min.js"></script>
     <script src="/js/plugins/pace/pace.min.js" defer="defer"></script>
 
     <!-- GITTER -->

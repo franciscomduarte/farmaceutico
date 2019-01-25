@@ -40,12 +40,12 @@
     	
     	
    		
-	</head>
+	
 	
 	<script src="/js/jquery-3.1.1.min.js"></script>
     <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="/js/plugins/validate/jquery.validate.min.js" defer="defer"></script> 
-    <script src="/js/plugins/dataTables/datatables.min.js"></script>
+<!--     <script src="/js/plugins/dataTables/datatables.min.js" async="async"></script> -->
     <script src="/js/md5/md5.min.js" defer="defer"></script>
     <script src="/js/plugins/sweetalert/sweetalert.min.js" defer="defer"></script>
     <script src="/js/plugins/toastr/toastr.min.js" defer="defer"></script>
@@ -66,7 +66,7 @@
 
     <script src="/js/datebox/jtsage-datebox-4.4.1.bootstrap.min.js" defer="defer"></script>
 	<script src="/js/datebox/initial.min.js" defer="defer"></script>
-
+	</head>
 	<script type="text/javascript">
 
 	$(document).ready(function() {
