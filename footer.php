@@ -72,7 +72,7 @@
 
     <!-- d3 and c3 charts -->
     <script src="js/plugins/c3-0.6.9/d3-5.4.0.min.js" defer="defer"></script>
-    <script src="js/plugins/c3-0.6.9/c3.min.js" async="async"></script>
+    <script src="js/plugins/c3-0.6.9/c3.min.js"></script>
  
     <script>
 
