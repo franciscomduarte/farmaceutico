@@ -9,8 +9,6 @@
 	</div>
 	</div>
 	
-	<script src="/js/plugins/dataTables/datatables.min.js" async="async"></script>
-	
     <!-- Mainly scripts -->
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.min.js" defer="defer"></script>
