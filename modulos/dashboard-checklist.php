@@ -25,7 +25,7 @@ $dashboard = new Dashboard();
                                 	 	<select name="filtro" id="filtro_dashboard" class="form-control">
             								<?php
             								
-            								foreach ( $dashboard->getDashboarFiltroPorChecklist($filtro_cheklist["id_checklist"],$filtro_cheklist["id_setor"]) as $filtro) {
+            								foreach ( $dashboard->getDashboarFiltroPorChecklist($filtro_cheklist["id_checklist"],$filtro_cheklist["id_setor"],true) as $filtro) {
             								    if (!isset($filtro_atual))
             								        $filtro_atual = $filtro['id_checklist']."|".$filtro['data_resposta'];
             								    
@@ -44,29 +44,14 @@ $dashboard = new Dashboard();
                             </div>
 <?php     
 #Atualizando os dados do dashboard
-$dashboard->getDashboarPorChecklist($filtro_atual); 
+$dashboard->getDashboarPorChecklist($filtro_atual,true); 
 ?>                            
                             <div class="ibox-content">
                                 <div class="row">
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-12">
                                         <div>
                                    			 <canvas id="barChartChecklist" height="140"></canvas>
                                 		</div>
-                                    </div>
-                                    <div class="col-md-3">
-                                         	<div class="ibox">
-                           					 	<span class="label label-warning pull-right">Qtd</span>
-                            				 	<h5>Resumo</h5>
-                       						 </div>
-                                            <div>
-                                                <div>
-                                                    <span>Adesão Respostas</span>
-                                                    <small class="pull-right"><?php echo $dashboard->grafico_barras_inicial["total_respondido"]."/".$dashboard->grafico_barras_inicial["total_previsto"]?> pacientes</small>
-                                                </div>
-                                                <div class="progress progress-small">
-                                                    <div style="width: <?php echo $total_porcentagem = calculaPorcentagemTotal($dashboard->grafico_barras_inicial["total_previsto"], $dashboard->grafico_barras_inicial["total_respondido"])?>%;" class="progress-bar <?php echo $total_porcentagem <= 50 ? "progress-bar-danger" : "a"?>"></div>
-                                                </div>
-                                            </div>
                                     </div>
                                 </div>
                             </div>
