@@ -43,7 +43,7 @@
                                 	?>
                                 	
                                 	<?php if ($i->tipo == 'TX')  { ?>
-                                		<input type="text" value="" class="form-control" name="tx">
+                                		<input type="text" value="" class="form-control" name="tx-<?php echo $i->id?>" maxlength="200" size="200">
                                 	<?php } ?>
                                 	
                                 	<?php 

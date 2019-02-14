@@ -20,6 +20,7 @@
             $resposta_checklist_item->id_resposta_checklist = $id_resposta_checklist;
             $resposta_checklist_item->id_item = $a->item->id; 
             $resposta_checklist_item->id_resposta_alternativa = $a->id;
+            $resposta_checklist_item->resposta_texto = null;
             $resposta_checklist_item->inserir($resposta_checklist_item);
         }
     }
@@ -29,23 +30,36 @@
         
     }
     
-    // Lógica para salvar as alternativas VF
+    // Lógica para salvar as alternativas VF ou TX
     $item = new Item();
     $itens = $item->listarPorIdChecklist($id_checklist);
     foreach ($itens as $i) { 
+        $id_item = $i->id;
         if(isset($_REQUEST['vf-'.$i->id])){
             
-            $id_item = $i->id;
+            
             $id_alternativa = $_REQUEST['vf-'.$i->id];
             
             $resposta_checklist_item = new RespostaChecklistItem();
             $resposta_checklist_item->id_resposta_checklist = $id_resposta_checklist;
             $resposta_checklist_item->id_item = $id_item; 
             $resposta_checklist_item->id_resposta_alternativa = $id_alternativa;
+            $resposta_checklist_item->resposta_texto = null;
+            $resposta_checklist_item->inserir($resposta_checklist_item);
+            
+        } else if (isset($_REQUEST['tx-'.$i->id])){
+            
+            $resposta_texto = $_REQUEST['tx-'.$i->id];
+            
+            $resposta_checklist_item = new RespostaChecklistItem();
+            $resposta_checklist_item->id_resposta_checklist = $id_resposta_checklist;
+            $resposta_checklist_item->id_item = $id_item; 
+            $resposta_checklist_item->id_resposta_alternativa = null;
+            $resposta_checklist_item->resposta_texto = $resposta_texto;
             $resposta_checklist_item->inserir($resposta_checklist_item);
         }
     }
-    
+    die;
     redirecionar("/checklist-resposta/" . $id_checklist);
 
 ?>
