@@ -202,6 +202,7 @@ class Dashboard{
             		 from resposta_checklist_item r, item i, alternativa a              
             		 where r.id_item = i.id 
             		 and   i.id = item.id
+                     and   item.tipo = 'SN' 
             		 and   a.id = alternativa.id              
             		 and   a.id = r.id_resposta_alternativa              
             		 and   r.id_resposta_checklist in (select r.id as id_resposta    
@@ -211,6 +212,7 @@ class Dashboard{
             		group by r.id_resposta_alternativa),0) as total_resposta 
                     from item, checklist_item c, alternativa
                     where item.id = c.id_item
+                    and   item.tipo = 'SN' 
                     and   alternativa.id_item = item.id
                     and   c.id_checklist = '".$id_checklist."' 
                     group by item.id, alternativa.id
@@ -221,7 +223,8 @@ class Dashboard{
         		 from resposta_checklist_item r, item i, alternativa a
         		 where r.id_item = i.id
         		 and   i.id = item.id
-        		 and   a.id = alternativa.id
+        		 and   item.tipo = 'SN' 
+                 and   a.id = alternativa.id
         		 and   a.id = r.id_resposta_alternativa
         		 and   r.id_resposta_checklist in (select r.id as id_resposta
         		 								   from resposta_checklist r
@@ -230,6 +233,7 @@ class Dashboard{
         		group by r.id_resposta_alternativa),0) as total_resposta
                 from item, checklist_item c, alternativa
                 where item.id = c.id_item
+                and   item.tipo = 'SN' 
                 and   alternativa.id_item = item.id
                 and   c.id_checklist = '".$id_checklist."' 
                 group by item.id, alternativa.id
