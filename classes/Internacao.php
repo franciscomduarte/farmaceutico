@@ -89,13 +89,40 @@ class Internacao extends Base
 	    }
 	    return $internacoes;
 	}
+
+	public function listarTodasPorCpf($cpf){
+	    $sql = "select i.id, i.numero_internacao, i.data_internacao, i.id_setor, i.id_paciente,
+                	   p.nome, p.cpf, p.nascimento, p.genero, p.registro, p.id_convenio
+                from internacao i, paciente p
+                where i.id_paciente = p.id
+                and   p.cpf = '$cpf'";
+	    
+        $this->array = executarSql($sql);
+	    $internacoes = array();
+	    
+	    foreach ($this->array as $linha) {
+	        
+	        $internacao = new Internacao();
+	        $convenio   = new Convenio();
+	        $paciente   = new Paciente();
+	        $setor      = new Setor();
+	        
+	        $internacao->id = $linha['id'];
+	        $internacao->numero_internacao = $linha['numero_internacao'];
+	        $internacao->data_internacao = $linha['data_internacao'];
+	        $internacao->paciente = $paciente->listarPorId($linha['id_paciente']);
+	        $internacao->convenio = $convenio->listarPorId($linha['id_convenio']);
+	        $internacao->setor = $setor->listarPorId($linha['id_setor']);
+	        $internacoes[] = $internacao;
+	    }
+	    return $internacoes;
+	}
 	
 	public function listarAtivas($id_checklist){
 	    
 	    $sql = "SELECT *
                 FROM internacao i, internacao_checklist ic
-                WHERE 1 = 1
-                AND i.id = ic.id_internacao
+                WHERE i.id = ic.id_internacao
                 AND ic.data_saida is null
                 AND ic.id_checklist = $id_checklist
                 ORDER BY i.data_internacao ";
@@ -109,7 +136,7 @@ class Internacao extends Base
 	        $internacao = new Internacao();
 	        $convenio   = new Convenio();
 	        $paciente   = new Paciente();
-	        $setor   = new Setor();
+	        $setor      = new Setor();
 	        
 	        $internacao->id = $linha['id'];
 	        $internacao->numero_internacao = $linha['numero_internacao'];
@@ -123,7 +150,7 @@ class Internacao extends Base
 	}
 	
 	public function listarInternacaoPorCpf($cpf){
-		$sql = "SELECT i.numero_internacao, i.id as id, p.id as id_paciente, p.id_convenio as id_convenio, p.cpf, i.id_setor as id_setor
+		$sql = "SELECT i.numero_internacao, i.id as id, p.id as id_paciente, p.id_convenio as id_convenio, p.cpf, i.id_setor as id_setor, i.data_internacao 
                 FROM internacao i, paciente p, internacao_checklist c
                 WHERE i.id_paciente = p.id 
                 AND i.id = c.id_internacao
@@ -140,7 +167,7 @@ class Internacao extends Base
 		    $internacao = new Internacao();
 		    $convenio   = new Convenio();
 		    $paciente   = new Paciente();
-		    $setor   = new Setor();
+		    $setor      = new Setor();
 		    
 		    $internacao->id = $linha['id'];
 		    $internacao->numero_internacao = $linha['numero_internacao'];
@@ -159,7 +186,7 @@ class Internacao extends Base
 	        $internacao = new Internacao();
 	        $convenio   = new Convenio();
 	        $paciente   = new Paciente();
-	        $setor   = new Setor();
+	        $setor      = new Setor();
 	        
 	        $internacao->id = $linha['id'];
 	        $internacao->numero_internacao = $linha['numero_internacao'];
@@ -169,6 +196,26 @@ class Internacao extends Base
 	        $internacao->setor = $setor->listarPorId($linha['id_setor']);
 	    }
 	    return $internacao;
+	}
+	
+	public function getInternacaoChecklist($id_checklist,$id_internacao){
+	    $sql = "SELECT IFNULL(data_saida,true) as ativo 
+                FROM internacao_checklist
+                WHERE id_checklist  = '$id_checklist'
+                AND   id_internacao = '$id_internacao'";
+	   
+	    $query = executarSql($sql);
+	    $this->array = $query->fetch_all(MYSQLI_ASSOC);
+	    
+	    $data_saida_internacao="";
+	    
+	    
+	    foreach ($this->array as $linha){
+	        $data_saida_internacao = $linha['ativo']==1 ? true : formatarDataHora($linha['ativo']);
+	    }
+	    
+	    return mostrarAtivoInativo($data_saida_internacao);
+	    
 	}
 	
 }

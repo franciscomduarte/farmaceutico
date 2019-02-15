@@ -50,6 +50,9 @@
 												<button onclick="editar(<?php echo $paciente->id?>)">
 													<span class="glyphicon glyphicon-edit" title="Editar"></span>
 												</button>
+												<button onclick="dashboard(<?php echo $paciente->cpf?>)">
+													<span class="glyphicon glyphicon-stats" title="Dashboard"></span>
+												</button>
 												<button onclick="excluir(<?php echo $paciente->id?>)">
 													<span class="glyphicon glyphicon-trash" title="Excluir"></span>
 												</button>
@@ -87,7 +90,12 @@
 				var pag = "/paciente/novo/"+id;
 				location.href = pag;
 			}
-		
+
+			function dashboard(cpf){
+				var pag = "/paciente/detalhes/"+cpf;
+				location.href = pag;
+			}
+			
 			function excluir(id){
 				var pag = "/paciente/excluir/"+id;
 				if (confirm("Tem certeza que deseja excluir este paciente?")){

@@ -58,10 +58,10 @@ class Checklist extends Base
 		    $checklist->data_cadastro = $linha['data_cadastro'];
 		    $checklist->ativo         = $linha['ativo'];
 		    $checklist->meta          = $linha['meta'];
-		    $checklist->sigla          = $linha['sigla'];
-		    $checklist->cor          = $linha['cor'];
+		    $checklist->sigla         = $linha['sigla'];
+		    $checklist->cor           = $linha['cor'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
-		    $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
+		    $checklist->internacoes   = $internacao->listarAtivas($linha['id']);
 		    
 		    $checklists[] = $checklist;
 		}
@@ -80,10 +80,10 @@ class Checklist extends Base
 	        $checklist->data_cadastro = $linha['data_cadastro'];
 	        $checklist->ativo         = $linha['ativo'];
 	        $checklist->meta          = $linha['meta'];
-	        $checklist->sigla          = $linha['sigla'];
-	        $checklist->cor          = $linha['cor'];
+	        $checklist->sigla         = $linha['sigla'];
+	        $checklist->cor           = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
-	        $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
+	        $checklist->internacoes   = $internacao->listarAtivas($linha['id']);
 	        
 	        $checklists[] = $checklist;
 	    }
@@ -157,8 +157,7 @@ class Checklist extends Base
 	    
 	    $sql = "SELECT *
                 FROM checklist i, internacao_checklist ic
-                WHERE 1 = 1
-                AND i.id = ic.id_checklist
+                WHERE i.id = ic.id_checklist
                 AND ic.data_saida is null
                 AND i.ativo = 1
                 AND ic.id_internacao = $id_internacao
@@ -175,15 +174,40 @@ class Checklist extends Base
 	        $checklist->data_cadastro = $linha['data_cadastro'];
 	        $checklist->ativo         = $linha['ativo'];
 	        $checklist->meta          = $linha['meta'];
-	        $checklist->sigla          = $linha['sigla'];
-	        $checklist->cor          = $linha['cor'];
+	        $checklist->sigla         = $linha['sigla'];
+	        $checklist->cor           = $linha['cor'];
 	        $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
-	        $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
+	        $checklist->internacoes   = $internacao->listarAtivas($linha['id']);
 	        
 	        $checklists[] = $checklist;
 	    }
 	    return $checklists;
 	}
+
+	public function listarPorInternacao($id_internacao){
+	    
+	    $sql = "SELECT *
+                FROM checklist c, internacao_checklist ic
+                WHERE c.id = ic.id_checklist
+                AND c.ativo = 1
+                AND ic.id_internacao = '$id_internacao' 
+                ORDER BY 1";
+	    $query = executarSql($sql);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    
+	    $checklists = array();
+	    foreach ($array as $linha) {
+	        $checklist = new Checklist();
+	        $checklist->id            = $linha['id'];
+	        $checklist->nome          = $linha['nome'];
+	        $checklist->sigla         = $linha['sigla'];
+	        $checklist->cor           = $linha['cor'];
+	        
+	        $checklists[] = $checklist;
+	    }
+	    return $checklists;
+	}
+	
 	
 	public function listarPorId($id){
 		self::listarObjetosPorId($id);
@@ -196,10 +220,10 @@ class Checklist extends Base
 		    $checklist->data_cadastro = $linha['data_cadastro'];
 		    $checklist->ativo         = $linha['ativo'];
 		    $checklist->meta          = $linha['meta'];
-		    $checklist->sigla          = $linha['sigla'];
-		    $checklist->cor          = $linha['cor'];
+		    $checklist->sigla         = $linha['sigla'];
+		    $checklist->cor           = $linha['cor'];
 		    $checklist->usuario       = $checklist->usuario->listarPorId($linha['usuario_id']);
-		    $checklist->internacoes  = $internacao->listarAtivas($linha['id']);
+		    $checklist->internacoes   = $internacao->listarAtivas($linha['id']);
 		}
 		
 		return $checklist;

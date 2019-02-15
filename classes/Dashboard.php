@@ -276,8 +276,8 @@ class Dashboard{
         $this->grafico_barras_inicial =
         array(
             "labels"            => '"ADESÃO BUNDLE","'.implode('","',$array_labels).'"',
-            "resposta_tipo_1"   => ($soma_sim/sizeof($array_sim_porcentagem)).",".implode(',',$array_sim_porcentagem),
-            "resposta_tipo_2"   => ($soma_nao/sizeof($array_nao_porcentagem)).",".implode(',',$array_nao_porcentagem),
+            "resposta_tipo_1"   => (round($soma_sim/sizeof($array_sim_porcentagem))).",".implode(',',$array_sim_porcentagem),
+            "resposta_tipo_2"   => (round($soma_nao/sizeof($array_nao_porcentagem))).",".implode(',',$array_nao_porcentagem),
             "maior_valor"       => 120,
             "total_previsto"    => $array_total["total_previsto"],
             "total_respondido"  => $array_total["total_respondido"]
@@ -333,7 +333,105 @@ class Dashboard{
                 
         return $this->array[0];
     }
-       
+    
+    public function getDashboarPorChecklistEPessoa($filtro,$mensal=false){
+        
+        $lista        = explode("|", $filtro);
+        $id_checklist = $lista[0];
+        $data_resposta_checklist = $lista[1];
+        
+        if(!$mensal){
+            $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
+            		IFNULL((select count(id_resposta_alternativa)
+            		 from resposta_checklist_item r, item i, alternativa a
+            		 where r.id_item = i.id
+            		 and   i.id = item.id
+            		 and   a.id = alternativa.id
+            		 and   a.id = r.id_resposta_alternativa
+            		 and   r.id_resposta_checklist in (select r.id as id_resposta
+            		 								   from resposta_checklist r
+            		 								   where r.id_checklist = '".$id_checklist."'
+            		 								   and   date_format(r.data_resposta,'%Y-%m-%d') = '".$data_resposta_checklist."')
+            		group by r.id_resposta_alternativa),0) as total_resposta
+                    from item, checklist_item c, alternativa
+                    where item.id = c.id_item
+                    and   alternativa.id_item = item.id
+                    and   c.id_checklist = '".$id_checklist."'
+                    group by item.id, alternativa.id
+                    order by item.enunciado, alternativa.descricao";
+        }else{
+            $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
+        		IFNULL((select count(id_resposta_alternativa)
+        		 from resposta_checklist_item r, item i, alternativa a
+        		 where r.id_item = i.id
+        		 and   i.id = item.id
+        		 and   a.id = alternativa.id
+        		 and   a.id = r.id_resposta_alternativa
+        		 and   r.id_resposta_checklist in (select r.id as id_resposta
+        		 								   from resposta_checklist r
+        		 								   where r.id_checklist = '".$id_checklist."'
+        		 								   and   date_format(r.data_resposta,'%Y-%m') = '".$data_resposta_checklist."')
+        		group by r.id_resposta_alternativa),0) as total_resposta
+                from item, checklist_item c, alternativa
+                where item.id = c.id_item
+                and   alternativa.id_item = item.id
+                and   c.id_checklist = '".$id_checklist."'
+                group by item.id, alternativa.id
+                order by item.enunciado, alternativa.descricao";
+        }
+        
+        $query = executarSql($sql);
+        $enunciado = "";
+        $array_labels = [];
+        $array_nao    = [];
+        $array_sim    = [];
+        $array_nao_porcentagem = [];
+        $array_sim_porcentagem = [];
+        $maior_valor  = 0;
+        
+        foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
+            
+            if ($enunciado != $linha["enunciado"]){
+                $array_labels[] = $linha["enunciado"];
+                $enunciado      = $linha["enunciado"];
+            }
+            
+            if (strtolower($linha["descricao"]) == "não")
+                $array_nao[] =  $linha["total_resposta"];
+                
+                if (strtolower($linha["descricao"]) == "sim")
+                    $array_sim[] =  $linha["total_resposta"];
+                    
+                    if ($maior_valor < $linha['total_resposta'])
+                        $maior_valor = $linha['total_resposta'];
+                        
+        }
+        $soma_sim=0;
+        $soma_nao=0;
+        for($i=0;$i<sizeof($array_sim);$i++){
+            $array_sim_porcentagem[]=calculaPorcentagem($array_sim[$i],$array_nao[$i]);
+            $array_nao_porcentagem[]=calculaPorcentagem($array_nao[$i],$array_sim[$i]);
+            $soma_sim += calculaPorcentagem($array_sim[$i],$array_nao[$i]);
+            $soma_nao += calculaPorcentagem($array_nao[$i],$array_sim[$i]);
+        }
+        
+        $array_total = $this->getPacientesPrevistosRespondidos($id_checklist, $data_resposta_checklist, $mensal);
+        
+        $this->grafico_barras_inicial =
+        array(
+            "labels"            => '"ADESÃO BUNDLE","'.implode('","',$array_labels).'"',
+            "resposta_tipo_1"   => (round($soma_sim/sizeof($array_sim_porcentagem))).",".implode(',',$array_sim_porcentagem),
+            "resposta_tipo_2"   => (round($soma_nao/sizeof($array_nao_porcentagem))).",".implode(',',$array_nao_porcentagem),
+            "maior_valor"       => 120,
+            "total_previsto"    => $array_total["total_previsto"],
+            "total_respondido"  => $array_total["total_respondido"]
+        );
+        
+    }
+    
+    
+    
+    
 }
 
 

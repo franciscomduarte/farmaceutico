@@ -11,8 +11,6 @@ if($id_checklist) {
     $cl = $objChecklist->listarAtivos();
 }
 
-
-
 ?>
 
 <div class="row">
@@ -45,6 +43,9 @@ if($id_checklist) {
 							<th>Quest.</th>
 							<th>Adicionar</th>
 							<th>Alta?</th>
+							<?php if (isset($id_checklist)){?>
+							<th>Dashboard</th>
+							<?php }?>
 						</tr>
 					</thead>
 					<tbody>
@@ -109,6 +110,12 @@ if($id_checklist) {
 							<!--  <td align="center">
 								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?></small>
 							</td>-->
+						
+							<?php if (isset($id_checklist)){?>
+							<td>
+								<a href="#" onclick="dashboard(<?php echo $id_checklist ?>,<?php echo $internacao->id?>)" class="btn btn-primary btn-xs"><i class="fa fa-pie-chart"></i> Dashboard </a>
+							</td>
+							<?php }?>
 						</tr>
 						<?php }
 						}
@@ -173,6 +180,11 @@ if($id_checklist) {
     		function responder(id_checklist, id_internacao){
     			var pag = "/checklist-resposta/resposta/"+id_checklist+"/"+id_internacao;
     			location.href = pag;
-    		}			
+    		}		
+
+    		function dashboard(id_checklist, id_internacao){
+    			var pag = "/checklist-resposta/dashboard/"+id_checklist+"/"+id_internacao;
+    			location.href = pag;
+    		}	
 
 		</script>
