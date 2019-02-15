@@ -55,6 +55,15 @@
                                 	   }
                                 	?>
                                 	
+                                	<?php 
+                                	   if ($i->tipo == 'SN')  {
+                                	       foreach ($alternativas as $alternativa) { 
+                                	?>
+												<div class="i-checks"><label> <input required="required" type="radio" value="<?php echo $alternativa->id ?>" name="sn-<?php echo $i->id?>"> <i></i> <?php echo $alternativa->descricao ?> </label></div>
+                                	<?php  }
+                                	   }
+                                	?>
+                                	
                                 	<?php if ($i->tipo == 'MV')  { ?>
                                 		<select multiple="multiple" class="form-control">
                                 			<option>Opção 1</option>

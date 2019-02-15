@@ -13,13 +13,13 @@ class RespostaChecklistItem extends Base
 	
 	public function inserir($obj){
 	    if($obj->resposta_texto == null) {
-	        echo $sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, id_resposta_alternativa)
+	        $sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, id_resposta_alternativa)
 				               VALUES ($obj->id_resposta_checklist, $obj->id_item, $obj->id_resposta_alternativa)";
 	    } else if ($obj->id_resposta_alternativa == null){
-	        echo $sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, resposta_texto)
+	        $sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, resposta_texto)
 				               VALUES ($obj->id_resposta_checklist, $obj->id_item, '$obj->resposta_texto')";
 	    } else {
-	        echo $sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, id_resposta_alternativa, resposta_texto)
+	        $sql = "INSERT INTO ".$this->tabela." (id_resposta_checklist, id_item, id_resposta_alternativa, resposta_texto)
 				               VALUES ($obj->id_resposta_checklist, $obj->id_item, $obj->id_resposta_alternativa, '$obj->resposta_texto')";
 	    }
         return  executarSql($sql);
