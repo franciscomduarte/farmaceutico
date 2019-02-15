@@ -198,23 +198,21 @@ class Internacao extends Base
 	    return $internacao;
 	}
 	
-	public function getInternacaoChecklist($id_checklist,$id_internacao){
+	public function getInternacaoChecklist($id_internacao){
 	    $sql = "SELECT IFNULL(data_saida,true) as ativo 
-                FROM internacao_checklist
-                WHERE id_checklist  = '$id_checklist'
-                AND   id_internacao = '$id_internacao'";
+                FROM  internacao_checklist
+                WHERE id_internacao = '$id_internacao'";
 	   
 	    $query = executarSql($sql);
 	    $this->array = $query->fetch_all(MYSQLI_ASSOC);
 	    
-	    $data_saida_internacao="";
-	    
+	    $data_saida_internacao="Sem Alta";
 	    
 	    foreach ($this->array as $linha){
 	        $data_saida_internacao = $linha['ativo']==1 ? true : formatarDataHora($linha['ativo']);
 	    }
 	    
-	    return mostrarAtivoInativo($data_saida_internacao);
+	    return $data_saida_internacao;
 	    
 	}
 	

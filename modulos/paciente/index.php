@@ -26,7 +26,6 @@
 					                        <th>CPF</th>
 					                        <th>Nascimento</th>
 					                        <th>Convênio</th>
-					                        <th>Gênero</th>
 					                        <th>Registro</th>
 					                        <th>Ações</th>
 					                    </tr>
@@ -40,11 +39,11 @@
 								        ?>
 										<tr>
 											<td><?php echo $paciente->id?></td>
-											<td><?php echo $paciente->nome?></td>
+											<td><?php echo $paciente->genero == "FEMININO" ? "<i class='fa fa-female'></i>" : "<i class='fa fa-male'></i>&nbsp;";
+	                                                  echo $paciente->nome?></td>
 											<td><?php echo $paciente->cpf?></td>
 											<td><?php echo formatarData($paciente->nascimento)?></td>
 											<td><?php echo $paciente->convenio->nome ?></td>
-											<td><?php echo $paciente->genero?></td>
 											<td><?php echo $paciente->registro?></td>
 											<td>
 												<button onclick="editar(<?php echo $paciente->id?>)">
@@ -71,7 +70,6 @@
 					                        <th>CPF</th>
 					                        <th>Nascimento</th>
 					                        <th>Convênio</th>
-					                        <th>Gênero</th>
 					                        <th>Registro</th>
 					                        <th>Ações</th>
 					                    </tr>

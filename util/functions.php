@@ -238,9 +238,16 @@
 	
 	function diffDate($data, $data_atual) {
 	    
+	    $data       = str_replace("/", "-", $data);
+	    $data_atual = str_replace("/", "-", $data_atual);
+	    
+	    if(strlen($data_atual) < 10)
+	        $data_atual = "";
+	    
 	    $date_time  = new DateTime( $data_atual );
+	    
 	    $diff       = $date_time->diff( new DateTime( $data ) );
-	    $result = $diff->format( '%d dia(s)' );
+	    $result = $diff->format( '%a dia(s)' );
 	    return $result;
 	}
 	
@@ -268,7 +275,6 @@
 	function calculaPorcentagemTotal($x,$y) {
 	    return round(($y*100)/$x,1);
 	}
-	
 	
 	
 ?>

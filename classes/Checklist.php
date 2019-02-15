@@ -208,6 +208,28 @@ class Checklist extends Base
 	    return $checklists;
 	}
 	
+	public function listarTodosPorInternacao($id_internacao){
+	    
+	    $sql = "SELECT *
+                FROM checklist c, internacao_checklist ic
+                WHERE c.id = ic.id_checklist
+                AND ic.id_internacao = '$id_internacao'
+                ORDER BY 1";
+	    $query = executarSql($sql);
+	    $array = $query->fetch_all(MYSQLI_ASSOC);
+	    
+	    $checklists = array();
+	    foreach ($array as $linha) {
+	        $checklist = new Checklist();
+	        $checklist->id            = $linha['id'];
+	        $checklist->nome          = $linha['nome'];
+	        $checklist->sigla         = $linha['sigla'];
+	        $checklist->cor           = $linha['cor'];
+	        
+	        $checklists[] = $checklist;
+	    }
+	    return $checklists;
+	}
 	
 	public function listarPorId($id){
 		self::listarObjetosPorId($id);
@@ -247,4 +269,51 @@ class Checklist extends Base
 	    self::deletar($id);
 	}
 	
+	public function getChecklistIndividualSumarizado($id_internacao) {
+	    $sql = "select i.id, ic.id_checklist,c.nome, c.sigla,
+                	   ifnull(datediff(ic.data_saida,i.data_internacao),datediff(now(),i.data_internacao)) as total_previsto,
+                       count(*) as total_resposta
+                from   resposta_checklist r, internacao_checklist ic, internacao i, checklist c
+                where  r.id_internacao  = i.id
+                and    ic.id_internacao = i.id
+                and    r.id_internacao  = ic.id_internacao
+                and    ic.id_checklist  = c.id
+                and    i.id = '$id_internacao'
+                group by i.id,ic.id_checklist";
+	    
+	    $query = executarSql($sql);
+	    $checklistvos = array();
+	    $this->array = $query->fetch_all(MYSQLI_ASSOC);
+	    
+	    foreach ($this->array as $linha){
+	        $checklistvo = new ChecklistVO();
+	        $checklistvo->id_internacao  = $linha['id'];
+	        $checklistvo->id_checklist   = $linha['id_checklist'];
+	        $checklistvo->nome_checklist = $linha['nome'];
+	        $checklistvo->sigla_cheklist = $linha['sigla'];
+	        $checklistvo->total_previsto = $linha['total_previsto'];
+	        $checklistvo->total_resposta = $linha['total_resposta'];
+	        $checklistvos[] = $checklistvo;
+	    }
+	    
+	    return $checklistvos;
+	}
+	
+}
+class ChecklistVO {
+    
+    public $id_internacao;
+    public $id_checklist;
+    public $nome_checklist;
+    public $sigla_cheklist;
+    public $total_previsto;
+    public $total_resposta;
+    
+    public function getDiferenca(){
+        return $this->total_previsto - $this->total_resposta;
+    }
+    
+    public function getPorcentagem() {
+        return round(($this->total_resposta*100)/$this->total_previsto);
+    }
 }
