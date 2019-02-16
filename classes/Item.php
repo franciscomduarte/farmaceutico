@@ -2,12 +2,12 @@
 
 class Item extends Base
 {	
-    protected $id;
-	protected $enunciado;
-	protected $tipo;
-	protected $meta;
-	protected $alternativas = [];
-	protected $checklist;
+    public $id;
+	public $enunciado;
+	public $tipo;
+	public $meta;
+	public $alternativas = [];
+	public $checklist;
 	
 	public function __construct(){
 	    $this->tabela = "item";

@@ -3,8 +3,8 @@
 class PermissaoPerfil extends Base
 {
 
-	protected $id_permissao;
-	protected $id_perfil;
+	public $id_permissao;
+	public $id_perfil;
 	
 	public function inserir($obj){
 		$sql = "INSERT INTO permissao_perfil (id_permissao, id_perfil) VALUES ('$obj->id_permissao', '$obj->id_perfil')";

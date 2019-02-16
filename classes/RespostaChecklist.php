@@ -2,11 +2,11 @@
 
 class RespostaChecklist extends Base
 {	
-    protected $id;
-    protected $checklist;
-	protected $data_resposta;
-	protected $internacao;
-	protected $itens = [];
+    public $id;
+    public $checklist;
+	public $data_resposta;
+	public $internacao;
+	public $itens = [];
 	
 	public function __construct(){
 	    $this->tabela = "resposta_checklist";

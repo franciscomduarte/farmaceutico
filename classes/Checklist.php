@@ -2,18 +2,18 @@
 
 class Checklist extends Base
 {	
-    protected $id;
-	protected $data_cadastro;
-	protected $nome;
-	protected $usuario;
-	protected $ativo;
-	protected $meta;
-	protected $sigla;
-	protected $cor;
-	protected $itens = [];
+    public $id;
+    public $data_cadastro;
+    public $nome;
+    public $usuario;
+    public $ativo;
+    public $meta;
+    public $sigla;
+    public $cor;
+    public $itens = [];
 	
 	// internações ativas no checklist
-    protected $internacoes = [];
+    public $internacoes = [];
 	
 	public function __construct(){
 	    $this->tabela = "checklist";

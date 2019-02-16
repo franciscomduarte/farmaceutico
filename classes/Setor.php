@@ -3,8 +3,8 @@
 class Setor extends Base
 {
 	
-	protected $id;
-	protected $nome;
+	public $id;
+	public $nome;
 	
 	public function __construct(){
 	    $this->tabela = "setor";

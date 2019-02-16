@@ -3,13 +3,13 @@
 class Paciente extends Base
 {
 	
-	protected $id;
-	protected $nome;
-	protected $cpf;
-	protected $nascimento;
-	protected $genero;
-	protected $registro;
-	protected $convenio;
+	public $id;
+	public $nome;
+	public $cpf;
+	public $nascimento;
+	public $genero;
+	public $registro;
+	public $convenio;
 	
 	public function __construct(){
 	    $this->convenio = new Convenio();

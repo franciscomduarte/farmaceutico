@@ -3,14 +3,14 @@
 class Internacao extends Base
 {
 	
-	protected $id;
-	protected $numero_internacao;
-	protected $data_internacao;
-	protected $setor;
-	protected $paciente;
-	protected $convenio;
+	public $id;
+	public $numero_internacao;
+	public $data_internacao;
+	public $setor;
+	public $paciente;
+	public $convenio;
 	
-	protected $checklists = [];
+	public $checklists = [];
 	
 	public function __construct(){
 	    $this->tabela   = "internacao";

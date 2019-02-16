@@ -3,10 +3,10 @@
 class Permissao extends Base
 {
 	
-	protected $id;
-	protected $descricao;
-	protected $url;
-	protected $tipoMenu;
+	public $id;
+	public $descricao;
+	public $url;
+	public $tipoMenu;
 	
 	public function inserir($obj){
 		$sql = "INSERT INTO permissao (id, descricao, url) VALUES (null, '$obj->descricao', '$obj->url')";

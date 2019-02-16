@@ -3,8 +3,8 @@
 class Teste extends Base
 {
 	
-	protected $id;
-	protected $descricao;
+	public $id;
+	public $descricao;
 	
 	public function inserir($obj){
 		$sql = "INSERT INTO teste (id, descricao) VALUES (null, '$obj->descricao')";

@@ -2,10 +2,10 @@
 
 class Dashboard{
     
-    protected $total;
-    protected $total_internados;
-    protected $grafico_barras_inicial;
-    protected $filtro_grafico_checklist;
+    public $total;
+    public $total_internados;
+    public $grafico_barras_inicial;
+    public $filtro_grafico_checklist;
         
     function __construct() {
         $sql = "SELECT TABLE_NAME, TABLE_ROWS 

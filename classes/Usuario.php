@@ -5,14 +5,14 @@ spl_autoload_register(function ($class) {
 
 class Usuario extends Base
 {	
-    protected $id;
-	protected $nome;
-	protected $email;
-	protected $senha;
-	protected $ativo;
-	protected $data_cadastro;
-	protected $cpf;
-	protected $perfil;
+    public $id;
+	public $nome;
+	public $email;
+	public $senha;
+	public $ativo;
+	public $data_cadastro;
+	public $cpf;
+	public $perfil;
 	
 	public function __construct(){
 	    $this->tabela = "usuario";

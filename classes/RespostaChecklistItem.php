@@ -2,10 +2,10 @@
 
 class RespostaChecklistItem extends Base
 {	
-    protected $id_resposta_checklist;
-    protected $id_item;
-	protected $id_resposta_alternativa;
-	protected $resposta_texto;
+    public $id_resposta_checklist;
+    public $id_item;
+	public $id_resposta_alternativa;
+	public $resposta_texto;
 	
 	public function __construct(){
 	    $this->tabela = "resposta_checklist_item";

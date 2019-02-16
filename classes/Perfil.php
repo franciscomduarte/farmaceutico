@@ -3,8 +3,8 @@
 class Perfil extends Base
 {
 	
-	protected $id;
-	protected $descricao;
+	public $id;
+	public $descricao;
 	
 	public function __construct() {
 	    $this->tabela = "perfil";

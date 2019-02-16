@@ -2,9 +2,9 @@
 
 class Roteador 
 {
-	protected $uri = array ();
-	protected $controlador;
-	protected $acao;
+	public $uri = array ();
+	public $controlador;
+	public $acao;
 	
 	public function __construct() 
 	{

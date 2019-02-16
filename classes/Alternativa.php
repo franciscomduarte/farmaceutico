@@ -2,9 +2,9 @@
 
 class Alternativa extends Base
 {
-    protected $id;
-    protected $descricao;
-    protected $item;
+    public $id;
+    public $descricao;
+    public $item;
     
     public function __construct(){
         $this->item = new Item();

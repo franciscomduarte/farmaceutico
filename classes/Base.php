@@ -45,31 +45,31 @@ abstract class Base
         return executarSql($sql);
     }
     
-    protected function listarObjetos(){
+    public function listarObjetos(){
         $sql   = "SELECT * FROM ".$this->tabela." WHERE 1=1 order by 2";
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
     }
     
-    protected function listarObjetosAtivos(){
+    public function listarObjetosAtivos(){
         $sql   = "SELECT * FROM ".$this->tabela." WHERE 1=1 and ativo = 1 order by 2";
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
     }
     
-    protected function listarObjetosPorId($id){
+    public function listarObjetosPorId($id){
         $sql = "SELECT * FROM ".$this->tabela." WHERE 1=1 AND id = $id order by 2";
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
     }
 
-    protected function listarObjetosPorChave($chave){
+    public function listarObjetosPorChave($chave){
         $sql = "SELECT * FROM ".$this->tabela." WHERE 1=1 AND chave = '$chave' order by 2";
         $query = executarSql($sql);
         $this->array = $query->fetch_all(MYSQLI_ASSOC);
     }
     
-    protected function gerarChave(){
+    public function gerarChave(){
         return md5(time()."$%&".microtime());
     }
 }
