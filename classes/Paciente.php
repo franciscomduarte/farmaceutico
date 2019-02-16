@@ -10,6 +10,7 @@ class Paciente extends Base
 	public $genero;
 	public $registro;
 	public $convenio;
+	public $ultima_internacao;
 	
 	public function __construct(){
 	    $this->convenio = new Convenio();
@@ -42,21 +43,27 @@ class Paciente extends Base
 	}
 	
 	public function listar(){
-	    $sql = "SELECT * FROM paciente WHERE 1=1 order by nome";
+	    $sql = "SELECT paciente.*,(select max(id) from internacao
+                                   where id_paciente = paciente.id) as internacao  
+                FROM paciente WHERE 1=1 
+                order by nome";
+	    
 	    $query = executarSql($sql);
 	    $array = $query->fetch_all(MYSQLI_ASSOC);
 	    $pacientes = [];
 	    
 	    foreach ($array as $linha) {
 	        $paciente = new Paciente();
-	        $paciente->id            = $linha['id'];
-	        $paciente->nome          = $linha['nome'];
-	        $paciente->cpf           = $linha['cpf'];
-	        $paciente->nascimento    = $linha['nascimento'];
-	        $paciente->genero    = $linha['genero'];
-	        $paciente->registro    = $linha['registro'];
-	        $paciente->convenio      = $paciente->convenio->listarPorId($linha['id_convenio']);
-	        $pacientes[]             = $paciente;
+	        $paciente->id                = $linha['id'];
+	        $paciente->nome              = $linha['nome'];
+	        $paciente->cpf               = $linha['cpf'];
+	        $paciente->nascimento        = $linha['nascimento'];
+	        $paciente->genero            = $linha['genero'];
+	        $paciente->registro          = $linha['registro'];
+	        $paciente->convenio          = $paciente->convenio->listarPorId($linha['id_convenio']);
+	        $paciente->ultima_internacao = $linha['internacao'];
+	        
+	        $pacientes[]                 = $paciente;
 	    }
 	    return $pacientes;
 	}
@@ -106,5 +113,6 @@ class Paciente extends Base
 		$sql = "DELETE FROM paciente WHERE id = " . $id;
 		return executarSql($sql);
 	}
+
 	
 }

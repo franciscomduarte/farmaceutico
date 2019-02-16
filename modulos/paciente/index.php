@@ -49,7 +49,7 @@
 												<button onclick="editar(<?php echo $paciente->id?>)">
 													<span class="glyphicon glyphicon-edit" title="Editar"></span>
 												</button>
-												<button onclick="dashboard(<?php echo $paciente->cpf?>)">
+												<button onclick="dashboard(<?php echo $paciente->cpf?>,<?php echo $paciente->ultima_internacao?>)">
 													<span class="glyphicon glyphicon-stats" title="Dashboard"></span>
 												</button>
 												<button onclick="excluir(<?php echo $paciente->id?>)">
@@ -89,8 +89,8 @@
 				location.href = pag;
 			}
 
-			function dashboard(cpf){
-				var pag = "/paciente/detalhes/"+cpf;
+			function dashboard(cpf,internacao){
+				var pag = "/paciente/detalhes/"+cpf+"/"+internacao;
 				location.href = pag;
 			}
 			
