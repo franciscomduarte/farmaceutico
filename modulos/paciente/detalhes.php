@@ -42,9 +42,15 @@ if (isset($id_internacao)){
                                     $data_saida = $internacaoDao->getInternacaoChecklist($internacao->id);
                                 ?>
                                 <b>Data Internação:</b> <?php echo formatarDataHora($internacao->data_internacao)?> 
-                                <b>Data Saída: </b><?php echo strlen($data_saida)>=10 ? "$data_saida - ":"";
-                                                         echo diffDate($internacao->data_internacao, $data_saida)?>
-                                <?php }?>
+                                <?php 
+                                    if (strlen($data_saida) < 10){
+                                        echo "<b>Paciente internado à: </b>".diffDate($internacao->data_internacao, $data_saida)." <b>SEM ALTA</b>";
+                                    }else{
+                                        echo "<b>Data Saída: </b>".$data_saida." - ".diffDate($internacao->data_internacao, $data_saida)." <b>Internada.</b>";
+                                    }
+                                }
+                               ?>
+							    
                             </div>
                         </div>
                         
@@ -56,7 +62,7 @@ if (isset($id_internacao)){
                         		<select name="id_internacao" id="carrega_internacao" class="form-control" required="required">
     								<option value="">-- Selecione --</option>
     								<?php
-    								$listaInterncoes = $internacaoDao->listarTodasPorCpf($cpf);
+    								$listaInterncoes = $internacaoDao->listarTodasPorCpf($cpf,"desc");
     								foreach ($listaInterncoes as $obj) {
     									?>
     									<option value="<?php echo $obj->id ?>" <?php echo ($id_internacao == $obj->id ? 'selected="selected"' : '')?>> <?php echo $obj->numero_internacao." - ".formatarDataHora($obj->data_internacao)?> </option>

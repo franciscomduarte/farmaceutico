@@ -90,12 +90,13 @@ class Internacao extends Base
 	    return $internacoes;
 	}
 
-	public function listarTodasPorCpf($cpf){
+	public function listarTodasPorCpf($cpf,$order="asc"){
 	    $sql = "select i.id, i.numero_internacao, i.data_internacao, i.id_setor, i.id_paciente,
                 	   p.nome, p.cpf, p.nascimento, p.genero, p.registro, p.id_convenio
                 from internacao i, paciente p
                 where i.id_paciente = p.id
-                and   p.cpf = '$cpf'";
+                and   p.cpf = '$cpf' 
+                order by i.id $order";
 	    
         $this->array = executarSql($sql);
 	    $internacoes = array();
