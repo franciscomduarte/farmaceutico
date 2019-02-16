@@ -6,7 +6,7 @@ include_once 'breadcrumb.php';
 
 $params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
 $cpf = $params[2];
-$id_internacao = $_REQUEST['id_internacao'];
+$id_internacao = $params[3];
 
 $pacienteDao   = new Paciente();
 $internacaoDao = new Internacao();
@@ -74,7 +74,7 @@ if (isset($id_internacao)){
                       </div>
                  </form>  
                  <?php 
-                    $checklistvos = $checklistDao->getChecklistIndividualSumarizado($id_internacao);
+                    $checklistvos = $checklistDao->getChecklistIndividualSumarizado($id_internacao,$paciente->id);
                  ?>
                  
                  <div class="row">
@@ -157,7 +157,7 @@ if (isset($id_internacao)){
 <script type="text/javascript">
 $('#carrega_internacao').change(function(){
 	if ($(this).val() != ""){
-    	location.href="/paciente/detalhes/<?php echo $cpf."?id_internacao="?>"+($(this).val());
+    	location.href="/paciente/detalhes/<?php echo $cpf."/"?>"+($(this).val());
 	}else{
 		//location.href="/paciente/detalhes/<?php echo $cpf?>;
 	}

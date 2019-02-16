@@ -269,7 +269,7 @@ class Checklist extends Base
 	    self::deletar($id);
 	}
 	
-	public function getChecklistIndividualSumarizado($id_internacao) {
+	public function getChecklistIndividualSumarizado($id_internacao,$id_paciente) {
 	    $sql = "select i.id, ic.id_checklist,c.nome, c.sigla,
                 	   ifnull(datediff(ic.data_saida,i.data_internacao),datediff(now(),i.data_internacao)) as total_previsto,
                        count(*) as total_resposta
@@ -278,7 +278,8 @@ class Checklist extends Base
                 and    ic.id_internacao = i.id
                 and    r.id_internacao  = ic.id_internacao
                 and    ic.id_checklist  = c.id
-                and    i.id = '$id_internacao'
+                and    i.id = '$id_internacao' 
+                and    i.id_paciente = '$id_paciente' 
                 group by i.id,ic.id_checklist";
 	    
 	    $query = executarSql($sql);
