@@ -5,6 +5,7 @@ class Alternativa extends Base
     public $id;
     public $descricao;
     public $mensagem;
+    public $dataEnvio;
     
     public function __construct(){
         $this->tabela = "alerta";
@@ -12,11 +13,19 @@ class Alternativa extends Base
     public function inserir($obj)
     {
         
-        $sql = "INSERT INTO ".$this->tabela." (id,descricao,mensagem)
-				             VALUES (null,'$obj->descricao','$obj->mensagem')";
+        $sql = "INSERT INTO ".$this->tabela." (id,descricao,mensagem, data_envio)
+				             VALUES (null,'$obj->descricao','$obj->mensagem','$obj->dataEnvio')";
         
         return executarSql($sql);
         
+    }
+    
+    public function atualizarDataEnvio($obj)
+    {
+        $sql = "UPDATE ".$this->tabela."
+			     SET data_envio      = '$obj->dataEnvio'
+                WHERE id = '$obj->id' ";
+        return executarSql($sql);
     }
 
     public function listar()
