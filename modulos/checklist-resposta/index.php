@@ -43,6 +43,7 @@ if($id_checklist) {
 							<th>Quest.</th>
 							<th>Adicionar</th>
 							<th>Alta?</th>
+							<th>Alerta</th>
 							<?php if (isset($id_checklist)){?>
 							<th>Dashboard</th>
 							<?php }?>
@@ -107,6 +108,11 @@ if($id_checklist) {
 									<span>-</span>
 								<?php }?>
 							</td>
+							
+							<td>
+								<a href="/checklist-resposta/enviaAlerta/<?php echo $internacao->id ?>">Enviar</a>
+							</td>
+							
 							<!--  <td align="center">
 								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?></small>
 							</td>-->

@@ -40,4 +40,18 @@ define('EXTERNO', 4);
 ########################################################################
 #define('FILTRO_INICIAL','1|2018-11-30');
 
+########################################################################
+## PARAMETROS TELEGRAM
+########################################################################
+
+// Quando precisar mudar de grupo, olhar isso
+//https://github.com/pluginsGLPI/telegrambot/issues/18
+//https://api.telegram.org/bot**ColeSeuTokenAqui**/getUpdates
+
+define('CHAT_ID', '-177939809');
+define('TOKEN_TELEGRAM', '701546356:AAECQf4kMv71A74JFWsPGAcgaSXK3iCBeb4');
+define('URL_TELEGRAM', 'https://api.telegram.org/bot');
+
+
+
 ?>
