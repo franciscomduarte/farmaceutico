@@ -56,11 +56,11 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
                                                 <h5>Check Lists preenchidos</h5>
                                             </div>
                                             <div class="ibox-content">
-                                            	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["paciente"]) ?></a><small> Preenchidos(s) no mês</small></h1>
+                                            	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["internacao"]) ?></a><small> Preenchidos(s) no mês</small></h1>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+                            	</div>
                             
                             <div class="ibox-content">
                                 <div class="row">

@@ -47,6 +47,33 @@ $dashboard = new Dashboard();
 $dashboard->getDashboarPorChecklist($filtro_atual,true); 
 ?>                            
                             <div class="ibox-content">
+                            
+                            <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                <span class="label label-success pull-right">Total</span>
+                                                <h5>Número de Pacientes</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                            	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["paciente"]) ?></a><small> internados(s) no mês</small></h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                <span class="label label-success pull-right">Total</span>
+                                                <h5>Check Lists preenchidos</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                            	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["internacao"]) ?></a><small> Preenchidos(s) no mês</small></h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                            	</div>
+                            
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div>
