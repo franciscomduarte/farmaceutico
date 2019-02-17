@@ -46,9 +46,9 @@ define('EXTERNO', 4);
 
 // Quando precisar mudar de grupo, olhar isso
 //https://github.com/pluginsGLPI/telegrambot/issues/18
-//https://api.telegram.org/bot**ColeSeuTokenAqui**/getUpdates
+//https://api.telegram.org/bot701546356:AAECQf4kMv71A74JFWsPGAcgaSXK3iCBeb4/getUpdates
 
-define('CHAT_ID', '-177939809');
+define('CHAT_ID', '-1001483990900');
 define('TOKEN_TELEGRAM', '701546356:AAECQf4kMv71A74JFWsPGAcgaSXK3iCBeb4');
 define('URL_TELEGRAM', 'https://api.telegram.org/bot');
 
