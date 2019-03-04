@@ -300,7 +300,33 @@ class Checklist extends Base
 	    return $checklistvos;
 	}
 	
+	public function getChecklistsSumarizadosDoDia() {
+	    
+	    $sql = "select c.id, c.nome, c.sigla, c.cor, c.tipo,
+        	    (select count(*) from internacao_checklist where id_checklist = c.id and data_saida is null) as total_internados,
+        	    (select count(*) from resposta_checklist   where id_checklist = c.id and data_resposta >= curdate()) as total_respostas
+        	    from   checklist c
+        	    where  c.tipo <> 'UNICO'";
+	    
+	    $query = executarSql($sql);
+	    $checklistvos = array();
+	    $this->array = $query->fetch_all(MYSQLI_ASSOC);
+	    
+	    foreach ($this->array as $linha){
+	        $checklistvo = new ChecklistVO();
+	        $checklistvo->id_checklist   = $linha['id'];
+	        $checklistvo->nome_checklist = $linha['nome'];
+	        $checklistvo->sigla_cheklist = $linha['sigla'];
+	        $checklistvo->total_previsto = $linha['total_internados'];
+	        $checklistvo->total_resposta = $linha['total_respostas'];
+	        $checklistvos[] = $checklistvo;
+	    }
+	    
+	    return $checklistvos;
+	}
+	
 }
+
 class ChecklistVO {
     
     public $id_internacao;
