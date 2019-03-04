@@ -32,7 +32,7 @@ if($id_checklist) {
                     <?php 
                     }
                     ?>
-					<button type="button" class="btn btn-info" onclick="location.href='/paciente/novo'">Incluir em CkeckList</button>
+					<button type="button" class="btn btn-info" onclick="location.href='/paciente/novo'">Incluir em Bundle</button>
 				</div>
 			</div>
 			<div class="ibox-content">
@@ -44,9 +44,6 @@ if($id_checklist) {
 							<th>Adicionar</th>
 							<th>Alta?</th>
 							<th>Alerta</th>
-							<?php if (isset($id_checklist)){?>
-							<th>Dashboard</th>
-							<?php }?>
 						</tr>
 					</thead>
 					<tbody>
@@ -113,15 +110,6 @@ if($id_checklist) {
 								<a href="/checklist-resposta/enviaAlerta/<?php echo $internacao->id ?>">Enviar</a>
 							</td>
 							
-							<!--  <td align="center">
-								<?php echo $status != null ? "<i class='fa fa-check text-navy'></i>" : "<i class='fa fa-warning'></i>" ?></small>
-							</td>-->
-						
-							<?php if (isset($id_checklist)){?>
-							<td>
-								<a href="#" onclick="dashboard(<?php echo $id_checklist ?>,<?php echo $internacao->id?>)" class="btn btn-primary btn-xs"><i class="fa fa-pie-chart"></i> Dashboard </a>
-							</td>
-							<?php }?>
 						</tr>
 						<?php }
 						}
