@@ -5,6 +5,9 @@
 	define ('ERROR', 'error');
 	define ('SUCCESS', 'Success');
 
+	function red($pagina) {
+	    echo "<script>location.href='$pagina';</script>";
+	}
 	function redirecionar($pagina) {
 	    echo "<html>";
 	    echo "<head>";
