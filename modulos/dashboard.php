@@ -13,14 +13,43 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
 ?>       
         <div class="wrapper wrapper-content">
             <div class="container">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">Total</span>
+                            <h5>Pacientes</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"><a href="/checklist"><?php printf("%02d",$dashboard->total["checklist"]) ?></a><small> Cadastrado(s) </small></h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">Total</span>
+                            <h5>Números de bundles</h5>
+                        </div>
+                        <div class="ibox-content">
+                        	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["paciente"]) ?></a><small> Cadastrado(s)</small></h1>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
             <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Checklists</h5>
+                                <h5>Bundles</h5>
                                 <div class="pull-right">
                                 	 <div class="btn-group">
-                                	 	<select name="filtro" id="filtro_dashboard" class="form-control">
+                                	 <label class="form-check-label">
+                                	 	<select name="filtro" id="filtro_dashboard" class="form-control select2_demo_2_checklist">
             								<?php
             								
             								foreach ( $dashboard->getDashboarFiltroPorChecklist(NULL,NULL,true) as $filtro) {
@@ -31,186 +60,64 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
             								}
             								?>
             	                    		</select>
+            	                    	</label>
                                     </div>
                                 </div>
                             </div>
                             
-                           <div class="ibox-content">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title">
-                                                <span class="label label-success pull-right">Total</span>
-                                                <h5>Número de Pacientes</h5>
-                                            </div>
-                                            <div class="ibox-content">
-                                            	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["paciente"]) ?></a><small> internados(s) no mês</small></h1>
-                                            </div>
+                            
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div>
+                                       			 <canvas id="barChartChecklist" height="140"></canvas>
+                                    		</div>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="col-lg-6">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title">
-                                                <span class="label label-success pull-right">Total</span>
-                                                <h5>Check Lists preenchidos</h5>
-                                            </div>
-                                            <div class="ibox-content">
-                                            	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["internacao"]) ?></a><small> Preenchidos(s) no mês</small></h1>
-                                            </div>
-                                        </div>
-                                    </div>
+                                	</div>
                             	</div>
-                            
-                            <div class="ibox-content">
-                                <div class="row">
+            				</div>
+                            <div class="row">
                                     <div class="col-lg-12">
-                                        <div>
-                                   			 <canvas id="barChartChecklist" height="140"></canvas>
-                                		</div>
-                                    </div>
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                
+                                                <div class="pull">
+                                                	<h5>Legenda</h5>
+                                                	 <div class="btn-group" style="padding-top: 5px;">
+                                            	 	<span class="pull-right label label-danger"> < 90%</span>
+                                            	 	<span class="pull-right label label-warning" style="background-color: #F6C600; color: black;"> < 99%</span>
+                                            	 	<span class="pull-right label label-primary"> 100%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                   </div>
+                               </div>
                             </div>
-                        </div>
-                    </div>
-            </div>
-           <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                
-                                <div class="pull">
-                                	<h5>Legenda</h5>
-                                	 <div class="btn-group" style="padding-top: 5px;">
-                                	 	<span class="pull-right label label-danger"> < 90%</span>
-                                	 	<span class="pull-right label label-warning" style="background-color: #F6C600; color: black;"> < 99%</span>
-                                	 	<span class="pull-right label label-primary"> 100%</span>
+                             <?php 
+                                $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
+                                echo '<div class="row">';
+                                for ($i=0; $i < sizeof($questoes); $i++){ ?>
+                                <div class="col-lg-4">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5><?php echo str_replace('"', '', $questoes[$i])?></h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div>
+                                                <div id="gauge_<?php echo $i?>"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                       </div>
-                   </div>
-             </div>
-             <?php 
-                $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
-                echo '<div class="row">';
-                for ($i=0; $i < sizeof($questoes); $i++){ ?>
-                <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5><?php echo str_replace('"', '', $questoes[$i])?></h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div>
-                                <div id="gauge_<?php echo $i?>"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php 
-                    if ((($i+1) % 3)==0){
-                        echo '</div><div class="row">';
-                    }
-                }
-                ?>
-            
-            <?php echo '</div>'?>
-            
-            <div class="row">
-			    <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-warning pull-right">Qtd</span>
-                            <h5>Dados do Sistema</h5>
-                        </div>
-                        
-                        <div class="ibox-content">
-                        		<div class="row">
-
-	    					       	<div class="col-xs-4">
-	                                    <h4><a href="#">Pacientes: </a></h4>
-	                                     <small class="stats-label"><?php printf("%02d",$dashboard->total["paciente"])?></small>
-	                                </div>
-	    
-	                                <div class="col-xs-4">
-	                                    <small class="stats-label">Cadastrados</small>
-	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total["paciente"])?></a></h4>
-	                                </div>
-	                                <div class="col-xs-4">
-	                                    <small class="stats-label">Internados</small>
-	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total["internacao"])?></a></h4>
-	                                </div>
-
-									<?php $dashboard->getDashboardInternados();?>
-									
-	    					       	<div class="col-xs-4">
-	                                    <h4><a href="#">Internações: </a></h4>
-	                                    <small class="stats-label"><?php printf("%02d",$dashboard->total_internados["total"])?></small>
-	                                </div>
-	    
-	                                <div class="col-xs-4">
-	                                    <small class="stats-label">Internados</small>
-	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total_internados["internado"])?></a></h4>
-	                                </div>
-	                                <div class="col-xs-4">
-	                                    <small class="stats-label">Dispensados</small>
-	                                    <h4><a href="#"><?php printf("%02d",$dashboard->total_internados["dispensado"])?></a></h4>
-	                                </div>
-    							</div>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                <div class="col-md-2">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-success pull-right">Total</span>
-                            <h5>Cheklists</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <h1 class="no-margins"><a href="/checklist"><?php printf("%02d",$dashboard->total["checklist"]) ?></a><small> Cadastrado(s) </small></h1>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-2">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-success pull-right">Total</span>
-                            <h5>Pacientes</h5>
-                        </div>
-                        <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="/paciente"><?php printf("%02d",$dashboard->total["paciente"]) ?></a><small> Cadastrado(s)</small></h1>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-success pull-right">Total</span>
-                            <h5>Internações</h5>
-                        </div>
-                        <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="/internacao"><?php printf("%02d",$dashboard->total["internacao"]) ?></a><small> Cadastrado(s)</small></h1>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-2">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-success pull-right">Total</span>
-                            <h5>Respostas</h5>
-                        </div>
-                        <div class="ibox-content">
-                        	<h1 class="no-margins"><a href="#"><?php  printf("%02d",$dashboard->total["resposta_checklist"]) ?></a><small> Cadastrado(s)</small></h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
+                                <?php 
+                                    if ((($i+1) % 3)==0){
+                                        echo '</div><div class="row">';
+                                    }
+                                }
+                                ?>
+                            
+                            <?php echo '</div>'?>
+            			</div>
 
         </div>
         

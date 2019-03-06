@@ -1,7 +1,7 @@
 <?php
 
 define("NOME_MODULO", "Relatórios");
-define("NOME_ACAO", "Checklist");
+define("NOME_ACAO", "Bundles");
 include_once 'breadcrumb.php';
 
 $filtro = array(
@@ -15,7 +15,7 @@ $filtro = array(
 	<div class="ibox float-e-margins">
 		<div class="ibox-title">
 			<h5>
-				Relatório de Checklist por Unidade
+				Relatório de Bundles por Unidade
 			</h5>
 		</div>
 		<div class="ibox-content">
@@ -26,7 +26,7 @@ $filtro = array(
 
 					<div class="form-group col-xs-6">
 							<div class="form-group">
-								<label>Tipos Checklist</label>
+								<label>Tipos Bundles</label>
 								
 								<select name="id_checklist" id="carrega_checklist" class="form-control" required="required">
 								<option value="">-- Selecione --</option>

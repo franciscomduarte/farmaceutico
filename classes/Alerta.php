@@ -13,8 +13,8 @@ class Alternativa extends Base
     public function inserir($obj)
     {
         
-        $sql = "INSERT INTO ".$this->tabela." (id,descricao,mensagem, data_envio)
-				             VALUES (null,'$obj->descricao','$obj->mensagem','$obj->dataEnvio')";
+        $sql = "INSERT INTO ".$this->tabela." (id, descricao, mensagem, data_envio)
+				             VALUES (null, '$obj->descricao', '$obj->mensagem',now())";
         
         return executarSql($sql);
         

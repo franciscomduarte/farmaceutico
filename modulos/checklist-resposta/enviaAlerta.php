@@ -7,7 +7,7 @@
     $internacao = new Internacao();
     $internacao = $internacao->listarPorId($id);
     $telegram = new Telegram();
-    $telegram->enviaAlerta("Não conformidade encontrada para o paciente " . $internacao->paciente->nome . ". Necessário verificação!");
+    $telegram->enviaAlerta("Bundle não preenchido do paciente " . $internacao->paciente->nome . ". Necessário verificação!");
     redirecionar("/checklist-resposta");
 
 ?>

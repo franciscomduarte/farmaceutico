@@ -26,7 +26,7 @@ if (strpos($_SERVER['QUERY_STRING'],"view")){
 	<div class="ibox float-e-margins">
 		<div class="ibox-title">
 			<h5>
-				Cadastro de Checklists<small></small>
+				Cadastro de Bundles<small></small>
 			</h5>
 		</div>
 		<div class="ibox-content">

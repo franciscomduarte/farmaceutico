@@ -83,7 +83,7 @@ if (isset($id_internacao)){
                                 <div class="pull-right forum-desc">
                                     <samll>Total: <?php echo sizeof($checklistvos)?></samll>
                                 </div>
-                                <h3>Checklists do Paciente</h3>
+                                <h3>Bundles do Paciente</h3>
                             </div>
 
 							<!-- Linha repetida -->
