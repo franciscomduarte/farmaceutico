@@ -7,8 +7,13 @@ spl_autoload_register(function ($class) {
 include_once '../../config.php';
 include_once '../../util/functions.php';
 
-$objChecklist = new Checklist();
-$cl = $objChecklist->listarAtivos();
+$chave=$argv[1];
+
+
+if ($chave == "amFuYWluYVNBQlJJTkFkZVBBVUxBU0FtYW50aGFGT1M="){
+
+  $objChecklist = new Checklist();
+  $cl = $objChecklist->listarAtivos();
 
     foreach ($cl as $checklist) {
         $mensagem = "Bundle . $checklist->sigla . não preenchido para o(s) paciente(s):";
@@ -18,7 +23,7 @@ $cl = $objChecklist->listarAtivos();
             $bundles = $objChecklist->listarAtivasPorInternacao($internacao->id);
             foreach ($bundles as $bundle) {
                 if ($checklist->id == $bundle->id) {
-                    $mensagem .= $internacao->paciente->nome . " ";
+                    $mensagem .= $internacao->paciente->nome . "\n";
                 }
             }
         }
@@ -26,4 +31,5 @@ $cl = $objChecklist->listarAtivos();
         $telegram->enviaAlerta($mensagem);
         
     }
+}
 ?>

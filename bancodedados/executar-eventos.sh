@@ -7,5 +7,5 @@ echo "Acessando o Diretório ... $DIRETORIO "
 cd $DIRETORIO
 sleep 1
 echo "Executando o arquivo ..."
-php bundles-nao-preenchidos.php
+php -f bundles-nao-preenchidos.php amFuYWluYVNBQlJJTkFkZVBBVUxBU0FtYW50aGFGT1M=
 echo "Fim da execucao do agendamento"
