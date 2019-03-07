@@ -145,21 +145,36 @@ $(document).ready(function() {
 	        datasets: [
 	            {
 	            	label: "SIM",
-	                backgroundColor: 'rgba(26,179,148,0.5)',
-	                borderColor: "rgba(26,179,148,0.7)",
+	            	borderColor: "rgba(26,179,148,0.7)",
 	                pointBackgroundColor: "rgba(26,179,148,1)",
-	                pointBorderColor: "#fff",
-	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_1"]?>]
-	            },
+	                pointBorderColor: "rgba(255,255,255,255)",
+	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_1"]?>],	 
+	                backgroundColor: [
+	                    'rgba(248, 172, 89, 0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                ],               
 // 	            {
 // 	                label: "NÃO",
 // 	                backgroundColor: 'rgba(248, 172, 89, 0.5)',
 // 	                pointBorderColor: "#fff",
-//	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_2"]?>]
+//	                data: [<?php #echo $dashboard->grafico_barras_inicial["resposta_tipo_2"]?>]
 // 	            }
-	        ]
+	            }]
 	    };
 
+  Chart.defaults.global.defaultFontSize = '15';
+	  
     var barOptions = {
         responsive: true,
         events: false,

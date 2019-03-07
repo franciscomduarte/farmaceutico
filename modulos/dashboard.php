@@ -10,7 +10,7 @@ if (!isset($filtro_atual)){
 
 $dashboard->getDashboarPorChecklist($filtro_atual,true);
     
-?>       
+?>      
         <div class="wrapper wrapper-content">
             <div class="container">
             
@@ -119,9 +119,9 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
                             <?php echo '</div>'?>
             			</div>
 
-        </div>
-        
+        </div>     
 <script>
+
 $('#filtro_dashboard').change(function(){
     location.href="/?filtro="+($(this).val());
 });
@@ -133,21 +133,34 @@ $(document).ready(function() {
 	        datasets: [
 	            {
 	            	label: "SIM",
-	                backgroundColor: 'rgba(26,179,148,0.5)',
 	                borderColor: "rgba(26,179,148,0.7)",
 	                pointBackgroundColor: "rgba(26,179,148,1)",
-	                pointBorderColor: "#fff",
-	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_1"]?>]
-	            },
+	                pointBorderColor: "rgba(255,255,255,255)",
+	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_1"]?>],	 
+	                backgroundColor: [
+	                    'rgba(248, 172, 89, 0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                    'rgba(26,179,148,0.5)',
+	                ],               
 // 	            {
 // 	                label: "NÃO",
 // 	                backgroundColor: 'rgba(248, 172, 89, 0.5)',
 // 	                pointBorderColor: "#fff",
-//	                data: [<?php echo $dashboard->grafico_barras_inicial["resposta_tipo_2"]?>]
+//	                data: [<?php #echo $dashboard->grafico_barras_inicial["resposta_tipo_2"]?>]
 // 	            }
-	        ]
+	            }]
 	    };
 
+  Chart.defaults.global.defaultFontSize = '15';
+  
     var barOptions = {
         responsive: true,
         events: false,
@@ -157,11 +170,14 @@ $(document).ready(function() {
         	onComplete: function () {
         	    // render the value of the chart above the bar
         	    var ctx = this.chart.ctx;
+				console.log(ctx);
+
         	    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
         	    ctx.fillStyle = this.chart.config.options.defaultFontColor;
         	    ctx.textAlign = 'center';
         	    ctx.textBaseline = 'bottom';
-        	    this.data.datasets.forEach(function (dataset) {
+        	
+				this.data.datasets.forEach(function (dataset) {
         	        for (var i = 0; i < dataset.data.length; i++) {
         	            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
         	            ctx.fillText(dataset.data[i]+'%', model.x, model.y - 5);
@@ -169,7 +185,8 @@ $(document).ready(function() {
         	    });
         	}},
         scales: {
-			yAxes: [{ticks: {min: 0, max: <?php echo $dashboard->grafico_barras_inicial["maior_valor"]?>}}]
+			yAxes: [{ticks: {min: 0, max: <?php echo $dashboard->grafico_barras_inicial["maior_valor"]?>}}],
+	        //xAxes: [{gridLines: {offsetGridLines: true}}],
 		}
     };
 
