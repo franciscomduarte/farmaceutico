@@ -9,10 +9,13 @@
         $paciente->cpf          = removeCaracteresCPF($cpf);
         $paciente->nascimento   = dateEmMysql($_REQUEST['nascimento'] );
         $paciente->genero       = $_REQUEST['genero'];
-        $paciente->registro     = $_REQUEST['registro'];
+        
         $convenio = new Convenio();
-        $paciente->convenio     = $convenio->listarPorId($_REQUEST['id_convenio']);
-
+        //removido a pedido do Dr. Deixei comentado tanto aqui quanto na tela caso ele mude de ideia.
+        //$paciente->registro     = $_REQUEST['registro'];
+        //$paciente->convenio     = $convenio->listarPorId($_REQUEST['id_convenio']);
+        $paciente->convenio     = $convenio->listarPorId(2);
+        
         if($paciente->id){
             $paciente->editar($paciente);
     	} else {
@@ -22,12 +25,13 @@
     	
     	#dados do formulario de internacao
     	$internacao = new Internacao();
-    	echo $internacao->id = $_REQUEST['id_internacao'];
-    	$internacao->numero_internacao = $_REQUEST['numero_internacao'];
+    	$internacao->id = $_REQUEST['id_internacao'];
+    	//removido a pedido do Dr. Deixei comentado tanto aqui quanto na tela caso ele mude de ideia.
+    	//$internacao->numero_internacao = $_REQUEST['numero_internacao'];
     	$internacao->data_internacao = dateEmMysql($_REQUEST['data_internacao']);
     	$internacao->setor->id = $_REQUEST['id_setor'];
     	$internacao->paciente->id = $paciente->id;
-    	$internacao->convenio->id = $_REQUEST['id_convenio'];
+    	$internacao->convenio->id = 2;
     	$internacao->checklists = $_REQUEST['id_checklists'];
     	if($internacao->id){
     	   $internacao->editar($internacao);

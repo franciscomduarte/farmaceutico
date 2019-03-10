@@ -83,6 +83,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                 							</div>
                 						</div>
                 						
+                						<!--  
                                        	<div class="form-group col-sm-6">
                 							<label>Convênio</label><span style="color: red;"> *</span> 
                 									<select <?php echo $objPaciente != null ? "readonly" : "" ?> class="form-control" name="id_convenio" required="required">
@@ -105,7 +106,7 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                                         	<label>Número da Internação</label><span style="color: red;"> *</span> 
                                         	<input <?php echo $objInternacao->id ? "readonly" : "" ?> type="text" value="<?php echo $objInternacao->numero_internacao ? $objInternacao->numero_internacao : null ?>" placeholder="Informe o número da internação" class="form-control" name="numero_internacao" required="required">
                                         </div>
-                                        
+                                        -->
                     					<div class="form-group col-sm-6">
                     						<label for="db">Data da Internação</label><span style="color: red;"> *</span> 
                     						<div class="input-group">
@@ -119,12 +120,12 @@ if(isset($_REQUEST['cpf']) && $_REQUEST['cpf'] != "") {
                     									>
                     						</div>
                                         </div>
-                                        
+                                        <!--  
                                         <div class="form-group col-sm-6">
                                         	<label>Registro de Internação</label> <span style="color: red;"> *</span>
                                            	<textarea required="required" placeholder="Registro de internação" class="form-control" name="registro"><?php echo $objPaciente->registro ? $objPaciente->registro : "" ?></textarea>
                                         </div>
-                                        
+                                        -->
                                         <div class="form-group col-sm-6">
                     						<label>Setor</label><span style="color: red;"> *</span>  
                         							<select class="form-control" name="id_setor" required="required">

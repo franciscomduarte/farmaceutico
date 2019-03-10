@@ -14,6 +14,26 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
         <div class="wrapper wrapper-content">
             <div class="container">
             
+            <div class="ibox-title">
+                <div class="pull-right">
+                	 <div class="btn-group">
+                	 <label class="form-check-label">
+                	 	<select name="filtro" id="filtro_dashboard" class="form-control select2_demo_2_checklist">
+							<?php
+							
+							foreach ( $dashboard->getDashboarFiltroPorChecklist(NULL,NULL,true) as $filtro) {
+							    $filtro_ativo = $filtro['id_checklist']."|".$filtro['data_resposta'] == $filtro_atual ? "selected" : "";
+								?>
+								<option value="<?php echo $filtro['id_checklist']."|".$filtro['data_resposta'] ?>" <?php echo $filtro_ativo?>> <?php echo $filtro['label']?> </option>
+							<?php
+							}
+							?>
+                    		</select>
+                    	</label>
+                    </div>
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col-md-6">
                     <div class="ibox float-e-margins">
@@ -42,40 +62,42 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
             </div>
             
             <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>Bundles</h5>
-                                <div class="pull-right">
-                                	 <div class="btn-group">
-                                	 <label class="form-check-label">
-                                	 	<select name="filtro" id="filtro_dashboard" class="form-control select2_demo_2_checklist">
-            								<?php
-            								
-            								foreach ( $dashboard->getDashboarFiltroPorChecklist(NULL,NULL,true) as $filtro) {
-            								    $filtro_ativo = $filtro['id_checklist']."|".$filtro['data_resposta'] == $filtro_atual ? "selected" : "";
-            									?>
-            									<option value="<?php echo $filtro['id_checklist']."|".$filtro['data_resposta'] ?>" <?php echo $filtro_ativo?>> <?php echo $filtro['label']?> </option>
-            								<?php
-            								}
-            								?>
-            	                    		</select>
-            	                    	</label>
-                                    </div>
+            
+            
+            	<div class="col-lg-12">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1"> Bundles </a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Gráficos de Pizza</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                
+                                    <div class="ibox-content">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div>
+                                           			 <canvas id="barChartChecklist" height="140"></canvas>
+                                        		</div>
+                                            </div>
+                                    	</div>
+                                	</div>
+                                
                                 </div>
                             </div>
-                            
-                            
-                                <div class="ibox-content">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div>
-                                       			 <canvas id="barChartChecklist" height="140"></canvas>
-                                    		</div>
-                                        </div>
-                                	</div>
-                            	</div>
-            				</div>
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                	GRÁFICOS DE PIZZA AQUI
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            
+                    <div class="col-lg-12">
                             <div class="row">
                                     <div class="col-lg-12">
                                         <div class="ibox float-e-margins">

@@ -10,10 +10,10 @@
             <div class="row">
                 <div class="col-lg-12">
 	                <div class="ibox float-e-margins">
-	                    <div class="ibox-title col-lg-8">
+	                    <div class="ibox-title col-lg-12">
 	                        <h5>Lista de Pacientes</h5>
 	                    </div>
-	                   <div class="ibox-title-right col-lg-4">
+	                   <div class="ibox-title-right col-lg-12">
 	                        <button type="button" class="btn btn-info" onclick="location.href='/paciente/novo/'">Novo</button>
 	                    </div>
 	                    <div class="ibox-content">
@@ -25,8 +25,8 @@
 					                        <th>Nome</th>
 					                        <th>CPF</th>
 					                        <th>Nascimento</th>
-					                        <th>Convênio</th>
-					                        <th>Registro</th>
+<!-- 					                        <th>Convênio</th> -->
+<!-- 					                        <th>Registro</th> -->
 					                        <th>Ações</th>
 					                    </tr>
 	                    			</thead>
@@ -43,8 +43,9 @@
 	                                                  echo $paciente->nome?></td>
 											<td><?php echo $paciente->cpf?></td>
 											<td><?php echo formatarData($paciente->nascimento)?></td>
-											<td><?php echo $paciente->convenio->nome ?></td>
+											<!--  <td><?php echo $paciente->convenio->nome ?></td>
 											<td><?php echo $paciente->registro?></td>
+											-->
 											<td>
 												<button onclick="editar(<?php echo $paciente->id?>)">
 													<span class="glyphicon glyphicon-edit" title="Editar"></span>
@@ -69,8 +70,8 @@
 					                        <th>Nome</th>
 					                        <th>CPF</th>
 					                        <th>Nascimento</th>
-					                        <th>Convênio</th>
-					                        <th>Registro</th>
+<!-- 					                        <th>Convênio</th> -->
+<!-- 					                        <th>Registro</th> -->
 					                        <th>Ações</th>
 					                    </tr>
 	                    			</tfoot>
