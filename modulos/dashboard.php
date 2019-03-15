@@ -102,7 +102,7 @@ $dashboard_pie->getDashboarPorChecklist($filtro_atual,true,"VF");
                     	           $questoes_pie = explode(",", $dashboard_pie->grafico_barras_inicial["labels"]);
                                     echo '<div class="row">';
                                     for ($i=0; $i < sizeof($questoes_pie); $i++){ ?>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-title">
                                                 <h5><?php echo str_replace('"', '', $questoes_pie[$i])?></h5>
@@ -115,7 +115,7 @@ $dashboard_pie->getDashboarPorChecklist($filtro_atual,true,"VF");
                                         </div>
                                     </div>
                                 <?php 
-                                    if ((($i+1) % 3)==0){
+                                    if ((($i+1) % 5)==0){
                                         echo '</div><div class="row">';
                                     }
                                 }
