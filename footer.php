@@ -42,6 +42,7 @@
 
     <!-- ChartJS-->
     <script src="/js/plugins/chartJs/Chart.min.2.1.js" defer="defer"></script>
+<!--     <script src="/js/plugins/chartJs/chartjs-plugin-datalabels.min.js" defer="defer"></script> -->
     <!-- script src="/js/plugins/chartJs/chartjs-plugin-labels.min.js" defer="defer"></script> -->
 
     <!-- Toastr -->

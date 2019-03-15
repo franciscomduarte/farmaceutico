@@ -183,7 +183,7 @@ $(document).ready(function() {
 		
 		for ($i=0; $i < sizeof($questoes_pie); $i++){ 
 	  ?>
- var doughnutData_<?php echo $i?> = {
+ 		var doughnutData_<?php echo $i?> = {
              labels: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["alternativa"]?>],
              datasets: [{
                  data: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["total"]?>],
@@ -194,7 +194,77 @@ $(document).ready(function() {
          var doughnutOptions = {
              responsive: true,
              showAllTooltips: true,
-             
+             events: false,
+             tooltips: {
+                  enable: true,
+            	  callbacks: {
+            	    label: function(tooltipItem, data) {
+            	      //get the concerned dataset
+            	      var dataset = data.datasets[tooltipItem.datasetIndex];
+            	      //calculate the total of this data set
+            	      var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            	        return previousValue + currentValue;
+            	      });
+            	      //get the current items value
+            	      var currentValue = dataset.data[tooltipItem.index];
+            	      //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+            	      var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+            	      return percentage + "%";
+            	    }
+            	  }
+            	},
+            	animation: {
+            		  duration: 0,
+            		  onComplete: function () {
+            		    var self = this,
+            		        chartInstance = this.chart,
+            		        ctx = chartInstance.ctx;
+
+            		    ctx.font = '14px Arial';
+            		    ctx.textAlign = "center";
+            		    ctx.fillStyle = "#777";
+
+            		    Chart.helpers.each(self.data.datasets.forEach(function (dataset, datasetIndex) {
+            		        var meta = self.getDatasetMeta(datasetIndex),
+            		            total = 0, //total values to compute fraction
+            		            labelxy = [],
+            		            offset = Math.PI / 2, //start sector from top
+            		            radius,
+            		            centerx,
+            		            centery, 
+            		            lastend = 0; //prev arc's end line: starting with 0
+
+            		        for (var val of dataset.data) { total += val; } 
+
+            		        Chart.helpers.each(meta.data.forEach( function (element, index) {
+            		            radius = 0.9 * element._model.outerRadius - element._model.innerRadius;
+            		            centerx = element._model.x;
+            		            centery = element._model.y;
+            		            var thispart = dataset.data[index],
+            		                arcsector = Math.PI * (2 * thispart / total);
+            		            if (element.hasValue() && dataset.data[index] > 0) {
+            		              labelxy.push(lastend + arcsector / 2 + Math.PI + offset);
+            		            }
+            		            else {
+            		              labelxy.push(-1);
+            		            }
+            		            lastend += arcsector;
+            		        }), self)
+
+            		        var lradius = radius * 3 / 4;
+            		        for (var idx in labelxy) {
+            		          if (labelxy[idx] === -1) continue;
+            		          var langle = labelxy[idx],
+            		              dx = centerx + lradius * Math.cos(langle),
+            		              dy = centery + lradius * Math.sin(langle),
+            		              val = Math.round(dataset.data[idx] / total * 100);
+            		          ctx.fillText(val + '%', dx, dy);
+            		        }
+
+            		    }), self);
+            		  }
+            		},      
          };
         
          var ctx4 = document.getElementById("doughnutChart_<?php echo $i?>").getContext("2d");
@@ -245,8 +315,6 @@ $(document).ready(function() {
         	onComplete: function () {
         	    // render the value of the chart above the bar
         	    var ctx = this.chart.ctx;
-				console.log(ctx);
-
         	    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
         	    ctx.fillStyle = this.chart.config.options.defaultFontColor;
         	    ctx.textAlign = 'center';
