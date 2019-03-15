@@ -8,6 +8,7 @@ $setor = new Setor();
 $setor = $setor->listarPorId($filtro_cheklist['id_setor']);
 
 $dashboard = new Dashboard();
+$dashboard_pie = new Dashboard();
     
     ?>
         <div class="wrapper wrapper-content">
@@ -73,6 +74,7 @@ $dashboard = new Dashboard();
 <?php     
 #Atualizando os dados do dashboard
 $dashboard->getDashboarPorChecklist($filtro_atual,true); 
+$dashboard_pie->getDashboarPorChecklist($filtro_atual,true,"VF");
 ?>                            
                             <div class="ibox-content">
                             
@@ -87,6 +89,40 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
                         </div>
                     </div>
             </div>
+
+	       <?php 
+	       //esse if foi um cat pra resolver mais facil
+	       $questoes_pie = [];
+	       if ($dashboard_pie->grafico_barras_inicial["labels"] != '"ADESÃO BUNDLE",""'){
+	           $dashboard_pie->grafico_barras_inicial["labels"] = str_replace('"ADESÃO BUNDLE",', "", $dashboard_pie->grafico_barras_inicial["labels"]);
+	           $questoes_pie = explode(",", $dashboard_pie->grafico_barras_inicial["labels"]);
+                echo '<div class="row">';
+                for ($i=0; $i < sizeof($questoes_pie); $i++){ ?>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5><?php echo str_replace('"', '', $questoes_pie[$i])?></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div>
+                                <canvas id="doughnutChart_<?php echo $i?>"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php 
+                if ((($i+1) % 5)==0){
+                    echo '</div><div class="row">';
+                }
+            }
+            ?>
+        
+        <?php 
+              echo '</div>';
+            }
+         ?>
+            
+            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
@@ -139,6 +175,99 @@ $('#filtro_dashboard').change(function(){
 });
 
 $(document).ready(function() {
+
+	<?php 
+    $array_respostas = $dashboard_pie->grafico_barras_inicial["respostas"];
+	
+   for ($i=0; $i < sizeof($questoes_pie); $i++){ 
+    ?>
+	var doughnutData_<?php echo $i?> = {
+         labels: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["alternativa"]?>],
+         datasets: [{
+             data: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["total"]?>],
+             backgroundColor: ["#a3e1d4","#dedede","#b5b8cf"]
+         }]
+     } ;
+    
+     var doughnutOptions = {
+         responsive: true,
+         showAllTooltips: true,
+         events: false,
+         tooltips: {
+              enable: true,
+        	  callbacks: {
+        	    label: function(tooltipItem, data) {
+        	      //get the concerned dataset
+        	      var dataset = data.datasets[tooltipItem.datasetIndex];
+        	      //calculate the total of this data set
+        	      var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+        	        return previousValue + currentValue;
+        	      });
+        	      //get the current items value
+        	      var currentValue = dataset.data[tooltipItem.index];
+        	      //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+        	      var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+        	      return percentage + "%";
+        	    }
+        	  }
+        	},
+        	animation: {
+        		  duration: 0,
+        		  onComplete: function () {
+        		    var self = this,
+        		        chartInstance = this.chart,
+        		        ctx = chartInstance.ctx;
+
+        		    ctx.font = '14px Arial';
+        		    ctx.textAlign = "center";
+        		    ctx.fillStyle = "#777";
+
+        		    Chart.helpers.each(self.data.datasets.forEach(function (dataset, datasetIndex) {
+        		        var meta = self.getDatasetMeta(datasetIndex),
+        		            total = 0, //total values to compute fraction
+        		            labelxy = [],
+        		            offset = Math.PI / 2, //start sector from top
+        		            radius,
+        		            centerx,
+        		            centery, 
+        		            lastend = 0; //prev arc's end line: starting with 0
+
+        		        for (var val of dataset.data) { total += val; } 
+
+        		        Chart.helpers.each(meta.data.forEach( function (element, index) {
+        		            radius = 0.9 * element._model.outerRadius - element._model.innerRadius;
+        		            centerx = element._model.x;
+        		            centery = element._model.y;
+        		            var thispart = dataset.data[index],
+        		                arcsector = Math.PI * (2 * thispart / total);
+        		            if (element.hasValue() && dataset.data[index] > 0) {
+        		              labelxy.push(lastend + arcsector / 2 + Math.PI + offset);
+        		            }
+        		            else {
+        		              labelxy.push(-1);
+        		            }
+        		            lastend += arcsector;
+        		        }), self)
+
+        		        var lradius = radius * 3 / 4;
+        		        for (var idx in labelxy) {
+        		          if (labelxy[idx] === -1) continue;
+        		          var langle = labelxy[idx],
+        		              dx = centerx + lradius * Math.cos(langle),
+        		              dy = centery + lradius * Math.sin(langle),
+        		              val = Math.round(dataset.data[idx] / total * 100);
+        		          ctx.fillText(val + '%', dx, dy);
+        		        }
+
+        		    }), self);
+        		  }
+        		},      
+     };
+    
+     var ctx4 = document.getElementById("doughnutChart_<?php echo $i?>").getContext("2d");
+     new Chart(ctx4, {type: 'pie', data: doughnutData_<?php echo $i?>, options:doughnutOptions});
+	<?php }?>
 	
   var barData = {
 	        labels: [<?php echo $dashboard->grafico_barras_inicial["labels"]?>],
