@@ -272,11 +272,15 @@
 	}
 
 	function calculaPorcentagem($x,$y){
-	    return round($x*100/($x+$y),2);
+	    return $y>0 ? round($x*100/($x+$y),2) : 0;
 	}
 	
 	function calculaPorcentagemTotal($x,$y) {
-	    return round(($y*100)/$x,1);
+	    return $y>0 ? round(($y*100)/$x,1) : 0;
+	}
+	
+	function tratarArray($arr) {
+	    return substr($arr,0,strlen($arr)-1);
 	}
 	
 	

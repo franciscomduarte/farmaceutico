@@ -2,6 +2,7 @@
 
 $filtro_atual = $_REQUEST['filtro'];
 $dashboard = new Dashboard();
+$dashboard_pie = new Dashboard();
 
 if (!isset($filtro_atual)){
     $dashboard->definirDataFiltroCheckListInicial(NULL,true);
@@ -9,6 +10,7 @@ if (!isset($filtro_atual)){
 }
 
 $dashboard->getDashboarPorChecklist($filtro_atual,true);
+$dashboard_pie->getDashboarPorChecklist($filtro_atual,true,"VF");
     
 ?>      
         <div class="wrapper wrapper-content">
@@ -68,7 +70,6 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1"> Bundles </a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2">Gráficos de Pizza</a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
@@ -86,18 +87,45 @@ $dashboard->getDashboarPorChecklist($filtro_atual,true);
                                 
                                 </div>
                             </div>
-                            <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                	GRÁFICOS DE PIZZA AQUI
-                                </div>
-                            </div>
                         </div>
-
 
                     </div>
                 </div>
-            
+            	
                     <div class="col-lg-12">
+                    
+                    	       <?php 
+                    	       //esse if foi um cat pra resolver mais facil
+                    	       $questoes_pie = [];
+                    	       if ($dashboard_pie->grafico_barras_inicial["labels"] != '"ADESÃO BUNDLE",""'){
+                    	           $dashboard_pie->grafico_barras_inicial["labels"] = str_replace('"ADESÃO BUNDLE",', "", $dashboard_pie->grafico_barras_inicial["labels"]);
+                    	           $questoes_pie = explode(",", $dashboard_pie->grafico_barras_inicial["labels"]);
+                                    echo '<div class="row">';
+                                    for ($i=0; $i < sizeof($questoes_pie); $i++){ ?>
+                                    <div class="col-lg-4">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                <h5><?php echo str_replace('"', '', $questoes_pie[$i])?></h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div>
+                                                    <canvas id="doughnutChart_<?php echo $i?>"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php 
+                                    if ((($i+1) % 3)==0){
+                                        echo '</div><div class="row">';
+                                    }
+                                }
+                                ?>
+                            
+                            <?php 
+                                  echo '</div>';
+                                }
+                             ?>
+                    
                             <div class="row">
                                     <div class="col-lg-12">
                                         <div class="ibox float-e-margins">
@@ -149,7 +177,32 @@ $('#filtro_dashboard').change(function(){
 });
 
 $(document).ready(function() {
-	
+
+	  <?php 
+	  $array_respostas = $dashboard_pie->grafico_barras_inicial["respostas"];
+		
+		for ($i=0; $i < sizeof($questoes_pie); $i++){ 
+	  ?>
+ var doughnutData_<?php echo $i?> = {
+             labels: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["alternativa"]?>],
+             datasets: [{
+                 data: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["total"]?>],
+                 backgroundColor: ["#a3e1d4","#dedede","#b5b8cf"]
+             }]
+         } ;
+        
+         var doughnutOptions = {
+             responsive: true,
+             showAllTooltips: true,
+             
+         };
+        
+         var ctx4 = document.getElementById("doughnutChart_<?php echo $i?>").getContext("2d");
+         new Chart(ctx4, {type: 'pie', data: doughnutData_<?php echo $i?>, options:doughnutOptions});
+		<?php }?>
+
+
+     
   var barData = {
 	        labels: [<?php echo $dashboard->grafico_barras_inicial["labels"]?>],
 	        datasets: [
@@ -241,6 +294,34 @@ $(document).ready(function() {
         }
     });
 
+	//Grafico pizza
+	var radar_total2 = c3.generate({
+    	bindto: '#pizzaChartChecklist',
+        data: {
+            columns: [['PREVISTOS','<?php echo $dashboard->grafico_barras_inicial["total_previsto"]?>'],
+            	      ['RESPONDIDOS','<?php echo $dashboard->grafico_barras_inicial["total_respondido"]?>']],
+            type: 'gauge'
+        },
+        gauge: {
+			label: 
+				{
+					format: function (value, ratio) {
+			    	return value;
+		    	}
+	    	}
+        },
+        color: {
+            pattern: ['#FF0000', '#f4ae70', '#F6C600', '#8CD9C9'], // the three color levels for the percentage values.
+            threshold: {
+                values: [30, 60, 90, 100]
+            }
+        },
+        size: {
+            height: 120
+        }
+    });
+
+
 // Graficos Questões	
 	<?php 
 	$respostas_sim = explode(",",$dashboard->grafico_barras_inicial["resposta_tipo_1"]);
@@ -274,6 +355,7 @@ $(document).ready(function() {
 
 
 	<?php } ?>
-    
+
+	    
 });
 </script>

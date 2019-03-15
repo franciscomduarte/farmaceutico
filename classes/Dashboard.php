@@ -190,11 +190,12 @@ class Dashboard{
         define('FILTRO_INICIAL', $filtro_retorno);
     }
     
-    public function getDashboarPorChecklist($filtro,$mensal=false){
+    public function getDashboarPorChecklist($filtro,$mensal=false,$tipo_questao="SN"){
         
         $lista        = explode("|", $filtro);
         $id_checklist = $lista[0];
         $data_resposta_checklist = $lista[1];
+        $array_item = NULL;
         
         if(!$mensal){
             $sql = "select item.id, item.enunciado, item.meta, alternativa.descricao,
@@ -202,7 +203,7 @@ class Dashboard{
             		 from resposta_checklist_item r, item i, alternativa a              
             		 where r.id_item = i.id 
             		 and   i.id = item.id
-                     and   item.tipo = 'SN' 
+                     and   item.tipo = '".$tipo_questao."'  
             		 and   a.id = alternativa.id              
             		 and   a.id = r.id_resposta_alternativa              
             		 and   r.id_resposta_checklist in (select r.id as id_resposta    
@@ -212,7 +213,7 @@ class Dashboard{
             		group by r.id_resposta_alternativa),0) as total_resposta 
                     from item, checklist_item c, alternativa
                     where item.id = c.id_item
-                    and   item.tipo = 'SN' 
+                    and   item.tipo = '".$tipo_questao."'  
                     and   alternativa.id_item = item.id
                     and   c.id_checklist = '".$id_checklist."' 
                     group by item.id, alternativa.id
@@ -223,7 +224,7 @@ class Dashboard{
         		 from resposta_checklist_item r, item i, alternativa a
         		 where r.id_item = i.id
         		 and   i.id = item.id
-        		 and   item.tipo = 'SN' 
+        		 and   item.tipo = '".$tipo_questao."'  
                  and   a.id = alternativa.id
         		 and   a.id = r.id_resposta_alternativa
         		 and   r.id_resposta_checklist in (select r.id as id_resposta
@@ -233,7 +234,7 @@ class Dashboard{
         		group by r.id_resposta_alternativa),0) as total_resposta
                 from item, checklist_item c, alternativa
                 where item.id = c.id_item
-                and   item.tipo = 'SN' 
+                and   item.tipo = '".$tipo_questao."'  
                 and   alternativa.id_item = item.id
                 and   c.id_checklist = '".$id_checklist."' 
                 group by item.id, alternativa.id
@@ -241,6 +242,7 @@ class Dashboard{
         }
         
         $query = executarSql($sql);
+        //echo $sql;
         $enunciado = "";
         $array_labels = [];
         $array_nao    = [];
@@ -248,14 +250,27 @@ class Dashboard{
 	    $array_nao_porcentagem = [];
 	    $array_sim_porcentagem = [];
         $maior_valor  = 0;
-        
+        $array_item = [];
         foreach ($query->fetch_all(MYSQLI_ASSOC) as $linha){
-            
+            //mudanca de enunciado
             if ($enunciado != $linha["enunciado"]){
                 $array_labels[] = $linha["enunciado"];
                 $enunciado      = $linha["enunciado"];
             }
-                
+            
+            
+            $array_item_id          .= "'".$linha["id"]."',";
+            $array_item_enunciado   .= "'".$linha["enunciado"]."',";
+            $array_item_item        .= "'".$linha["descricao"]."',";
+            $array_item_total       .= "'".$linha["total_resposta"]."',";
+            
+            $array_item[]  = array(
+                                "id"    => $linha["id"],
+                                "enunciado" => $linha["enunciado"],
+                                "item"  => $linha["descricao"],
+                                "total" => $linha["total_resposta"]
+                                 );
+            
             if (strtolower($linha["descricao"]) == "não")
                 $array_nao[] =  $linha["total_resposta"];
             
@@ -266,6 +281,7 @@ class Dashboard{
                     $maior_valor = $linha['total_resposta'];
                         
         }
+        
         $soma_sim=0;
         $soma_nao=0;
     	for($i=0;$i<sizeof($array_sim);$i++){
@@ -277,14 +293,53 @@ class Dashboard{
 
     	$array_total = $this->getPacientesPrevistosRespondidos($id_checklist, $data_resposta_checklist, $mensal);
     	
+    	if (sizeof($array_sim_porcentagem) > 0){
+    	   $psim = $soma_sim/sizeof($array_sim_porcentagem);
+    	}else{
+    	   $psim = 0;
+    	}
+    	
+    	if (sizeof($array_nao_porcentagem) > 0){
+    	    $pnao = $soma_nao/sizeof($array_nao_porcentagem);
+    	}else{
+    	    $pnao = 0;
+    	}
+    	$e = NULL;
+    	$array_teste = [];
+    	for($x=0;$x<sizeof($array_item);$x++){
+    	    if ($e != $array_item[$x]["enunciado"] && $x > 0){
+    	        $array_teste[] = array(
+    	                           "enunciado" => $e,
+    	                           "alternativa" => tratarArray($a),
+    	                           "total"       => tratarArray($t)
+    	                         );
+    	        $e=NULL;
+    	        $a=NULL;
+    	        $t=NULL;
+    	    }
+    	    
+    	    $e  = $array_item[$x]["enunciado"];
+    	    $a .="'".$array_item[$x]["item"]."',";
+    	    $t .= $array_item[$x]["total"].",";
+    	}
+    	if (sizeof($array_item)>0){
+        	$array_teste[] = array(
+        	    "enunciado" => $e,
+        	    "alternativa" => tratarArray($a),
+        	    "total"       => tratarArray($t)
+        	);
+    	}
+    	
         $this->grafico_barras_inicial =
         array(
             "labels"            => '"ADESÃO BUNDLE","'.implode('","',$array_labels).'"',
-            "resposta_tipo_1"   => (round($soma_sim/sizeof($array_sim_porcentagem))).",".implode(',',$array_sim_porcentagem),
-            "resposta_tipo_2"   => (round($soma_nao/sizeof($array_nao_porcentagem))).",".implode(',',$array_nao_porcentagem),
+            "resposta_tipo_1"   => (round($psim)).",".implode(',',$array_sim_porcentagem),
+            "resposta_tipo_2"   => (round($pnao)).",".implode(',',$array_nao_porcentagem),
             "maior_valor"       => 120,
             "total_previsto"    => $array_total["total_previsto"],
-            "total_respondido"  => $array_total["total_respondido"]
+            "total_respondido"  => $array_total["total_respondido"],
+            "respostas"         => $array_item,
+            "item_vf"           => $array_teste
         );
         
     }
@@ -432,8 +487,6 @@ class Dashboard{
         );
         
     }
-    
-    
     
     
 }

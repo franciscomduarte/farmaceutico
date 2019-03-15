@@ -41,7 +41,8 @@
     <script src="/js/demo/sparkline-demo.min.js" defer="defer"></script>
 
     <!-- ChartJS-->
-    <script src="/js/plugins/chartJs/Chart.min.js" defer="defer"></script>
+    <script src="/js/plugins/chartJs/Chart.min.2.1.js" defer="defer"></script>
+    <!-- script src="/js/plugins/chartJs/chartjs-plugin-labels.min.js" defer="defer"></script> -->
 
     <!-- Toastr -->
     <script src="/js/plugins/toastr/toastr.min.js" defer="defer"></script>
