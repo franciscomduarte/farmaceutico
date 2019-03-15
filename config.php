@@ -4,7 +4,7 @@
 ## PARAMENTROS INTERNOS DO SISTEMA
 #######################################################################
 define('NOME_SISTEMA', 'Sistema de Checklist para UTIs');
-define('SIGLA_SISTEMA', 'c.UTI');
+define('SIGLA_SISTEMA', 'Bundle');
 define('AMBIENTE','PROD');
 
 ########################################################################
