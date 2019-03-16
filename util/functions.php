@@ -283,5 +283,16 @@
 	    return substr($arr,0,strlen($arr)-1);
 	}
 	
+	function isMobile() {
+	   
+    	$android = strpos(strtolower($_SERVER['HTTP_USER_AGENT']),"android");
+    	$ipad = strpos(strtolower($_SERVER['HTTP_USER_AGENT']),"ipad");
+    	$iphone = strpos(strtolower($_SERVER['HTTP_USER_AGENT']),"iphone");
+    	$ipod = strpos(strtolower($_SERVER['HTTP_USER_AGENT']),"ipod");
 	
+    	if (($android === false) && ($ipad === false) && ($iphone === false) && ($ipod === false))
+    	    return false;
+    	else
+    	    return true;
+	}
 ?>

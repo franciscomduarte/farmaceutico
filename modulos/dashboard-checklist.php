@@ -104,7 +104,7 @@ $dashboard_pie->getDashboarPorChecklist($filtro_atual,true,"VF");
                             <h5><?php echo str_replace('"', '', $questoes_pie[$i])?></h5>
                         </div>
                         <div class="ibox-content">
-                            <div>
+                            <div <?php echo isMobile() ? 'class="chart-container" style=" height:70vh; width:80vw"' : '' ?>>
                                 <canvas id="doughnutChart_<?php echo $i?>"></canvas>
                             </div>
                         </div>
@@ -193,6 +193,7 @@ $(document).ready(function() {
          responsive: true,
          showAllTooltips: true,
          events: false,
+         maintainAspectRatio: true,
          tooltips: {
               enable: true,
         	  callbacks: {
