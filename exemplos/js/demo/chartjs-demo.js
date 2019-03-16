@@ -100,7 +100,7 @@ $(function () {
     new Chart(ctx3, {type: 'polarArea', data: polarData, options:polarOptions});
 
     var doughnutData = {
-        labels: ["App","Software","Laptop" ],
+        labels: ["Appxxx","Software","Laptop"],
         datasets: [{
             data: [300,50,100],
             backgroundColor: ["#a3e1d4","#dedede","#b5b8cf"]
@@ -109,7 +109,9 @@ $(function () {
 
 
     var doughnutOptions = {
-        responsive: true
+        responsive: true,
+        
+        
     };
 
 
