@@ -19,10 +19,10 @@
 
 <body class="gray-bg">
 
-    <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div class="middle-box text-center loginscreen animated fadeInDown" style="padding-top: 10px">
         <div>
             <div>
-                <h1 class="logo-name"><?php echo SIGLA_SISTEMA?></h1>
+                <h1 class="logo-name" style="font-size: 90px; color: #727279"><?php echo SIGLA_SISTEMA?></h1>
             </div>
             <p><?php echo NOME_SISTEMA?></p>
             <?php 
