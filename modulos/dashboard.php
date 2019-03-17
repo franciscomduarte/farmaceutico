@@ -92,83 +92,80 @@ $dashboard_pie->getDashboarPorChecklist($filtro_atual,true,"VF");
                     </div>
                 </div>
             	
-                    <div class="col-lg-12">
-                    
-                    	       <?php 
-                    	       //esse if foi um cat pra resolver mais facil
-                    	       $questoes_pie = [];
-                    	       if ($dashboard_pie->grafico_barras_inicial["labels"] != '"ADESÃO BUNDLE",""'){
-                    	           $dashboard_pie->grafico_barras_inicial["labels"] = str_replace('"ADESÃO BUNDLE",', "", $dashboard_pie->grafico_barras_inicial["labels"]);
-                    	           $questoes_pie = explode(",", $dashboard_pie->grafico_barras_inicial["labels"]);
-                                    echo '<div class="row">';
-                                    for ($i=0; $i < sizeof($questoes_pie); $i++){ ?>
-                                    <div class="col-lg-6">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title">
-                                                <h5><?php echo str_replace('"', '', $questoes_pie[$i])?></h5>
-                                            </div>
-                                            <div class="ibox-content">
-                                                <div <?php echo isMobile() ? 'class="chart-container" style=" height:70vh; width:80vw"' : '' ?>>
-                                                    <canvas id="doughnutChart_<?php echo $i?>"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php 
-                                    if ((($i+1) % 5)==0){
-                                        echo '</div><div class="row">';
-                                    }
-                                }
-                                ?>
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
                             
-                            <?php 
-                                  echo '</div>';
-                                }
-                             ?>
-                    
-                            <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title">
-                                                
-                                                <div class="pull">
-                                                	<h5>Legenda</h5>
-                                                	 <div class="btn-group" style="padding-top: 5px;">
-                                            	 	<span class="pull-right label label-danger"> < 90%</span>
-                                            	 	<span class="pull-right label label-warning" style="background-color: #F6C600; color: black;"> < 99%</span>
-                                            	 	<span class="pull-right label label-primary"> 100%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                   </div>
-                               </div>
+                            <div class="pull">
+                            	<h5>Legenda</h5>
+                            	 <div class="btn-group" style="padding-top: 5px;">
+                        	 	<span class="pull-right label label-danger"> < 90%</span>
+                        	 	<span class="pull-right label label-warning" style="background-color: #F6C600; color: black;"> < 99%</span>
+                        	 	<span class="pull-right label label-primary"> 100%</span>
                             </div>
-                             <?php 
-                                $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
-                                echo '<div class="row">';
-                                for ($i=0; $i < sizeof($questoes); $i++){ ?>
-                                <div class="col-lg-4">
-                                    <div class="ibox float-e-margins">
-                                        <div class="ibox-title">
-                                            <h5><?php echo str_replace('"', '', $questoes[$i])?></h5>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div>
-                                                <div id="gauge_<?php echo $i?>"></div>
-                                            </div>
+                        </div>
+                    </div>
+               </div>
+
+             <?php 
+                $questoes = explode(",", $dashboard->grafico_barras_inicial["labels"]);
+                echo '<div class="row">';
+                for ($i=0; $i < sizeof($questoes); $i++){ ?>
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5><?php echo str_replace('"', '', $questoes[$i])?></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div>
+                                <div id="gauge_<?php echo $i?>"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php 
+                    if ((($i+1) % 3)==0){
+                        echo '</div><div class="row">';
+                    }
+                }
+                ?>
+            
+            <?php echo '</div>'?>
+			</div>
+            <div class="col-lg-12">
+            
+            	       <?php 
+            	       //esse if foi um cat pra resolver mais facil
+            	       $questoes_pie = [];
+            	       if ($dashboard_pie->grafico_barras_inicial["labels"] != '"ADESÃO BUNDLE",""'){
+            	           $dashboard_pie->grafico_barras_inicial["labels"] = str_replace('"ADESÃO BUNDLE",', "", $dashboard_pie->grafico_barras_inicial["labels"]);
+            	           $questoes_pie = explode(",", $dashboard_pie->grafico_barras_inicial["labels"]);
+                            echo '<div class="row">';
+                            for ($i=0; $i < sizeof($questoes_pie); $i++){ ?>
+                            <div class="col-lg-6">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5><?php echo str_replace('"', '', $questoes_pie[$i])?></h5>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div <?php echo isMobile3() ? 'class="chart-container" style=" height:70vh; width:80vw"' : '' ?>>
+                                            <canvas id="doughnutChart_<?php echo $i?>"></canvas>
                                         </div>
                                     </div>
                                 </div>
-                                <?php 
-                                    if ((($i+1) % 3)==0){
-                                        echo '</div><div class="row">';
-                                    }
-                                }
-                                ?>
-                            
-                            <?php echo '</div>'?>
-            			</div>
-
+                            </div>
+                        <?php 
+                            if ((($i+1) % 2)==0){
+                                echo '</div><div class="row">';
+                            }
+                        }
+                        ?>
+                    
+                    <?php 
+                          echo '</div>';
+                        }
+                     ?>
+ 
         </div>     
 <script>
 
@@ -187,7 +184,7 @@ $(document).ready(function() {
              labels: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["alternativa"]?>],
              datasets: [{
                  data: [<?php echo $dashboard_pie->grafico_barras_inicial["item_vf"][$i]["total"]?>],
-                 backgroundColor: ["#a3e1d4","#dedede","#b5b8cf"]
+                 backgroundColor: ["#03b6bc","#24c0f4","#f8ac59","#f7a5a5","#f9dab8","#7d95f2"],
              }]
          } ;
         
@@ -222,9 +219,9 @@ $(document).ready(function() {
             		        chartInstance = this.chart,
             		        ctx = chartInstance.ctx;
 
-            		    ctx.font = '14px Arial';
+            		    ctx.font = 'bold 14px Arial';
             		    ctx.textAlign = "center";
-            		    ctx.fillStyle = "#777";
+            		    ctx.fillStyle = "#fff";
 
             		    Chart.helpers.each(self.data.datasets.forEach(function (dataset, datasetIndex) {
             		        var meta = self.getDatasetMeta(datasetIndex),
