@@ -113,6 +113,7 @@ class Dashboard{
                 from   resposta_checklist r, internacao i, checklist c
                 where  i.id = r.id_internacao
                 and    c.id = r.id_checklist
+                and    c.tipo <> 'UNICO' 
                 group by date_format(r.data_resposta,'%Y-%m-%d'), c.sigla
                 order by r.data_resposta desc";
         }else{
@@ -121,6 +122,7 @@ class Dashboard{
                 from   resposta_checklist r, internacao i, checklist c
                 where  i.id = r.id_internacao
                 and    c.id = r.id_checklist
+                and    c.tipo <> 'UNICO' 
                 group by date_format(r.data_resposta,'%Y-%m'), c.sigla
                 order by r.data_resposta desc";
         }
@@ -135,6 +137,7 @@ class Dashboard{
                     and    c.id = r.id_checklist
                     and    c.id = '".$id_cheklist."' 
                     and    i.id_setor = '".$id_setor."' 
+                    and    c.tipo <> 'UNICO' 
                     group by date_format(r.data_resposta,'%Y-%m-%d') , c.sigla
                     order by r.data_resposta desc";
             }else{
@@ -145,6 +148,7 @@ class Dashboard{
                     and    c.id = r.id_checklist
                     and    c.id = '".$id_cheklist."'
                     and    i.id_setor = '".$id_setor."'
+                    and    c.tipo <> 'UNICO' 
                     group by date_format(r.data_resposta,'%Y-%m'), c.sigla
                     order by r.data_resposta desc";
             }
