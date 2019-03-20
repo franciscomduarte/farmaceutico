@@ -34,8 +34,6 @@ $filtro = array(
 								$checklist = new Checklist();
 								$listaCheckList = $checklist->listar();
 								foreach ($listaCheckList as $obj) {
-									if ($obj->tipo == "UNICO")
-									    continue;
 								    ?>
 									<option value="<?php echo $obj->id ?>" <?php echo ($filtro["id_checklist"] == $obj->id ? 'selected="selected"' : '')?>> <?php echo $obj->sigla?> </option>
 								<?php
