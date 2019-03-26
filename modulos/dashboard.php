@@ -14,7 +14,6 @@ $dashboard_pie->getDashboarPorChecklist($filtro_atual,true,"VF");
 $numeroPacientesCheckListMes = count($dashboard->getNumeroPacientesCkecklistMes($filtro_atual));
 $preenchidosCheckListMes = count($dashboard->getNumeroPreenchidosCkecklistMes($filtro_atual));
     
-var_dump($numeroPacientesCheckListMes);
 ?>      
         <div class="wrapper wrapper-content">
             <div class="container">
