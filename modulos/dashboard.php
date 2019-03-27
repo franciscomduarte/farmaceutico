@@ -77,7 +77,7 @@ $objChecklist = $objChecklist->listarPorIdFiltro($filtro_atual);
             	<div class="col-lg-12">
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1"> Bundles - <?php echo strtoupper($objChecklist->nome." - ".$objChecklist->sigla." | ".formatarFiltro($filtro_atual))?></a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-1"> Bundles - <?php echo strtoupper($objChecklist->sigla." | ".formatarFiltro($filtro_atual))?></a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
