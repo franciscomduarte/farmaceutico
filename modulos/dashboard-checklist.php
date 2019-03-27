@@ -3,6 +3,7 @@ $filtro_atual    = $_REQUEST['filtro'];
 
 $dashboard = new Dashboard();
 $dashboard_pie = new Dashboard();
+$objChecklist = new Checklist();
 
 if (!isset($filtro_atual)){
     $dashboard->definirDataFiltroCheckListInicial(NULL,true);
@@ -14,6 +15,7 @@ $filtro_cheklist = array("id_checklist" => $_REQUEST['id_checklist'],
 
 $setor = new Setor();
 $setor = $setor->listarPorId($filtro_cheklist['id_setor']);
+$objChecklist = $objChecklist->listarPorIdFiltro($filtro_cheklist['id_checklist']);
 
 $numeroPacientesCheckListMes = count($dashboard->getNumeroPacientesCkecklistMes($filtro_atual, $setor->id));
 $preenchidosCheckListMes = count($dashboard->getNumeroPreenchidosCkecklistMes($filtro_atual, $setor->id));
@@ -55,7 +57,7 @@ $preenchidosCheckListMes = count($dashboard->getNumeroPreenchidosCkecklistMes($f
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Bundles | <span style="color: #1ab394;">UNIDADE: <?php echo $setor->nome?></span></h5>
+                                <h5>Bundles | <?php echo strtoupper($objChecklist->sigla)?> | <span style="color: #1ab394;">UNIDADE: <?php echo $setor->nome?></span></h5>
                                 <span class="pull-right label label-info" style="padding: 10px; font-size: small; cursor: pointer;" onclick="location.href='/relatorio'">Novo filtro</span>
                                 <!-- button type="button" class="btn-sl btn-info" onclick="location.href='/relatorio'">Filtro</button> -->
                                 <div class="pull-right">
