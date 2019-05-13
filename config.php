@@ -3,9 +3,9 @@
 #######################################################################
 ## PARAMENTROS INTERNOS DO SISTEMA
 #######################################################################
-define('NOME_SISTEMA', 'Sistema de Checklist para UTIs');
-define('SIGLA_SISTEMA', 'Bundle');
-define('AMBIENTE','PROD');
+define('NOME_SISTEMA', 'Market Access');
+define('SIGLA_SISTEMA', 'MK');
+define('AMBIENTE','DEV');
 
 ########################################################################
 ## PARAMENTROS DO BANCO DE DADOS
@@ -14,13 +14,13 @@ define('AMBIENTE','PROD');
 $ip = getenv("REMOTE_ADDR");
 if($ip == '127.0.0.1' && AMBIENTE == "DEV") {
     define('HOST', 'localhost');
-    define('DBNAME', 'e2f10');
+    define('DBNAME', 'farmaceutico');
     define('CHARSET', 'utf8');
     define('USER', 'root');
     define('PASSWORD', '');
 } else {
     define('HOST', 'mysql.e2f.com.br');
-    define('DBNAME', 'e2f10');
+    define('DBNAME', 'farmaceutico');
     define('CHARSET', 'utf8');
     define('USER', 'e2f10');
     define('PASSWORD', 'e2f12345678');

@@ -90,25 +90,6 @@ $usuario = $_SESSION['usuario'];
                     	}
                     ?>
                     
-                   <li class="dropdown">
-                    	<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Bundles <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                        	<li><a href="/checklist-resposta">Todos</a></li>
-                        	<?php 
-                        	
-                            	$objChecklist = new Checklist();
-                            	$bundles = $objChecklist->listarAtivosCount();
-                            	foreach ($bundles as $bundle) {
-                        	?>
-                            	<li><a href="/checklist-resposta/<?php echo $bundle->id?>"><?php echo $bundle->sigla ?></a></li>
-                            <?php 
-                        		}
-                            ?>
-                        </ul>
-                    </li>
-                    
-                    <li><a class="navbar-toggle overlay btn btn-outline btn-primary dim" type="button" href="/checklist-resposta" title="Cadastrados"><i class="fa fa-list-alt"></i> </a></li>
-                	<li><a class="navbar-toggle overlay btn btn-outline btn-primary dim" type="button" href="/paciente/novo" title="Novo Cadastro"><i class="fa fa-plus"></i></a></li>
                     
                 </ul>
                 <ul class="nav navbar-top-links navbar-right">
