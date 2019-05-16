@@ -5,7 +5,7 @@
 #######################################################################
 define('NOME_SISTEMA', 'Market Access');
 define('SIGLA_SISTEMA', 'MK');
-define('AMBIENTE','DEV');
+define('AMBIENTE','PROD');
 
 ########################################################################
 ## PARAMENTROS DO BANCO DE DADOS
