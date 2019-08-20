@@ -64,6 +64,12 @@
         <script src="/js/datebox/jtsage-datebox-4.4.1.bootstrap.min.js" defer="defer"></script>
     	<script src="/js/datebox/initial.min.js" defer="defer"></script>
     	
+    	
+    	<script src="/js/amcharts/core.js"></script>
+        <script src="/js/amcharts/charts.js"></script>
+        <script src="/js/amcharts/animated.js"></script>
+    	
+    	
     	<script type="text/javascript">
 
 	$(document).ready(function() {

@@ -5,7 +5,7 @@
 #######################################################################
 define('NOME_SISTEMA', 'Market Access');
 define('SIGLA_SISTEMA', 'MK');
-define('AMBIENTE','PROD');
+define('AMBIENTE','DEV');
 
 ########################################################################
 ## PARAMENTROS DO BANCO DE DADOS
@@ -25,6 +25,8 @@ if($ip == '127.0.0.1' && AMBIENTE == "DEV") {
     define('USER', 'e2f10');
     define('PASSWORD', 'e2f12345678');
 }
+
+define('URL_SISTEMA', 'http://localhost:83/farmaceutico/');
 
 ########################################################################
 ## PERFIS FIXOS DO SISTEMA

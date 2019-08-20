@@ -9,6 +9,13 @@ define("NOME_MODULO", "Acesso");
 define("NOME_ACAO", "Detalhe");
 include_once 'breadcrumb.php';
 
+
+$params = retornaParametrosUrl($_SERVER['QUERY_STRING']);
+$id = $params[2];
+
+$obj = new Funcionario();
+$funcionario = $obj->listarPorId($id);
+
 ?>
         <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -17,16 +24,16 @@ include_once 'breadcrumb.php';
                 <div class="col-md-6">
 
                     <div class="profile-image">
-                        <img src="../exemplos/../exemplos/../exemplos/img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                        <img src="../exemplos/img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
                     </div>
                     <div class="profile-info">
                         <div class="">
                             <div>
                                 <h2 class="no-margins">
-                                    Francisco Carlos Molina
+                                    <?php echo $funcionario->nome ?>
                                 </h2>
                                 <h3>Gerente de Acesso</h3>
-                                <h4>Matrícula: 123456</h4>
+                                <h4>Matrícula: <?php echo $funcionario->matricula ?></h4>
                                 <small>
                                     Responsável pelas visitas no Centro-Oeste e Nordeste
                                 </small>
@@ -135,7 +142,7 @@ include_once 'breadcrumb.php';
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            <a href="novo" type="button" class="btn btn btn-primary"> <i class="fa fa-new"></i> Novo Acesso </a>
+                                            <a href="/acesso/novo" type="button" class="btn btn btn-primary"> <i class="fa fa-new"></i> Novo Acesso </a>
                                         </div>
                                     </div>
                                 </div>
